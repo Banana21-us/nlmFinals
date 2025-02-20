@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Announcements</h2>
+    <button type="button" class="btn mb-2" 
+    style="width:5%"  mat-mini-fab
+    (click)="openDialog()"> 
+    <i class="bi bi-pencil-square"></i>
+    </button>
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search . . ." #input>
+    </mat-form-field>
+
+    <div class="table-container" >
+        <section class="announcement-list" >
+            <div id="announcementsContainer">
+                @for (ann of filteredAnnouncements.length ? filteredAnnouncements : announcements; track ann) {
+                <div class="announcement">
+                    <div class="announcement-header">
+                        <h3>
+                            {{ ann.title }}
+                        </h3>
+                        <span class="date">
+                            {{ ann.created_at | date: 'medium' }}
+                        </span>
+                        <div class="announcement-actions ms-3">
+                            <i class="bi bi-pencil ms-3" (click)="onUpdate(ann)"></i>
+                            <i class="bi bi-trash3 ms-3" (click)="onDelete(ann.id)" ></i>
+                        </div>
+                    </div>
+                     <p class="announcement-p" [innerHTML]="ann.announcement"></p> 
+                </div>
+                }
+            </div>
+        </section>
+    </div>
+</div>

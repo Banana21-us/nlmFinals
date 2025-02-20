@@ -1,0 +1,35 @@
+<div class="container">
+    <header>Position Management</header>
+    <form [formGroup]="positionsform" (ngSubmit)="register()">
+        <div class="form first">
+            <div class="details personal">
+                <div class="fields">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-field ms-1">
+                                <label>Position</label>
+                                <input type="text" formControlName="name" class="form-control" 
+                                required oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-field">
+                                <label>Rate</label>
+                                <input type="text" formControlName="salary" class="form-control" 
+                                required >
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="sumbit">
+                <span class="btnText">Submit</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+        </div>
+</form>
+</div>  

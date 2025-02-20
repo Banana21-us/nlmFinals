@@ -1,0 +1,56 @@
+<div class="container">
+    <header>Edit Employee Details</header>
+    <form [formGroup]="empformupdate" (ngSubmit)="update()">
+        <div class="form first">
+            <div class="details personal">
+                <div class="fields">
+                    <div class="input-field">
+                        <label>Department</label>
+                        <select formControlName="department" class="form-control" required>
+                            @for (department of departments; track $index) {
+                            <option  
+                            [value]="department.name">{{ department.name }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Position</label>
+                      
+                        <select formControlName="position" class="form-control" required>
+                            @for (position of positions; track $index) {
+                            <option [value]="position.id">{{ position.name }}</option>
+                            }
+                        </select>
+                        
+                    </div>
+
+                    <div class="input-field">
+                        <label>Designation</label>
+                        <select formControlName="designation" class="form-control" required>
+                            @for (designation of designations; track $index) {
+                            <option [value]="designation.id">{{ designation.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field4">
+                        <label>Email</label>
+                        <input type="email" formControlName="email" class="form-control" 
+                         >
+                    </div>
+                    <div class="input-field4">
+                        <label>New Password</label>
+                        <input type="password" formControlName="password" class="form-control" 
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="sumbit">
+                <span class="btnText">Update</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+        </div>
+    </form>
+</div>

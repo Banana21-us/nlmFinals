@@ -1,0 +1,116 @@
+/* Basic reset and layout styles */
+i{
+  cursor: pointer;
+}
+.table-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 0%;
+  }
+  
+  /* Styles for form and list */
+  
+  .announcement-form {
+    flex: 1 1 45%;
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    padding: 20px 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Adds shadow */
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+  }
+  
+  /* Announcement list styles */
+  .announcement-list .announcement {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .announcement-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .announcement-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+    flex: 1;
+  }
+  
+  .date {
+    font-size: 0.9rem;
+    color: #888;
+  }
+  
+  .announcement-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .announcement-actions a {
+    color: #0056b3;
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  
+  .announcement-actions a:hover {
+    color: #003d79;
+  }
+  
+  .announcement-p {
+    margin: 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  
+  .delete {
+    background: linear-gradient(135deg, #ff6b6b, #c21807);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 24px;
+    /* Adjust size as needed */
+  }
+  
+  .edit {
+    background: linear-gradient(135deg, #1e90ff, #008080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 24px;
+    /* Adjust size as needed */
+  }
+  mat-form-field {
+    display: flex;
+    margin-left: auto; /* Pushes it to the right */
+  }

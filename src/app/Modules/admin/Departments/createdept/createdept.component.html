@@ -1,0 +1,23 @@
+<div class="container">
+    <header>Department Management</header>
+    <form [formGroup]="deptform" (ngSubmit)="register()">
+        <div class="form first">
+            <div class="details personal">
+                <div class="fields">
+                    <div class="input-field ms-1">
+                        <label>Department</label>
+                        <input type="text" formControlName="name" class="form-control" 
+                        required  oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="sumbit">
+                <span class="btnText">Submit</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+        </div>
+</form>
+</div>  

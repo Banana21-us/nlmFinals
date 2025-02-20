@@ -1,0 +1,22 @@
+<div class="container">
+    <header>Edit Designation</header>
+    <form [formGroup]="designationformupdate" (ngSubmit)="update()">
+        <div class="form first">
+            <div class="details personal">
+                <div class="fields">
+                    <div class="input-field">
+                        <label>Designation</label>
+                        <input type="text" formControlName="name" class="form-control" 
+                        required oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="sumbit">
+                <span class="btnText">Update</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+        </div>
+    </form>
+</div>

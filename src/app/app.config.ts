@@ -5,7 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './token.interceptor';
 import { errorInterceptor } from './error.interceptor';
 
@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
   // providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay()), provideAnimationsAsync()]
   providers: [
       provideZoneChangeDetection({ eventCoalescing: true }),provideRouter (routes), provideClientHydration(withEventReplay()),
-      provideHttpClient (withInterceptors ([tokenInterceptor, errorInterceptor])), provideAnimationsAsync ()
+      provideHttpClient (withFetch(),withInterceptors ([tokenInterceptor, errorInterceptor])), provideAnimationsAsync ()
               ]
 };
 

@@ -1,0 +1,50 @@
+
+<a mat-list-item  
+[routerLink]="item().route" 
+(click)="toggleNested()"
+class="menu-item"
+routerLinkActive="selected-menu-item" 
+#rla="routerLinkActive" 
+[activated]="rla.isActive">
+
+<mat-icon matListItemIcon   [matBadge]="item().unreadCount > 0 ? item().unreadCount : null" matBadgeColor="warn">
+    {{ item().icon }}
+  </mat-icon>
+
+@if (!collapsed()) {
+    <span matListItemTitle style="font-family: Poppins; font-weight: 600;">{{item().label}}</span>
+}
+
+@if(item().subItems){
+    <span matListItemMeta style="font-family: Poppins; font-weight: 600;">
+        @if(nestedMenuOpen()){
+            <mat-icon>expand_less</mat-icon>
+        } @else {
+            <mat-icon>expand_more</mat-icon>
+        }           
+    </span>
+}
+
+</a>
+
+@if(item().subItems && nestedMenuOpen()) {
+<div @expandContractMenu>
+    @for(subItem of item().subItems; track subItem){
+        <a mat-list-item
+            [routerLink]="subItem.route" 
+            [class.indented]="!collapsed()"
+            class="menu-item"
+            routerLinkActive="selected-submenu-item" 
+            #rla="routerLinkActive" 
+            [activated]="rla.isActive">
+            <mat-icon matListItemIcon
+            [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'" matTooltip="{{subItem.label}}">{{subItem.icon}}</mat-icon>
+            @if (!collapsed()) {
+                <span matListItemTitle style="font-family: Poppins;">{{subItem.label}}</span>
+            }
+
+            
+    </a>
+}
+</div>
+}

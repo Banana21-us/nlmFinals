@@ -1,0 +1,35 @@
+<div class="container">
+    <header>Leave Management</header>
+    <form [formGroup]="leaveform" (ngSubmit)="register()">
+        <div class="form first">
+            <div class="details personal">
+                <div class="fields">
+                    <div class="input-field ms-1">
+                        <label>Leave Type</label>
+                        <input type="text" formControlName="type" class="form-control" 
+                        required placeholder="Enter type" oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
+                        
+                    </div>
+                    <div class="input-field">
+                        <label>Days Allowed</label>
+                        <input type="number" formControlName="days_allowed" class="form-control" 
+                        required placeholder="Enter days"  min="0">
+                    </div>
+
+                    <div class="input-field">
+                        <label>Description</label>
+                        <input type="text" formControlName="description" class="form-control" 
+                        required placeholder="Enter description">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="sumbit">
+                <span class="btnText">Submit</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+        </div>
+</form>
+</div>  

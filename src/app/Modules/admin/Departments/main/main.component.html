@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Job Management</h2>
+    <div class="con">
+      <button type="button" class="btn " 
+              style="width:10%"  mat-fab> 
+              <a class="navlink" 
+                [routerLink]="['dept']"
+                routerLinkActive="active-link"> 
+                <i class="bi bi-person-lines-fill me-2"></i>Department</a>
+                
+      </button>
+      <button type="button" class="btn ms-3" 
+              style="width:10%"  mat-fab> 
+              <a class="navlink" 
+                [routerLink]="['designation']"
+                routerLinkActive="active-link"> 
+                <i class="bi bi-buildings me-2"></i>Designation</a>
+      </button>
+      <button type="button" class="btn ms-3" 
+              style="width:10%"  mat-fab> 
+              <a class="navlink" 
+                [routerLink]="['position']"
+                routerLinkActive="active-link"> 
+                <i class="bi bi-file-earmark-person me-2"></i>Position</a>
+      </button>
+      
+    </div>
+    <br>
+    
+    <router-outlet></router-outlet>
+
+      
+    
+  </div>
