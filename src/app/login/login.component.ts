@@ -25,43 +25,60 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  openDialog() {
-      const dialogRef = this.dialog.open(RegisterComponent, {
-        width: '95vw',
-        height: 'auto',
-        maxWidth: '95vw',
-        maxHeight: 'auto',
-        
-      });
-    
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) { // Only call getdata() if the dialog closed after successful submission
-          // this.getdata();
-        }
-      });
-    }
+  
 
   login() {
     this.conn.login(this.loginForm.value).subscribe(
       (result: any) => {
-        if (result.token != null) {
+        console.log('Login response:', result);
+  
+        if (result.token) {
           localStorage.setItem('token', result.token);
           localStorage.setItem('user', result.id);
-
-          const user = result.admin;
-          localStorage.setItem('users', JSON.stringify(user));
-          
+          localStorage.setItem('users', JSON.stringify(result.admin));
+          localStorage.setItem('position', result.position);
+  
           console.log('Token stored:', result.token);
-          this.navigateToMainPage();
+  
+          setTimeout(() => {
+            // **Re-fetch position to ensure accuracy**
+            const position = localStorage.getItem('position');
+            console.log('Updated position:', position);
+  
+            if (position === 'hr') {
+              this.router.navigateByUrl('/admin-page');
+            } else {
+              this.router.navigateByUrl('/user-page');
+            }
+          }, 300); // Slightly longer delay ensures updates before navigation
         }
-        // console.log(result);
+      },
+      (error) => {
+        console.error('Login failed', error);
       }
     );
-}
+  }
+  
+  
+  
+  
+  
 
 
-  navigateToMainPage() {
-    this.router.navigate(['main-page/Dashboard']);
-    // window.location.reload()
-    }
+  openDialog() {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '95vw',
+      height: 'auto',
+      maxWidth: '95vw',
+      maxHeight: 'auto',
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // Only call getdata() if the dialog closed after successful submission
+        // this.getdata();
+      }
+    });
+  }
+  
 }

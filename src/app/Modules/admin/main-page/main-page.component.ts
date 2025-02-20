@@ -46,7 +46,9 @@ export class MainPageComponent {
         (response) => {
             console.log('Logout successful:', response);
             localStorage.removeItem('token');
-            localStorage.removeItem('if');
+            localStorage.removeItem('users');
+            localStorage.removeItem('user');
+            localStorage.removeItem('position');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

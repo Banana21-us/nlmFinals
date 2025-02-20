@@ -19,7 +19,7 @@
                       
                         <select formControlName="position" class="form-control" required>
                             @for (position of positions; track $index) {
-                            <option [value]="position.id">{{ position.name }}</option>
+                            <option [value]="position.name">{{ position.name }}</option>
                             }
                         </select>
                         
@@ -29,7 +29,7 @@
                         <label>Designation</label>
                         <select formControlName="designation" class="form-control" required>
                             @for (designation of designations; track $index) {
-                            <option [value]="designation.id">{{ designation.name }}</option>
+                            <option [value]="designation.name">{{ designation.name }}</option>
                             }
                         </select>
                     </div>

@@ -48,11 +48,11 @@ export class UpdateComponent implements OnInit{
     this.empService.getdepartment().subscribe(data => {
       this.departments = data;
     });
-    this.empService.getdesignation().subscribe(data => {
+    this.empService.getposition().subscribe(data => {
       this.positions = data;
     });
 
-    this.empService.getposition().subscribe(data => {
+    this.empService.getdesignation().subscribe(data => {
       this.designations = data;
     });
   }
