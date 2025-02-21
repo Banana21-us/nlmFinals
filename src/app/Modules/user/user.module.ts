@@ -5,7 +5,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { DashboardComponent } from './Dashboard/dashboard.component';
 import { AccountComponent } from '../admin/Account/account.component'; // Reusing Account component from Admin module
 
-import { announcementRoutes } from './announcement/announcement.route';
+import { annRoutes } from './announcement/announcement.route';
 import { userLeaveRequest } from './leave/leave.route';
 
 // 👤 User Module Routes
@@ -23,8 +23,8 @@ const routes: Routes = [
             { path: 'leave', 
               loadChildren: () => import('./leave/leave.route').then(r => userLeaveRequest),
             },
-            { path: 'Announcement', 
-              loadChildren: () => import('./announcement/announcement.route').then(r => announcementRoutes),
+            { path: 'ann', 
+              loadChildren: () => import('./announcement/announcement.route').then(r => annRoutes),
             },
             // { path: 'Announcement', 
             //   loadChildren: () => import('./Departments/dapartmets.routes').then(r => departmentsRoutes),

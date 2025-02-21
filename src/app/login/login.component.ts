@@ -31,7 +31,11 @@ export class LoginComponent {
     this.conn.login(this.loginForm.value).subscribe(
       (result: any) => {
         console.log('Login response:', result);
-  
+        if (result.reg_approval === null) {
+          console.warn('Registration not approved. Unable to login.');
+          alert('Your registration is pending approval. Please wait for confirmation.');
+          return; // Stop further execution
+        }
         if (result.token) {
           localStorage.setItem('token', result.token);
           localStorage.setItem('user', result.id);

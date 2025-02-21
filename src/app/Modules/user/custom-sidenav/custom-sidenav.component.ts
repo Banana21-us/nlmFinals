@@ -95,7 +95,7 @@ export class CustomSidenavComponent {
         {
           icon: 'announcement',
           label: 'Announcement',
-          route: 'announcement'
+          route: 'ann'
         },
       ]);
 
@@ -116,7 +116,7 @@ export class CustomSidenavComponent {
     {
       icon: 'announcement',
       label: 'Announcement',
-      route: 'Announcement'
+      route: 'ann'
     },
     
   ]);
