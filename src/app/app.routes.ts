@@ -1,21 +1,27 @@
 import { CanActivateFn, Router, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { inject } from '@angular/core';
 import { RegisterComponent } from './register/register.component';
 import { authGuard } from './auth.guard';
-
+import { isPlatformBrowser } from '@angular/common';
+import { inject, PLATFORM_ID } from '@angular/core';
 // 🔐 Login Guard to prevent logged-in users from accessing login page
+
 export const loginGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const token = localStorage.getItem('token');
+  const platformId = inject(PLATFORM_ID);
 
-  if (token) {
-    console.log('User is already logged in, redirecting...');
-    setTimeout(() => {
-      router.navigate(['/admin-page']); // Ensures navigation happens
-    }, 100);
-    return false;
+  if (isPlatformBrowser(platformId)) {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      console.log('User is already logged in, redirecting...');
+      setTimeout(() => {
+        router.navigate(['/admin-page']);
+      }, 100);
+      return false;
+    }
   }
+
   return true;
 };
 
@@ -25,15 +31,12 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   {
     path: 'admin-page',
-     // Protects the admin page
     loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule),
   },
   {
     path: 'user-page',
-     // Protects the user page
+    canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/user/user.module').then(m => m.UserModule),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
-
-

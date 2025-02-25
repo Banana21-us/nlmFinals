@@ -70,6 +70,15 @@ section {
 [tabindex='-1']:focus {
   outline: 0 !important;
 }
+.custom-trash-btn {
+  position: relative;
+  top: -30px; /* Moves the button 50px upwards */
+}
+.cstm{
+  position: relative;
+  top: -30px;
+  right: 10px;
+}
 
 hr {
   overflow: visible;
@@ -1944,6 +1953,10 @@ p {
 @media (max-width: 768px) {
   .btn {
     margin-bottom: 10px;
+  }
+  .save{
+    margin-right: -50px;
+
   }
 }
 

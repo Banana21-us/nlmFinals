@@ -8,7 +8,6 @@
     }
   
   .menu-item {
-      border-radius: 0%;
       color: blue;
       border-left: 5px solid;
       border-left-color: rgba(0, 0, 0, 0);
@@ -17,7 +16,7 @@
     
     .selected-menu-item {
       border-left-color: blue;
-      background-color: #F5F7F8;
+      background-color: #f8f5f5;
   
     }
   

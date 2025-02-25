@@ -139,4 +139,13 @@ export class ApiService {
   deleteAnnouncement(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}announcements/${id}`);
   }
+
+  // account 
+  saveAccountData(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}accountsaveedit`, data);
+  }
+
+  getAccountDetails(userid: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}account/${userid}`);
+  }
 }

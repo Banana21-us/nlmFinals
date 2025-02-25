@@ -41,18 +41,16 @@ export class LoginComponent {
           localStorage.setItem('user', result.id);
           localStorage.setItem('users', JSON.stringify(result.admin));
           localStorage.setItem('position', result.position);
-  
           console.log('Token stored:', result.token);
   
           setTimeout(() => {
-            // **Re-fetch position to ensure accuracy**
             const position = localStorage.getItem('position');
             console.log('Updated position:', position);
   
             if (position === 'hr') {
-              this.router.navigateByUrl('/admin-page');
+              this.router.navigate(['/admin-page/dashboard']);
             } else {
-              this.router.navigateByUrl('/user-page');
+              this.router.navigate(['/user-page/dashboard']);
             }
           }, 300); // Slightly longer delay ensures updates before navigation
         }
