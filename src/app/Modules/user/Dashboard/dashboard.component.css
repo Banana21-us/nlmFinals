@@ -7,7 +7,7 @@
 .banner {
   display: flex;
   align-items: center;
-  background-color: #001c30;
+  background-color: #B9B28A;
   color: #ffffff;
   padding: 20px 40px;
   border-radius: 20px;
@@ -16,10 +16,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   gap: 20px;
   
-}
-.bg-c-red {
-  background: linear-gradient(45deg, #632be7, #FF6F61); /* Coral and yellow gradient */
-  border: 1px solid #ff7707; /* Maintain yellow border for consistency */
 }
 .text-content {
   max-width: 70%;
@@ -121,18 +117,23 @@
 }
 
 .bg-c-blue {
-  background: linear-gradient(45deg, #3ABEF9, #73b4ff);
-  border: 1px solid #007bff;
+  background: #578FCA;
+  /* border: 1px solid #007bff; */
+}
+
+.bg-c-red {
+  background: #D84040;
+  /* border: 1px solid #007bff; */
 }
 
 .bg-c-green {
-  background: linear-gradient(45deg, #1ed9b4, #98FF98);
-  border: 1px solid #20c997;
+  background:#A7D477;
+  /* border: 1px solid #20c997; */
 }
 
-.bg-c-yellow {
-  background: linear-gradient(45deg, #ee9518, #FF6F61);
-  border: 1px solid #ffc107;
+.bg-c-orange {
+  background: #FFAB5B;
+  /* border: 1px solid #ffc107; */
 }
 
 /* Media Queries for Responsiveness */
@@ -223,3 +224,47 @@
       font-size: 1.2rem;
   }
 }
+
+/* Style for the sidebar */
+.l-wrap__sabbath {
+  position: fixed; /* Fixed to stay in place */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right */
+  width: 200px; /* Set width for the sidebar */
+  height: 100%; /* Take up the full height of the screen */
+  background-color: #001c30; /* Set background color to #001c30 */
+  z-index: 1000; /* Ensure it stays on top of other content */
+  padding: 20px; /* Add some padding */
+}
+
+/* Styling the logo inside the sidebar */
+.l-sabbath__logo {
+  text-align: center; /* Center the logo */
+}
+
+/* Adjust the size of the logo */
+.l-sabbath__logo-inner {
+  width: 100%;
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+.l-sabbath__logo-light svg {
+  width: 100%; /* Make the logo responsive */
+  height: auto; /* Keep the aspect ratio */
+}
+
+/* Ensure the main content doesn't overlap with the sidebar */
+.container {
+  margin-right: 220px; /* Add margin to the right so content doesn't overlap */
+}
+
+.sidebar-logo {
+  width: 100%;           /* Makes the image responsive */
+  max-width: 180px;      /* Sets a max-width for the logo */
+  height: 160px;         /* Ensure the height matches the width to maintain the round shape */
+  object-fit: cover;     /* Ensures the image covers the area without stretching */
+  border-radius: 50%;    /* Makes the image round */
+  margin: 50px auto 0;   /* Adds 20px margin on top (adjust as needed), centers it horizontally */
+}
+
