@@ -42,7 +42,7 @@ export class LoginComponent {
           localStorage.setItem('users', JSON.stringify(result.admin));
           localStorage.setItem('position', result.position);
           console.log('Token stored:', result.token);
-  
+          
           setTimeout(() => {
             const position = localStorage.getItem('position');
             console.log('Updated position:', position);

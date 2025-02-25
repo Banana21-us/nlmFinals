@@ -36,7 +36,7 @@ export class AccountComponent implements OnInit{
             birthplace: [''],
             education: this.fb.array([]),
             spouse: [''],
-            spousedate: [''],
+            dateofmarriage: [''],
             employments: this.fb.array([])
         });
 
@@ -46,24 +46,30 @@ export class AccountComponent implements OnInit{
     }
 
     loadUserData(): void {
-        try {
-            const userString = localStorage.getItem('users');
-            const id = localStorage.getItem('user');
-
-            if (userString) {
-                this.user = JSON.parse(userString);
-            } else {
-                this.user = {};
-                console.warn('No user data found in localStorage.');
-            }
-
-            this.id = id;
-            this.userPic = this.user.img || 'default-profile.png';
-        } catch (error) {
-            console.error('Error parsing user data from localStorage:', error);
-            this.user = {};
-        }
-    }
+      try {
+          const userString = localStorage.getItem('users');
+  
+          if (userString) {
+              this.user = JSON.parse(userString);
+              
+              // Ensure image URL is properly set
+              if (this.user.img && !this.user.img.startsWith('http')) {
+                  this.user.img = `http://localhost:8000/assets/userPic/${this.user.img}`;
+              }
+          } else {
+              this.user = {};
+              console.warn('No user data found in localStorage.');
+          }
+  
+          this.userPic = this.user.img || 'default-profile.png';
+  
+      } catch (error) {
+          console.error('Error parsing user data from localStorage:', error);
+          this.user = {};
+          this.userPic = 'default-profile.png';
+      }
+  }
+  
 
     loadAccountDetails(): void {
         const id = localStorage.getItem('user');
@@ -90,7 +96,7 @@ export class AccountComponent implements OnInit{
             birthdate: this.accountData?.birthdate || '', // Use accountData.birthdate
             birthplace: this.accountData?.birthplace || '',// Use accountData.birthplace
             spouse: this.accountData?.spouse?.name || '',
-            spousedate: this.accountData?.spouse?.dateofmarriage || ''
+            dateofmarriage: this.accountData?.spouse?.dateofmarriage || ''
         });
 
         // Patch education
@@ -200,7 +206,7 @@ export class AccountComponent implements OnInit{
     
       const user = JSON.parse(localStorage.getItem('users') || '{}');
     
-      if (!user.userid) {
+      if (!user.id) {
           console.error('User ID is missing in localStorage:', user);
           return;
       }
@@ -209,7 +215,7 @@ export class AccountComponent implements OnInit{
       formData.append('image', file);
     
       // Include additional user information if needed
-      formData.append('id', user.userid); // Use userid from parsed object
+      formData.append('id', user.id); // Use userid from parsed object
     
       // Log FormData for debugging
       console.log('FormData before upload:', formData);

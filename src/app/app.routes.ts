@@ -35,7 +35,7 @@ export const routes: Routes = [
   },
   {
     path: 'user-page',
-    canActivate: [authGuard], // Protect user routes
+    // canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/user/user.module').then(m => m.UserModule),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
