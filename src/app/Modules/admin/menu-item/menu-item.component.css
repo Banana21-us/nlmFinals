@@ -1,26 +1,26 @@
 ::ng-deep .mat-badge-content {
-    background-color: red !important;
-    color: white !important;
+  background-color: red !important;
+  color: white !important;
+}
+
+:host * {
+    transition: all 500ms ease-in-out;
+  }
+
+.menu-item {
+    border-radius: 0%;
+    color: blue;
+    border-left: 5px solid;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: transparent;
   }
   
-  :host * {
-      transition: all 500ms ease-in-out;
-    }
-  
-  .menu-item {
-      color: blue;
-      border-left: 5px solid;
-      border-left-color: rgba(0, 0, 0, 0);
-      border-right-color: transparent;
-    }
-    
-    .selected-menu-item {
-      border-left-color: blue;
-      background-color: #f8f5f5;
-  
-    }
-  
-  .indented {
-      --mat-list-list-item-leading-icon-start-space: 48px;
+  .selected-menu-item {
+    border-left-color: blue;
+    background-color: #F5F7F8;
+
   }
-  
+
+.indented {
+    --mat-list-list-item-leading-icon-start-space: 48px;
+}
