@@ -190,48 +190,52 @@ export class AccountComponent implements OnInit{
     }
 
   
-  onFileChange(event: any): void {
-    console.log('File change event:', event); // Log entire event
-    const file = event.target.files[0];
-    console.log('Selected file:', file); // Log selected file
-  
-    if (!file) {
-      console.error('No file selected.');
-      return;
-    }
-  
-    const user = JSON.parse(localStorage.getItem('users') || '{}');
+    onFileChange(event: any): void {
+      const file = event.target.files[0];
     
-    console.log('User from localStorage:', user);
-  
-    if (!user.id) {
-      console.error('User ID is missing in localStorage:', user);
-      return;
-    }
-  
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('id', user.id);
-  
-    console.log('FormData before upload:', formData);
-  
-    this.acc.uploadImage(formData).subscribe(response => {
-      console.log('Upload response:', response);
-      const newImageUrl = `http://localhost:8000/assets/userPic/${response['image_url'].split('/').pop()}`;
-  
-      this.userPic = newImageUrl;
-      user.img = newImageUrl;
-      localStorage.setItem('user', JSON.stringify(user));
-  
-      console.log('Updated user image:', newImageUrl);
-      console.log('Updated localStorage user:', JSON.parse(localStorage.getItem('users') || '{}'));
-  
-      this.acc.updateUserPic(newImageUrl);
-      console.log('User Picture URL:', this.userPic);
-    }, error => {
-      console.error('Error uploading image:', error);
-    });
+      if (!file) {
+          console.error('No file selected.');
+          return;
+      }
+    
+      const user = JSON.parse(localStorage.getItem('users') || '{}');
+    
+      if (!user.userid) {
+          console.error('User ID is missing in localStorage:', user);
+          return;
+      }
+    
+      const formData = new FormData();
+      formData.append('image', file);
+    
+      // Include additional user information if needed
+      formData.append('id', user.userid); // Use userid from parsed object
+    
+      // Log FormData for debugging
+      console.log('FormData before upload:', formData);
+    
+      // Proceed with image upload
+      this.acc.uploadImage(formData).subscribe(response => {
+          const newImageUrl = `http://localhost:8000/assets/userPic/${response['image_url'].split('/').pop()}`;
+          // Update localStorage or perform other actions as needed
+          console.log('Upload response:', response);
+          
+          // Update user's image URL in localStorage if necessary
+          user.img = newImageUrl; 
+          localStorage.setItem('users', JSON.stringify(user));
+          
+          console.log('Updated localStorage user:', JSON.parse(localStorage.getItem('users') || '{}'));
+          
+          // Additional logic to handle the updated profile picture
+          this.acc.updateUserPic(newImageUrl);
+          console.log('User Picture URL:', newImageUrl);
+          
+      }, error => {
+          console.error('Error uploading image:', error);
+      });
   }
+  
+  
   
   onSubmit(): void {
     if (this.accountForm.valid && this.childrenForm.valid) {
