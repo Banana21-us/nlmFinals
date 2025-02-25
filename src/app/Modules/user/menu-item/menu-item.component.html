@@ -5,14 +5,15 @@
 class="menu-item"
 routerLinkActive="selected-menu-item" 
 #rla="routerLinkActive" 
+
 [activated]="rla.isActive">
 
-<mat-icon matListItemIcon   [matBadge]="item().unreadCount > 0 ? item().unreadCount : null" matBadgeColor="warn">
+<mat-icon matListItemIcon class="text-light" [matBadge]="item().unreadCount > 0 ? item().unreadCount : null" matBadgeColor="warn">
     {{ item().icon }}
   </mat-icon>
 
 @if (!collapsed()) {
-    <span matListItemTitle style="font-family: Poppins; font-weight: 600;">{{item().label}}</span>
+    <span class="text-light" matListItemTitle style="font-family: Poppins; font-weight: 600;">{{item().label}}</span>
 }
 
 @if(item().subItems){

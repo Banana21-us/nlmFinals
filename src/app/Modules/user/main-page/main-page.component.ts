@@ -19,14 +19,34 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
+  getWidth: any;
+  sidenavWidth:any;
+  menunavWidth:any;
+  navSize:any;
   adminPic: string | null = null;
 
   collapsed = signal(true)
-  sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
-  menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
+
   constructor(private conn: ApiService, private router: Router) {}
 
+   onResize() {
+    this.getWidth = window.innerWidth
+    if (this.getWidth > 414) {
+      this.navSize = '250px';
+    } else {
+      this.navSize = '100%';
+    }
+  }
+
   ngOnInit() {
+
+    // Get the current window width
+    this.onResize();
+    // Set the initial width of the sidenav
+
+    this.sidenavWidth = computed(() => this.collapsed() ? '65px' : this.navSize);
+    this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
+    console.log(this.getWidth)
     // Subscribe to the adminPic$ observable to get the image URL
     // this.conn.adminPic$.subscribe((newImageUrl) => {
     //   if (newImageUrl) {

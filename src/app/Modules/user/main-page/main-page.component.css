@@ -1,7 +1,7 @@
 mat-toolbar{
     position: relative;
     z-index: 5;
-    background-color: #001c30;
+    background-color: #001F3F;
   }
   
   mat-icon{
@@ -10,15 +10,18 @@ mat-toolbar{
   
   .content {
     padding: 24px;
-    background-color: #F5F7F8;
+    background-color: #F1F0E8;
   }
   
   mat-sidenav-container{
     height: calc(100vh - 64px);
+    background-color: #F1F0E8;
   }
   
   mat-sidenav, mat-sidenav-content {
+    border-radius: 0%;
     transition: all 500ms ease-in-out;
+    background-color: #03346E;
   }
   
   .example-spacer {
