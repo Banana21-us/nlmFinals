@@ -7,7 +7,7 @@
 .banner {
   display: flex;
   align-items: center;
-  background-color: #B9B28A;
+  background-color: #001c30;
   color: #ffffff;
   padding: 20px 40px;
   border-radius: 20px;
@@ -17,6 +17,7 @@
   gap: 20px;
   
 }
+
 .text-content {
   max-width: 70%;
 }
@@ -224,47 +225,3 @@
       font-size: 1.2rem;
   }
 }
-
-/* Style for the sidebar */
-.l-wrap__sabbath {
-  position: fixed; /* Fixed to stay in place */
-  top: 0; /* Align to the top */
-  right: 0; /* Align to the right */
-  width: 200px; /* Set width for the sidebar */
-  height: 100%; /* Take up the full height of the screen */
-  background-color: #001c30; /* Set background color to #001c30 */
-  z-index: 1000; /* Ensure it stays on top of other content */
-  padding: 20px; /* Add some padding */
-}
-
-/* Styling the logo inside the sidebar */
-.l-sabbath__logo {
-  text-align: center; /* Center the logo */
-}
-
-/* Adjust the size of the logo */
-.l-sabbath__logo-inner {
-  width: 100%;
-  max-width: 180px;
-  margin: 0 auto;
-}
-
-.l-sabbath__logo-light svg {
-  width: 100%; /* Make the logo responsive */
-  height: auto; /* Keep the aspect ratio */
-}
-
-/* Ensure the main content doesn't overlap with the sidebar */
-.container {
-  margin-right: 220px; /* Add margin to the right so content doesn't overlap */
-}
-
-.sidebar-logo {
-  width: 100%;           /* Makes the image responsive */
-  max-width: 180px;      /* Sets a max-width for the logo */
-  height: 160px;         /* Ensure the height matches the width to maintain the round shape */
-  object-fit: cover;     /* Ensures the image covers the area without stretching */
-  border-radius: 50%;    /* Makes the image round */
-  margin: 50px auto 0;   /* Adds 20px margin on top (adjust as needed), centers it horizontally */
-}
-
