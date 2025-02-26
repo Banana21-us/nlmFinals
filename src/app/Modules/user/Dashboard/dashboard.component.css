@@ -117,25 +117,25 @@
   transform: translateY(-5px);
 }
 
-.bg-c-blue {
-  background: #578FCA;
-  /* border: 1px solid #007bff; */
-}
+    .bg-c-blue {
+      background: #578FCA;
+      /* border: 1px solid #007bff; */
+    }
 
-.bg-c-red {
-  background: #D84040;
-  /* border: 1px solid #007bff; */
-}
+    .bg-c-red {
+      background: #D84040;
+      /* border: 1px solid #007bff; */
+    }
 
-.bg-c-green {
-  background:#A7D477;
-  /* border: 1px solid #20c997; */
-}
+    .bg-c-green {
+      background:#A7D477;
+      /* border: 1px solid #20c997; */
+    }
 
-.bg-c-orange {
-  background: #FFAB5B;
-  /* border: 1px solid #ffc107; */
-}
+    .bg-c-orange {
+      background: #FFAB5B;
+      /* border: 1px solid #ffc107; */
+    }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
