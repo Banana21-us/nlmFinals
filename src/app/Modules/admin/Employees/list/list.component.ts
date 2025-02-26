@@ -20,6 +20,7 @@ export interface Employee {
   phone_number: number;
   email: string;
   status: string;
+  reg_approval?: string | null; 
 }
 @Component({
   selector: 'app-list',
@@ -44,8 +45,27 @@ export class ListComponent implements OnInit {
   getdata(){
     this.employeeService.getEmployees().subscribe(data => {
       this.dataSource.data = data;
+      this.updateStatusOptions();
     });
   }
+  statusOptions: { id: number; status: string; color: string }[] = [];
+
+  updateStatusOptions() {
+    this.statusOptions = this.dataSource.data.map(emp => ({
+      id: emp.id,
+      status: emp.reg_approval ? 'ACTIVE' : 'PENDING',
+      color: emp.reg_approval ? 'green' : 'red'
+    }));
+  }
+
+    getStatusText(id: number): string {
+    return this.statusOptions.find(opt => opt.id === id)?.status || 'Pending';
+  }
+  
+  getStatusColor(id: number): string {
+    return this.statusOptions.find(opt => opt.id === id)?.color || 'red';
+  }
+  
   viewemployee(element: any): void {
     const dialogRef = this.dialog.open(ViewComponent, {
       width: '95vw',

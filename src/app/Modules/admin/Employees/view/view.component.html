@@ -17,7 +17,8 @@
             </p>
 
             <a class="btn btn-info" (click)="printSection('print-container')">Print</a>
-            <a class="btn btn-info" *ngIf="employee" (click)="acceptemployee(employee)">Accept</a>
+            <a class="btn btn-info" *ngIf="employee.employee.reg_approval == null" (click)="acceptemployee(employee)">Approve</a>
+
 
           </div>
         </div>

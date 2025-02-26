@@ -2,16 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../api.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { RippleModule } from 'primeng/ripple';
 @Component({
   selector: 'app-account',
-  imports: [CommonModule,ReactiveFormsModule ],
+  imports: [CommonModule,ReactiveFormsModule,ToastModule,ButtonModule,RippleModule],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.css'
+  styleUrl: './account.component.css',
+  providers: [MessageService]
 })
 export class AccountComponent implements OnInit{
 
-  constructor(private acc: ApiService,private fb: FormBuilder) {}
+  constructor(private acc: ApiService,private fb: FormBuilder,private messageService: MessageService) {}
     accountForm!: FormGroup;
     childrenForm!: FormGroup;
     userPic: any;
@@ -19,7 +23,16 @@ export class AccountComponent implements OnInit{
     id: any;
     accountData: any;
     
+    isEditing = false;
 
+    toggleEditMode(editMode: boolean) {
+      this.isEditing = editMode;
+    }
+    cancelChanges() {
+      // Your cancel logic here (e.g., reset form, hide edit mode)
+      this.toggleEditMode(false); // Disable edit mode
+    }
+    
     ngOnInit(): void {
         this.initializeForms();
         this.loadUserData();
@@ -266,11 +279,14 @@ export class AccountComponent implements OnInit{
             (response) => {
                 console.log('Data saved successfully:', response);
                 localStorage.setItem('users', JSON.stringify(allData));
+                this.showBottomRight();
             },
             (error) => {
                 console.error('Error saving data:', error);
             }
         );
+        this.toggleEditMode(false);
+        
     } else {
         this.accountForm.markAllAsTouched();
         this.childrenForm.markAllAsTouched();
@@ -278,5 +294,7 @@ export class AccountComponent implements OnInit{
     }
 }
 
-  
+    showBottomRight() {
+        this.messageService.add({ severity: 'success', summary: 'Updated', detail: 'Account updated successfully', key: 'br', life: 3000 });
+    }
 }

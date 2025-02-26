@@ -41,8 +41,10 @@ export class ListComponent {
 
   openDialog() {
       const dialogRef = this.dialog.open(CreateComponent, {
-        width: 'auto',
-        height: 'auto',
+        width: '90vw',
+        height: '85vh',
+        maxHeight: '85vh',
+        maxWidth: '90vw'
       });
     
       // dialogRef.afterClosed().subscribe(result => {

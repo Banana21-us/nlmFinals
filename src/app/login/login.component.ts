@@ -69,9 +69,9 @@ export class LoginComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '95vw',
+      width: '86vw',
       height: 'auto',
-      maxWidth: '95vw',
+      maxWidth: '86vw',
       maxHeight: 'auto',
       
     });
