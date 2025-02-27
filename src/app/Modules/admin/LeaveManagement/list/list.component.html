@@ -15,6 +15,7 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Search . . ." #input>
       </mat-form-field>
     
+    <div class="table-responsive">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
      
     
@@ -51,7 +52,8 @@
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-      </tr>
     </table>
+    </div>
+    <!-- </table>  -->
     
   </div>
