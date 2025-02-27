@@ -29,4 +29,14 @@ body {
   
   
   
-  
+    .status-pending {
+      color: orange;
+    }
+
+    .status-approved {
+      color: green;
+    }
+
+    .status-rejected {
+      color: red;
+    }

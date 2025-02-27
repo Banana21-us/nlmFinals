@@ -148,4 +148,19 @@ export class ApiService {
   getAccountDetails(userid: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}account/${userid}`);
   }
+
+  // reqleave user
+  
+  submitLeaveRequest(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}leaverequests`, data);
+  }
+  getLeaveRequestsByUserId(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}leaverequests/user/${userId}`);
+  }
+  deleteLeaveRequest(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}leaverequests/${id}`);
+  }
+  updatedetails(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-requests/userupdate/${id}`, data);
+  }
 }
