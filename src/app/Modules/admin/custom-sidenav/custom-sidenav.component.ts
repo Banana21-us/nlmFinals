@@ -113,6 +113,12 @@ export class CustomSidenavComponent {
         label: 'Announcement',
         route: 'Announcement'
       },
+
+      {
+        icon: 'event',
+        label: 'Calendar',
+        route: 'calendar'
+      },
       
       
     ]);
@@ -144,6 +150,12 @@ export class CustomSidenavComponent {
           icon: 'announcement',
           label: 'Announcement',
           route: 'announcement'
+        },
+
+        {
+          icon: 'event',
+          label: 'Calendar',
+          route: 'calendar'
         },
       ]);
 
