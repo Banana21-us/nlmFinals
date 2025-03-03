@@ -9,11 +9,20 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { tokenInterceptor } from './token.interceptor';
 import { errorInterceptor } from './error.interceptor';
 
+import Aura from '@primeng/themes/aura';
+import { providePrimeNG } from 'primeng/config';
+
 export const appConfig: ApplicationConfig = {
   // providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay()), provideAnimationsAsync()]
   providers: [
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
       provideZoneChangeDetection({ eventCoalescing: true }),provideRouter (routes), provideClientHydration(withEventReplay()),
-      provideHttpClient (withFetch(),withInterceptors ([tokenInterceptor, errorInterceptor])), provideAnimationsAsync ()
+      provideHttpClient (withFetch(),withInterceptors ([tokenInterceptor, errorInterceptor])), provideAnimationsAsync (),
               ]
+              
 };
 

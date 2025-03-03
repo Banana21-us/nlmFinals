@@ -36,8 +36,9 @@ export class AcceptComponent {
     if (this.data) {
       this.acceptform.patchValue({
         department: this.data.department,
-        position: this.data.position,
         designation: this.data.designation,
+        position: this.data.position
+       
       });
     }
   }
@@ -46,11 +47,12 @@ export class AcceptComponent {
       this.departments = data;
     });
     this.empService.getdesignation().subscribe(data => {
-      this.positions = data;
+      
+      this.designations = data;
     });
 
     this.empService.getposition().subscribe(data => {
-      this.designations = data;
+      this.positions = data;
     });
   }
 

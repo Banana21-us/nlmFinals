@@ -79,6 +79,44 @@ export class CustomSidenavComponent {
       //   });
       // }
     }
+    menuItems = signal<MenuItem[]>([
+      {
+        icon: 'dashboard',
+        label: 'Dashboard',
+        route: 'dashboard'
+      },
+      {
+        icon: 'groups',
+        label: 'Employees',
+        route: 'Employee'
+      },
+      
+      {
+        icon: 'person',
+        label: 'Leave Request',
+        route: 'LeaveRequest'
+      },
+      {
+        icon: 'subject',
+        label: 'Departments',
+        route: 'Departments'
+      },
+      
+      {
+        icon: 'meeting_room',
+        label: 'Leave Management',
+        route: 'LeaveManagement'
+      },
+      
+      {
+        icon: 'announcement',
+        label: 'Announcement',
+        route: 'Announcement'
+      },
+      
+      
+    ]);
+
     updateMenuItems() {
       this.menuItems.set([
         {
@@ -107,80 +145,10 @@ export class CustomSidenavComponent {
           label: 'Announcement',
           route: 'announcement'
         },
-        // {
-        //   icon: 'subject',
-        //   label: 'Subject',
-        //   route: 'subjectmanagement'
-        // },
-       
-        
-        // {
-        //   icon: 'family_restroom',
-        //   label: 'Parent',
-        //   route: 'parent'
-        // },
-        // 
-        // {
-        //   icon: 'chat',
-        //   label: 'Message',
-        //   route: 'message',
-        //   unreadCount: this.unreadMessagesCount
-        // }
       ]);
 
     }
-  menuItems = signal<MenuItem[]>([
-    {
-      icon: 'dashboard',
-      label: 'Dashboard',
-      route: 'dashboard'
-    },
-    {
-      icon: 'groups',
-      label: 'Employees',
-      route: 'Employee'
-    },
-    {
-      icon: 'subject',
-      label: 'Departments',
-      route: 'Departments'
-    },
-    
-    {
-      icon: 'meeting_room',
-      label: 'Leave Management',
-      route: 'LeaveManagement'
-    },
-    
-    {
-      icon: 'person',
-      label: 'Leave Request',
-      route: 'LeaveRequest'
-    },
-    {
-      icon: 'announcement',
-      label: 'Announcement',
-      route: 'Announcement'
-    },
-    
-    // {
-    //   icon: 'family_restroom',
-    //   label: 'Parent',
-    //   route: 'parent'
-    // },
-    // {
-    //   icon: 'announcement',
-    //   label: 'Announcement',
-    //   route: 'announcement'
-    // },
-    // {
-    //   icon: 'chat',
-    //   label: 'Message',
-    //   route: 'message',
-    //   unreadCount: this.unreadMessagesCount
-    // },
-    
-  ]);
+  
 
   trackByFn(index: number, item: MenuItem) {
     return item.route; // or any unique identifier

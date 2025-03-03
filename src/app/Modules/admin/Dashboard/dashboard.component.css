@@ -117,19 +117,20 @@
   transform: translateY(-5px);
 }
 
+
 .bg-c-blue {
-  background: linear-gradient(45deg, #3ABEF9, #73b4ff);
-  border: 1px solid #007bff;
+  background: #578FCA;
+  /* border: 1px solid #007bff; */
 }
 
 .bg-c-green {
-  background: linear-gradient(45deg, #1ed9b4, #98FF98);
-  border: 1px solid #20c997;
+  background:#A7D477;
+  /* border: 1px solid #20c997; */
 }
 
-.bg-c-yellow {
-  background: linear-gradient(45deg, #ee9518, #FF6F61);
-  border: 1px solid #ffc107;
+.bg-c-red {
+  background: #D84040;
+  /* border: 1px solid #007bff; */
 }
 
 /* Media Queries for Responsiveness */

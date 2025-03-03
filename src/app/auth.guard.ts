@@ -14,14 +14,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
 
   const position = localStorage.getItem('position');
-  console.log('AuthGuard Activated:', position);
+  console.log('AuthGuard Activated:', position, typeof position);
 
-  if (!position) {
-    console.log('No position found, redirecting to login');
+  if (!position || position === 'null' || position === 'undefined') {
+    console.log('No valid position found, redirecting to login');
     router.navigate(['/login']);
     return of(false);
   }
-
   // Check if the user is trying to access the admin page
   if (route.routeConfig?.path?.startsWith('admin-page')) {
     if (position === 'hr') {

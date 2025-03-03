@@ -2,16 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../api.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { RippleModule } from 'primeng/ripple';
 @Component({
   selector: 'app-account',
-  imports: [CommonModule,ReactiveFormsModule ],
+  imports: [CommonModule,ReactiveFormsModule,ToastModule,ButtonModule,RippleModule],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.css'
+  styleUrl: './account.component.css',
+  providers: [MessageService]
 })
 export class AccountComponent implements OnInit{
 
-  constructor(private acc: ApiService,private fb: FormBuilder) {}
+  constructor(private acc: ApiService,private fb: FormBuilder,private messageService: MessageService) {}
     accountForm!: FormGroup;
     childrenForm!: FormGroup;
     userPic: any;
@@ -19,7 +23,16 @@ export class AccountComponent implements OnInit{
     id: any;
     accountData: any;
     
+    isEditing = false;
 
+    toggleEditMode(editMode: boolean) {
+      this.isEditing = editMode;
+    }
+    cancelChanges() {
+      // Your cancel logic here (e.g., reset form, hide edit mode)
+      this.toggleEditMode(false); // Disable edit mode
+    }
+    
     ngOnInit(): void {
         this.initializeForms();
         this.loadUserData();
@@ -36,7 +49,7 @@ export class AccountComponent implements OnInit{
             birthplace: [''],
             education: this.fb.array([]),
             spouse: [''],
-            spousedate: [''],
+            dateofmarriage: [''],
             employments: this.fb.array([])
         });
 
@@ -46,24 +59,30 @@ export class AccountComponent implements OnInit{
     }
 
     loadUserData(): void {
-        try {
-            const userString = localStorage.getItem('users');
-            const id = localStorage.getItem('user');
-
-            if (userString) {
-                this.user = JSON.parse(userString);
-            } else {
-                this.user = {};
-                console.warn('No user data found in localStorage.');
-            }
-
-            this.id = id;
-            this.userPic = this.user.img || 'default-profile.png';
-        } catch (error) {
-            console.error('Error parsing user data from localStorage:', error);
-            this.user = {};
-        }
-    }
+      try {
+          const userString = localStorage.getItem('users');
+  
+          if (userString) {
+              this.user = JSON.parse(userString);
+              
+              // Ensure image URL is properly set
+              if (this.user.img && !this.user.img.startsWith('http')) {
+                  this.user.img = `http://localhost:8000/assets/userPic/${this.user.img}`;
+              }
+          } else {
+              this.user = {};
+              console.warn('No user data found in localStorage.');
+          }
+  
+          this.userPic = this.user.img || 'default-profile.png';
+  
+      } catch (error) {
+          console.error('Error parsing user data from localStorage:', error);
+          this.user = {};
+          this.userPic = 'default-profile.png';
+      }
+  }
+  
 
     loadAccountDetails(): void {
         const id = localStorage.getItem('user');
@@ -90,7 +109,7 @@ export class AccountComponent implements OnInit{
             birthdate: this.accountData?.birthdate || '', // Use accountData.birthdate
             birthplace: this.accountData?.birthplace || '',// Use accountData.birthplace
             spouse: this.accountData?.spouse?.name || '',
-            spousedate: this.accountData?.spouse?.dateofmarriage || ''
+            dateofmarriage: this.accountData?.spouse?.dateofmarriage || ''
         });
 
         // Patch education
@@ -190,48 +209,52 @@ export class AccountComponent implements OnInit{
     }
 
   
-  onFileChange(event: any): void {
-    console.log('File change event:', event); // Log entire event
-    const file = event.target.files[0];
-    console.log('Selected file:', file); // Log selected file
-  
-    if (!file) {
-      console.error('No file selected.');
-      return;
-    }
-  
-    const user = JSON.parse(localStorage.getItem('users') || '{}');
+    onFileChange(event: any): void {
+      const file = event.target.files[0];
     
-    console.log('User from localStorage:', user);
-  
-    if (!user.id) {
-      console.error('User ID is missing in localStorage:', user);
-      return;
-    }
-  
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('id', user.id);
-  
-    console.log('FormData before upload:', formData);
-  
-    this.acc.uploadImage(formData).subscribe(response => {
-      console.log('Upload response:', response);
-      const newImageUrl = `http://localhost:8000/assets/userPic/${response['image_url'].split('/').pop()}`;
-  
-      this.userPic = newImageUrl;
-      user.img = newImageUrl;
-      localStorage.setItem('user', JSON.stringify(user));
-  
-      console.log('Updated user image:', newImageUrl);
-      console.log('Updated localStorage user:', JSON.parse(localStorage.getItem('users') || '{}'));
-  
-      this.acc.updateUserPic(newImageUrl);
-      console.log('User Picture URL:', this.userPic);
-    }, error => {
-      console.error('Error uploading image:', error);
-    });
+      if (!file) {
+          console.error('No file selected.');
+          return;
+      }
+    
+      const user = JSON.parse(localStorage.getItem('users') || '{}');
+    
+      if (!user.id) {
+          console.error('User ID is missing in localStorage:', user);
+          return;
+      }
+    
+      const formData = new FormData();
+      formData.append('image', file);
+    
+      // Include additional user information if needed
+      formData.append('id', user.id); // Use userid from parsed object
+    
+      // Log FormData for debugging
+      console.log('FormData before upload:', formData);
+    
+      // Proceed with image upload
+      this.acc.uploadImage(formData).subscribe(response => {
+          const newImageUrl = `http://localhost:8000/assets/userPic/${response['image_url'].split('/').pop()}`;
+          // Update localStorage or perform other actions as needed
+          console.log('Upload response:', response);
+          
+          // Update user's image URL in localStorage if necessary
+          user.img = newImageUrl; 
+          localStorage.setItem('users', JSON.stringify(user));
+          
+          console.log('Updated localStorage user:', JSON.parse(localStorage.getItem('users') || '{}'));
+          
+          // Additional logic to handle the updated profile picture
+          this.acc.updateUserPic(newImageUrl);
+          console.log('User Picture URL:', newImageUrl);
+          
+      }, error => {
+          console.error('Error uploading image:', error);
+      });
   }
+  
+  
   
   onSubmit(): void {
     if (this.accountForm.valid && this.childrenForm.valid) {
@@ -256,11 +279,14 @@ export class AccountComponent implements OnInit{
             (response) => {
                 console.log('Data saved successfully:', response);
                 localStorage.setItem('users', JSON.stringify(allData));
+                this.showBottomRight();
             },
             (error) => {
                 console.error('Error saving data:', error);
             }
         );
+        this.toggleEditMode(false);
+        
     } else {
         this.accountForm.markAllAsTouched();
         this.childrenForm.markAllAsTouched();
@@ -268,5 +294,7 @@ export class AccountComponent implements OnInit{
     }
 }
 
-  
+    showBottomRight() {
+        this.messageService.add({ severity: 'success', summary: 'Updated', detail: 'Account updated successfully', key: 'br', life: 3000 });
+    }
 }

@@ -24,6 +24,7 @@ export class MainPageComponent {
   menunavWidth:any;
   navSize:any;
   adminPic: string | null = null;
+  user: any = null;
 
   collapsed = signal(true)
 
@@ -39,7 +40,11 @@ export class MainPageComponent {
   }
 
   ngOnInit() {
-
+    const storedUser = localStorage.getItem('users');
+    if (storedUser) {
+      console.log('Stored user:', storedUser);
+      this.user = JSON.parse(storedUser);
+    }
     // Get the current window width
     this.onResize();
     // Set the initial width of the sidenav

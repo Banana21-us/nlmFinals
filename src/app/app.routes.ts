@@ -31,11 +31,12 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   {
     path: 'admin-page',
+    // canActivate: [authGuard], // Protect admin routes
     loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule),
   },
   {
     path: 'user-page',
-    canActivate: [authGuard], // Protect user routes
+    // canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/user/user.module').then(m => m.UserModule),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' }

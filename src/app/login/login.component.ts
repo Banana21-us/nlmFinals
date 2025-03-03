@@ -42,7 +42,18 @@ export class LoginComponent {
           localStorage.setItem('users', JSON.stringify(result.admin));
           localStorage.setItem('position', result.position);
           console.log('Token stored:', result.token);
-  
+
+          localStorage.setItem('admin_pic', result.admin.img);
+          console.log('Admin picture stored:', result.admin.img);
+
+          const user = result.admin;
+          if (user && user.img) {
+            if (!user.img.startsWith('http://localhost:8000')) {
+              user.img = `http://localhost:8000/assets/userPic/${user.img}`;
+            }
+          }
+          this.conn.updateUserPic(user.img);
+          console.log('Admin picture updated:', user.img);
           setTimeout(() => {
             const position = localStorage.getItem('position');
             console.log('Updated position:', position);
@@ -53,7 +64,10 @@ export class LoginComponent {
               this.router.navigate(['/user-page/dashboard']);
             }
           }, 300); // Slightly longer delay ensures updates before navigation
+          
         }
+
+        
       },
       (error) => {
         console.error('Login failed', error);
@@ -69,9 +83,9 @@ export class LoginComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '95vw',
+      width: '86vw',
       height: 'auto',
-      maxWidth: '95vw',
+      maxWidth: '86vw',
       maxHeight: 'auto',
       
     });

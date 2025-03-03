@@ -14,12 +14,15 @@ import { ViewComponent } from '../view/view.component';
 
 export interface Employee {
   id: number; // ✅ Added ID field
+  img: string;
+  nameWithImage: string;
   name: string;
   department: string;
   designation: string;
   phone_number: number;
   email: string;
   status: string;
+  reg_approval?: string | null; 
 }
 @Component({
   selector: 'app-list',
@@ -35,7 +38,7 @@ export class ListComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   readonly employeeService = inject(ApiService);
 
-  displayedColumns: string[] = ['name','department', 'phone_number','email','status', 'actions'];
+  displayedColumns: string[] = ['nameWithImage','department', 'phone_number','email','status', 'actions'];
   dataSource = new MatTableDataSource<Employee>([]);
 
   ngOnInit(): void {
@@ -44,8 +47,28 @@ export class ListComponent implements OnInit {
   getdata(){
     this.employeeService.getEmployees().subscribe(data => {
       this.dataSource.data = data;
+      console.log("hell",this.dataSource.data);
+      this.updateStatusOptions();
     });
   }
+  statusOptions: { id: number; status: string; color: string }[] = [];
+
+  updateStatusOptions() {
+    this.statusOptions = this.dataSource.data.map(emp => ({
+      id: emp.id,
+      status: emp.reg_approval ? 'ACTIVE' : 'PENDING',
+      color: emp.reg_approval ? 'green' : 'red'
+    }));
+  }
+
+    getStatusText(id: number): string {
+    return this.statusOptions.find(opt => opt.id === id)?.status || 'Pending';
+  }
+  
+  getStatusColor(id: number): string {
+    return this.statusOptions.find(opt => opt.id === id)?.color || 'red';
+  }
+  
   viewemployee(element: any): void {
     const dialogRef = this.dialog.open(ViewComponent, {
       width: '95vw',

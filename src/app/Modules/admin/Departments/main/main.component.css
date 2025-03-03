@@ -54,6 +54,42 @@ button:has(.active-link) {
 }
 
   
-  
+  /* General button styling */
+button {
+  width: 10%;
+  /* mat-fab; */
+}
+
+.navlink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hide text on small screens */
+@media (max-width: 768px) {
+  .navlink {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .navlink span {
+    display: none; /* Hide text */
+  }
+
+  .navlink i {
+    font-size: 1.5em; /* Increase icon size for better visibility */
+  }
+}
+
+/* Show text on larger screens */
+@media (min-width: 769px) {
+  .navlink span {
+    display: inline-block; /* Show text */
+    margin-left: 8px;
+  }
+}
+
   
   

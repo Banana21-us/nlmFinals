@@ -4,19 +4,14 @@
     font-family: 'Poppins', sans-serif;
 }
 .container {
-    width: 100%;
+    width: 100vw;
     border-radius: 6px;
     padding: 30px;
-    margin: 15px 15px;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    margin-left: auto;
-    margin-right: auto;
-    
-   
-    overflow: scroll; /* Allows scrolling */
-    
-    /* Webkit specific styles to hide the scrollbar */
+    max-height: 90vh; /* Adjustable height */
+    overflow-y: auto; /* Enable vertical scroll */
+    overflow-x: auto; /* Enable horizontal scroll if needed */
     -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
 }
 
@@ -167,9 +162,16 @@ form .buttons button , .backBtn{
     form .fields .input-field{
         width: calc(100% / 2 - 15px);
     }
+    .container {
+        max-height: 80vh; /* Reduce height for smaller screens */
+    }
 }
 @media (max-width: 550px) {
     form .fields .input-field{
         width: 100%;
     }
+    .container {
+        max-height: 80vh; /* Reduce height for smaller screens */
+    }
+    
 }
