@@ -18,9 +18,11 @@ export class ApiService {
     }
   }
 
-  private userPicSubject = new BehaviorSubject<string | null>(null); // Store user image URL
-  userPic$ = this.userPicSubject.asObservable();
+  // private userPicSubject = new BehaviorSubject<string | null>(null); // Store user image URL
+  // userPic$ = this.userPicSubject.asObservable();
 
+  private adminPicSubject = new BehaviorSubject<string | null>(null); // This will store the admin image URL
+  adminPic$ = this.adminPicSubject.asObservable();
 
   // constructor(private http: HttpClient) {}
   // token = localStorage.getItem('token');
@@ -40,7 +42,7 @@ export class ApiService {
   }
   
   updateUserPic(newImageUrl: string) {
-    this.userPicSubject.next(newImageUrl); // Emit new image URL
+    this.adminPicSubject.next(newImageUrl); // Emit new image URL
   }
 
   // emp
@@ -162,5 +164,14 @@ export class ApiService {
   }
   updatedetails(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-requests/userupdate/${id}`, data);
+  }
+  getLeaveRequests(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'leaverequests');
+  }
+  accept(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-reqs/${id}/approve`, null); // Pass null as the body since no data is needed
+  }
+  reject(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-reqs/${id}/reject`, null);
   }
 }

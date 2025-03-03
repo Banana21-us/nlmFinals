@@ -14,6 +14,8 @@ import { ViewComponent } from '../view/view.component';
 
 export interface Employee {
   id: number; // ✅ Added ID field
+  img: string;
+  nameWithImage: string;
   name: string;
   department: string;
   designation: string;
@@ -36,7 +38,7 @@ export class ListComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   readonly employeeService = inject(ApiService);
 
-  displayedColumns: string[] = ['name','department', 'phone_number','email','status', 'actions'];
+  displayedColumns: string[] = ['nameWithImage','department', 'phone_number','email','status', 'actions'];
   dataSource = new MatTableDataSource<Employee>([]);
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class ListComponent implements OnInit {
   getdata(){
     this.employeeService.getEmployees().subscribe(data => {
       this.dataSource.data = data;
+      console.log("hell",this.dataSource.data);
       this.updateStatusOptions();
     });
   }

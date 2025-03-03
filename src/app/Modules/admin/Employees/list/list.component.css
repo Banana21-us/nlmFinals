@@ -6,7 +6,17 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
-
+  .rounded-image {
+    border-radius: 50%; /* Makes the image rounded */
+    width: 50px; /* Sets the width */
+    height: 50px; /* Sets the height */
+    object-fit: cover; /* Ensures the image fits within the bounds */
+    margin-right: 10px; /* Adds space between the image and the name */
+    display: inline-block; /* Ensures the image is displayed inline */
+    vertical-align: middle; /* Aligns the image vertically with the text */
+  }
+  
+  
   h2 {
     font-size: 26px;
     margin: 20px 0;

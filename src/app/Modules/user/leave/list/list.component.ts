@@ -70,7 +70,7 @@ export class ListComponent implements OnInit{
         },
     });
 }
-
+  
     
   openDialog() {
       const dialogRef = this.dialog.open(CreateComponent, {
@@ -87,7 +87,7 @@ export class ListComponent implements OnInit{
         }
       });
     }
-
+    
     edits(element: any) {
       const dialogRef = this.dialog.open(UpdateComponent, {
         width: '90vw',
@@ -99,16 +99,20 @@ export class ListComponent implements OnInit{
     
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          
           this.messageService.add({ 
             severity: 'success', 
             summary: 'Success', 
             detail: 'Updated successfully',
             life: 3000
         });
-         
+      
         }
-      });
-      this.getdata();
+        this.getdata();
+      }
+      
+    );
+      
 
     }
     getdata() {

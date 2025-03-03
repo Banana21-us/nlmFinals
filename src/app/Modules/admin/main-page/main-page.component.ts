@@ -17,29 +17,39 @@ import { ApiService } from '../../../api.service';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css'
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
 
   adminPic: string | null = null;
+  user: any = null;
 
   collapsed = signal(true)
   sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
   menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
   constructor(private conn: ApiService, private router: Router) {}
 
-  ngOnInit() {
+  
+  ngOnInit(): void {
+    const storedUser = localStorage.getItem('users');
+    if (storedUser) {
+      console.log('Stored user:', storedUser);
+      this.user = JSON.parse(storedUser);
+    }
     // Subscribe to the adminPic$ observable to get the image URL
-    // this.conn.adminPic$.subscribe((newImageUrl) => {
-    //   if (newImageUrl) {
-    //     this.adminPic = newImageUrl; // Update the component's admin picture
-    //   }
-    // });
+    this.conn.adminPic$.subscribe((newImageUrl) => {
+      if (newImageUrl) {
+        
+        this.adminPic = newImageUrl; // Update the component's admin picture
+      }
+    });
+  
+    const user = JSON.parse(localStorage.getItem('admin_pic') || '{}');
+    if (user && user.img) {
+      this.adminPic = user.img;
+    }
 
-    // // Optionally, initialize with the image from localStorage
-    // const user = JSON.parse(localStorage.getItem('user') || '{}');
-    // if (user && user.admin_pic) {
-    //   this.adminPic = user.admin_pic;
-    // }
+    
   }
+  
 
   onLogout() {
     this.conn.logout().subscribe(
