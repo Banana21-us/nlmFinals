@@ -174,4 +174,16 @@ export class ApiService {
   reject(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-reqs/${id}/reject`, null);
   }
+
+  createEvent(eventData: any) {
+    return this.http.post(this.apiUrl + 'events', eventData);
+  }
+  getEvents(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}events`);
+  }
+  updateEvents(id: number, event: any) {
+    return this.http.put(`${this.apiUrl}events/${id}`, event);
+  }
+
+
 }

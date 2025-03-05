@@ -42,10 +42,10 @@ export class MainPageComponent implements OnInit {
       }
     });
   
-    const user = JSON.parse(localStorage.getItem('admin_pic') || '{}');
-    if (user && user.img) {
-      this.adminPic = user.img;
-    }
+    // const user = JSON.parse(localStorage.getItem('admin_pic') || '{}');
+    // if (user && user.img) {
+    //   this.adminPic = user.img;
+    // }
 
     
   }
@@ -59,6 +59,7 @@ export class MainPageComponent implements OnInit {
             localStorage.removeItem('users');
             localStorage.removeItem('user');
             localStorage.removeItem('position');
+            localStorage.removeItem('admin_pic');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {
