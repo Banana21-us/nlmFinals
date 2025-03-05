@@ -184,6 +184,8 @@ export class ApiService {
   updateEvents(id: number, event: any) {
     return this.http.put(`${this.apiUrl}events/${id}`, event);
   }
-
+  deleteEvents(id: number) {
+    return this.http.delete(`${this.apiUrl}events/${id}`);
+  }
 
 }

@@ -26,7 +26,7 @@
   <button mat-icon-button class="example-icon circle-btn ms-2" [matMenuTriggerFor]="profileMenu">
     <img [src]="adminPic ? adminPic: 'default-profile.png'" class="prof-image">
   </button>
-  <p class="text-white mt-3 ms-2" *ngIf="user">
+  <p class="text-white mt-3 ms-2 d-none d-md-block" *ngIf="user">
     {{user.name}} 
   </p>
 

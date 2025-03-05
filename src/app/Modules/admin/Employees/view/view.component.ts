@@ -44,7 +44,7 @@ export class ViewComponent implements OnInit{
 
   ngOnInit(): void {
     console.log('Employee reg_approval:', this.employee?.reg_approval);
-
+    
     const employeeId = this.data.empId;
     if (employeeId) {
       this.users.getEmployee(employeeId).subscribe(

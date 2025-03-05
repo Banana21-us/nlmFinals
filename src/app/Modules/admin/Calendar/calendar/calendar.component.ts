@@ -7,7 +7,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../../../../api.service';
-
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { RippleModule } from 'primeng/ripple';
 interface CalendarDay {
   date: Date;
   day: number;
@@ -29,12 +34,18 @@ interface CalendarDay {
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    ToastModule,ButtonModule,RippleModule
   ],
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
+  providers: [MessageService]
 })
 export class CalendarComponent implements OnInit {
-  constructor(private eventService: ApiService) { }
+  constructor(private eventService: ApiService, private messageService: MessageService) { }
   isDialogOpenupdate = false;
   isDialogOpen = false;
   title = '';
@@ -89,6 +100,28 @@ export class CalendarComponent implements OnInit {
     this.eventService.updateEvents(this.eventId, event).subscribe(response => {
       console.log("values",response);
       // Handle response here
+      this.messageService.add({ 
+        severity: 'success', 
+        summary: 'Success', 
+        detail: 'Updated successfully',
+        life: 3000
+    });
+      this.closeDialogupdate();
+      this.loadEvents(); // Reload events after updating
+      
+    }, error => {
+      console.error(error);
+      // Handle error here
+    });
+    
+  }
+  deleteEvents(){
+    console.log('Deleting event:', this.eventId);
+    this.eventService.deleteEvents(this.eventId).subscribe(response => {
+      console.log("values",response);
+      // Handle response here
+      this.closeDialogupdate();
+      this.loadEvents();
     }, error => {
       console.error(error);
       // Handle error here
