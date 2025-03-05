@@ -19,14 +19,33 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent implements OnInit {
 
+  getWidth: any;
+  sidenavWidth:any;
+  menunavWidth:any;
+  navSize:any;
+  // adminPic: string | null = null;
+  // user: any = null;
+
+  collapsed = signal(true)
+
   adminPic: string | null = null;
   user: any = null;
 
-  collapsed = signal(true)
-  sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
-  menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
+  // collapsed = signal(true)
+  // sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
+  // menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
+  // constructor(private conn: ApiService, private router: Router) {}
+
   constructor(private conn: ApiService, private router: Router) {}
 
+   onResize() {
+    this.getWidth = window.innerWidth
+    if (this.getWidth > 414) {
+      this.navSize = '250px';
+    } else {
+      this.navSize = '100%';
+    }
+  }
   
   ngOnInit(): void {
     const storedUser = localStorage.getItem('users');
@@ -46,6 +65,18 @@ export class MainPageComponent implements OnInit {
     // if (user && user.img) {
     //   this.adminPic = user.img;
     // }
+    // const storedUser = localStorage.getItem('users');
+    // if (storedUser) {
+    //   console.log('Stored user:', storedUser);
+    //   this.user = JSON.parse(storedUser);
+    // }
+    // Get the current window width
+    this.onResize();
+    // Set the initial width of the sidenav
+
+    this.sidenavWidth = computed(() => this.collapsed() ? '65px' : this.navSize);
+    this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
+    console.log(this.getWidth)
 
     
   }
