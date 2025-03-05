@@ -9,13 +9,12 @@ import { RouterModule } from '@angular/router';
 import { ApiService } from '../../../../api.service';
 
 interface CalendarDay {
-  id: number;
   date: Date;
   day: number;
   isCurrentMonth: boolean;
   isToday: boolean;
   isSelected: boolean;
-  events: { title: string; time: Date }[];
+  events: { id: number; title: string; time: Date }[];
 }
 
 @Component({
@@ -47,6 +46,7 @@ export class CalendarComponent implements OnInit {
   isCurrentMonth: boolean = false;
   date: Date = new Date();
   events: any[] = []; // Make sure events is initialized as an array
+  eventId = 0;
 
   ngOnInit(): void {
     this.generateCalendar();
@@ -60,7 +60,8 @@ export class CalendarComponent implements OnInit {
   openDialogupdate(event: any) {
     this.isDialogOpenupdate = true;
     this.title = event.title;
-    
+    this.eventId = event.id;
+    console.log('Event:', this.eventId,this.title); 
     // Convert Date object to the correct format
     if (event.time instanceof Date) {
       this.time = event.time.toISOString().slice(0, 16);
@@ -77,13 +78,16 @@ export class CalendarComponent implements OnInit {
     this.isDialogOpenupdate = false;
   }
   updateEvents() {
+    console.log('Updating event:', this.title, this.time,this.eventId);
+    // Ensure time is in the format 'YYYY-MM-DD HH:mm:ss'
     const event = {
+      id: this.eventId,
       title: this.title,
-      time: this.time // Ensure time is in the format 'YYYY-MM-DD HH:mm:ss'
+      time: new Date(this.time).toISOString().slice(0, 19).replace('T', ' ')
     };
 
-    this.eventService.updateEvents(this.id, event).subscribe(response => {
-      console.log(response);
+    this.eventService.updateEvents(this.eventId, event).subscribe(response => {
+      console.log("values",response);
       // Handle response here
     }, error => {
       console.error(error);
@@ -186,6 +190,7 @@ export class CalendarComponent implements OnInit {
     this.eventService.getEvents().subscribe(
       (events: any[]) => {
         this.events = events;
+        console.log('Events:', this.events);
         this.mapEventsToDays();
       },
       (error: any) => {
@@ -204,7 +209,7 @@ export class CalendarComponent implements OnInit {
           day.date.getMonth() === eventDate.getMonth() &&
           day.date.getDate() === eventDate.getDate()
         ) {
-          day.events.push({ title: event.title, time: eventDate });
+          day.events.push({ id: event.id, title: event.title, time: eventDate });
         }
       });
     });

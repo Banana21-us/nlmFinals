@@ -182,7 +182,7 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrl}events`);
   }
   updateEvents(id: number, event: any) {
-    return this.http.put(`${this.apiUrl}${id}`, event);
+    return this.http.put(`${this.apiUrl}events/${id}`, event);
   }
 
 
