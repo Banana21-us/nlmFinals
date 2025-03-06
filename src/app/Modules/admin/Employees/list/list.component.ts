@@ -71,10 +71,8 @@ export class ListComponent implements OnInit {
   
   viewemployee(element: any): void {
     const dialogRef = this.dialog.open(ViewComponent, {
-      width: '95vw',
-      height: '90vh',
-      maxWidth: '95vw',
-      maxHeight: '90vh', // Prevents it from being too tall
+      width: 'auto',
+      height: 'auto',// Prevents it from being too tall
       data: { empId: element.id }
        
     });

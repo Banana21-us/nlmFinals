@@ -184,7 +184,7 @@
           </div>
         </div>
         
-        <div class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden ">
+        <div class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden overflow-x-auto">
           <button *ngFor="let day of daysInMonth" type="button"
             class="flex flex-col px-3 py-2 hover:bg-gray-100 focus:z-10 min-h-[56px]" 
             [ngClass]="{
@@ -203,18 +203,16 @@
             }">{{ day.date | date: 'd' }}</time>
         
             <div *ngFor="let event of day.events" (click)="openDialogupdate(event)" 
-                 class="mt-1 p-1 text-xs bg-indigo-100 text-gray-900 rounded-md cursor-pointer w-full">
+           class="mt-1 p-1 text-xs bg-indigo-100 text-gray-900 rounded-md cursor-pointer w-full">
               <p class="truncate font-medium group-hover:text-indigo-600">
-                {{ event.title }}
+          {{ event.title }}
               </p>
               <time class="block text-gray-500">
-                {{ event.time | date: 'h:mma' }}
+          {{ event.time | date: 'h:mma' }}
               </time>
             </div>
           </button>
         </div>
-        
-        
       </div>
     </div>
   </div>

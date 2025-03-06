@@ -23,8 +23,6 @@
         </td>
       </ng-container>
       
-      
-    
       <!-- depart Column -->
   
       <ng-container matColumnDef="department">
@@ -53,12 +51,12 @@
      <!-- Actions Column -->
      <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
-        <i class="bi bi-eye" (click)="viewemployee(element)"></i>
-        <i class="bi bi-pencil ms-3" (click)="editemployee(element)"></i>
-        <i class="bi bi-trash3 ms-3" mat-button color="warn" (click)="deleteEmployee(element.id)"></i>
-        
+      <td mat-cell *matCellDef="let element" class="flex-column flex-sm-row">
+        <i class="bi bi-eye mb-3 mb-sm-0 " (click)="viewemployee(element)"></i>
+        <i class="bi bi-pencil ms-sm-3 mb-3 mb-sm-0 ms-2" (click)="editemployee(element)"></i>
+        <i class="bi bi-trash3 ms-sm-3 ms-2" mat-button color="warn" (click)="deleteEmployee(element.id)"></i>
       </td>
+      
     </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
