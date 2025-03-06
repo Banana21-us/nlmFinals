@@ -22,6 +22,8 @@ interface CalendarDay {
   events: { id: number; title: string; time: Date }[];
 }
 
+
+
 @Component({
   selector: 'app-calendar',
   standalone: true,
@@ -59,28 +61,32 @@ export class CalendarComponent implements OnInit {
   events: any[] = []; // Make sure events is initialized as an array
   eventId = 0;
 
+  loadEvents() {
+    const userId = Number(localStorage.getItem('user'));
+    this.loadEventsbyuser(userId);
+  }
+
   ngOnInit(): void {
     this.generateCalendar();
     this.loadEvents();
   }
-
   openDialog() {
     this.isDialogOpen = true;
+    this.title ="";
   }
-
-  openDialogupdate(event: any) {
+  openDialogupdate(event: any) { 
     this.isDialogOpenupdate = true;
     this.title = event.title;
     this.eventId = event.id;
-    console.log('Event:', this.eventId,this.title); 
-    // Convert Date object to the correct format
-    if (event.time instanceof Date) {
-      this.time = event.time.toISOString().slice(0, 16);
-    } else {
-      this.time = event.time; // Assuming it's already in the correct format
-    }
+    console.log('Event:', this.eventId, this.title); 
+
+    if (event.time) {
+      const eventTime = new Date(event.time); 
+      const localTime = new Date(eventTime.getTime() - eventTime.getTimezoneOffset() * 60000);
+      this.time = localTime.toISOString().slice(0, 16); // Format for datetime-local input
   }
-  
+}
+
 
   closeDialog() {
     this.isDialogOpen = false;
@@ -94,7 +100,8 @@ export class CalendarComponent implements OnInit {
     const event = {
       id: this.eventId,
       title: this.title,
-      time: new Date(this.time).toISOString().slice(0, 19).replace('T', ' ')
+      time: this.time,
+      // time:new Date(this.time).toISOString(), // Convert to ISO string
     };
 
     this.eventService.updateEvents(this.eventId, event).subscribe(response => {
@@ -219,18 +226,19 @@ export class CalendarComponent implements OnInit {
     this.mapEventsToDays(); // Call this after calendar is generated
   }
 
-  loadEvents() {
-    this.eventService.getEvents().subscribe(
-      (events: any[]) => {
-        this.events = events;
-        console.log('Events:', this.events);
-        this.mapEventsToDays();
-      },
-      (error: any) => {
-        console.error('Error loading events:', error);
-      }
-    );
-  }
+    loadEventsbyuser(userId: number) {
+      this.eventService.getEventsByUserId(userId).subscribe(
+        (events: any[]) => {
+          this.events = events;
+          console.log('Events by User ID:', this.events);
+          this.mapEventsToDays();
+        },
+        (error: any) => {
+          console.error('Error loading events by user ID:', error);
+        }
+      );
+    }
+
 
   mapEventsToDays() {
     this.daysInMonth.forEach(day => {

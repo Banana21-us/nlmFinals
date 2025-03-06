@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from '../../../../api.service';
 import { UpdateComponent } from '../update/update.component';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 // import Swal from 'sweetalert2'; 
 
 @Component({
@@ -32,12 +33,14 @@ export class ListComponent implements OnInit{
   announcements: any[] = [];
   filteredAnnouncements: any[] = []; // New filtered array
 
-  constructor(private router: Router, private ser: ApiService) {}
+  constructor(private router: Router, private ser: ApiService,private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.getdata();
   }
-
+  getSanitizedHtml(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
   getdata() {
     this.ser.getAnnouncements().subscribe(data => {
       this.announcements = data;

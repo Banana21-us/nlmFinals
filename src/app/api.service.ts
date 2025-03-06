@@ -178,8 +178,11 @@ export class ApiService {
   createEvent(eventData: any) {
     return this.http.post(this.apiUrl + 'events', eventData);
   }
-  getEvents(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}events`);
+  // getEvents(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}events`);
+  // }
+  getEventsByUserId(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}events/user/${userId}`);
   }
   updateEvents(id: number, event: any) {
     return this.http.put(`${this.apiUrl}events/${id}`, event);
