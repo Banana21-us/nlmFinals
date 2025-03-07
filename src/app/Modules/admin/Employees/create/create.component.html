@@ -53,7 +53,9 @@
                     <div class="mt-2">
                         <select formControlName="department" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
                             <option disabled selected>Select Department</option>
-                            <option *ngFor="let department of departments" [value]="department.name">{{ department.name }}</option>
+                            @for (department of departments; track $index) {
+                                <option [value]="department.name">{{ department.name }}</option>
+                                }    
                         </select>
                     </div>
                 </div>
@@ -62,7 +64,9 @@
                     <div class="mt-2">
                         <select formControlName="position" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
                             <option disabled selected>Select Position</option>
-                            <option *ngFor="let position of positions" [value]="position.name">{{ position.name }}</option>
+                            @for (position of positions; track $index) {
+                                <option [value]="position.name">{{ position.name }}</option>
+                                }                        
                         </select>
                     </div>
                 </div>
@@ -71,7 +75,9 @@
                     <div class="mt-2">
                         <select formControlName="designation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
                             <option disabled selected>Select Designation</option>
-                            <option *ngFor="let designation of designations" [value]="designation.name">{{ designation.name }}</option>
+                            @for (designation of designations; track $index) {
+                                <option [value]="designation.name">{{ designation.name }}</option>
+                                }                        
                         </select>
                     </div>
                 </div>
@@ -100,3 +106,25 @@
         </div>
     </form>
 </div>
+
+
+ <!-- <select formControlName="designation" class="form-control" required>
+                            <option disabled selected >Select Designation</option>
+                            @for (designation of designations; track $index) {
+                            <option [value]="designation.name">{{ designation.name }}</option>
+                            }
+                        </select>
+
+<select formControlName="position" class="form-control" required>
+                            <option disabled selected >Select Position</option>
+                            @for (position of positions; track $index) {
+                            <option [value]="position.name">{{ position.name }}</option>
+                            }
+                        </select>
+
+<select formControlName="position" class="form-control" required>
+                            <option disabled selected >Select Position</option>
+                            @for (position of positions; track $index) {
+                            <option [value]="position.name">{{ position.name }}</option>
+                            }
+                        </select> -->
