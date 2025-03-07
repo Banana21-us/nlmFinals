@@ -191,4 +191,17 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl}events/${id}`);
   }
 
+  // files
+  getFiles(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'requestfile');
+  }
+  createFile(data: any): Observable<any> {
+    return this.http.post(this.apiUrl + 'requestfile', data);
+  }
+  deleteFile(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}requestfile/${id}`);
+  }
+  updateFile(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}requestfile/${id}`, data);
+  }
 }

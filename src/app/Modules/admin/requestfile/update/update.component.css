@@ -1,0 +1,84 @@
+/* Styles for form and list */
+.announcement-form header{
+    position: relative;
+    font-size: 20px;
+    font-weight: 800;
+    color: #333;
+}
+.announcement-form header::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 3px;
+    width: 27px;
+    border-radius: 8px;
+    background-color: #4070f4;
+}
+
+.announcement-form,
+.announcement-list {
+    border-radius: 8px;
+    padding: 2rem;
+    flex: 1;
+}
+
+.announcement-form {
+    height: auto;
+    max-height: 80vh;
+}
+
+.announcement-list {
+    overflow-y: auto; /* Enable vertical scrolling */
+    
+}
+
+/* Form and button styles */
+.announcement-form h2,
+.announcement-list h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #003366;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #003d79;
+}
