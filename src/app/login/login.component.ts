@@ -60,7 +60,14 @@ export class LoginComponent {
   
             if (position === 'hr') {
               this.router.navigate(['/admin-page/dashboard']);
-            } else {
+            } 
+            else if (position === 'accounting') { // Redirect to accounting page
+              this.router.navigate(['/accounting-page/dashboard']);
+            }
+            else if (position === 'archives') { // Redirect to archives page
+              this.router.navigate(['/archives-page/dashboard']);
+            }
+            else {
               this.router.navigate(['/user-page/dashboard']);
             }
           }, 300); // Slightly longer delay ensures updates before navigation

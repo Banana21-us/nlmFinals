@@ -192,8 +192,14 @@ export class ApiService {
   }
 
   // files
+  // getFiles(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.apiUrl + 'requestfile');
+  // }
+  getrecordsByUserId(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}requestfile/records/${userId}`);
+  }
   getFiles(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + 'requestfile');
+    return this.http.get<any[]>(this.apiUrl + 'soarecords');
   }
   createFile(data: any): Observable<any> {
     return this.http.post(this.apiUrl + 'requestfile', data);
@@ -204,4 +210,9 @@ export class ApiService {
   updateFile(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}requestfile/${id}`, data);
   }
+
+  // archive
+  filerecords(): Observable<any> {
+    return this.http.get(this.apiUrl + 'filerecords');
+  } 
 }

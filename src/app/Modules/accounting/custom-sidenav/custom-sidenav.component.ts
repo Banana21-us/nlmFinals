@@ -79,54 +79,6 @@ export class CustomSidenavComponent {
       //   });
       // }
     }
-    menuItems = signal<MenuItem[]>([
-      {
-        icon: 'dashboard',
-        label: 'Dashboard',
-        route: 'dashboard'
-      },
-      {
-        icon: 'groups',
-        label: 'Employees',
-        route: 'Employee'
-      },
-      
-      {
-        icon: 'person',
-        label: 'Leave Request',
-        route: 'LeaveRequest'
-      },
-      {
-        icon: 'subject',
-        label: 'Departments',
-        route: 'Departments'
-      },
-      
-      {
-        icon: 'meeting_room',
-        label: 'Leave Management',
-        route: 'LeaveManagement'
-      },
-      
-      {
-        icon: 'announcement',
-        label: 'Announcement',
-        route: 'Announcement'
-      },
-      // {
-      //   icon: 'description',
-      //   label: 'Reports',
-      //   route: 'reports'
-      // },
-      {
-        icon: 'event',
-        label: 'Calendar',
-        route: 'calendar'
-      },
-      
-      
-    ]);
-
     updateMenuItems() {
       this.menuItems.set([
         {
@@ -134,32 +86,22 @@ export class CustomSidenavComponent {
           label: 'Dashboard',
           route: 'dashboard'
         },
-        {
-          icon: 'class',
-          label: 'Employees',
-          route: 'Employee'
-        },
-        {
-          icon: 'meeting_room',
-          label: 'Leave Management',
-          route: 'LeaveManagement'
-        },
         
         {
           icon: 'person',
-          label: 'Leave Request',
-          route: 'LeaveRequest'
+          label: 'Request Leave',
+          route: 'leave'
+        },
+        {
+          icon: 'description',
+          label: 'Reports',
+          route: 'rfile'
         },
         {
           icon: 'announcement',
           label: 'Announcement',
-          route: 'announcement'
+          route: 'Announcement'
         },
-        // {
-        //   icon: 'description',
-        //   label: 'Reports',
-        //   route: 'reports'
-        // },
         {
           icon: 'event',
           label: 'Calendar',
@@ -168,7 +110,35 @@ export class CustomSidenavComponent {
       ]);
 
     }
-  
+  menuItems = signal<MenuItem[]>([
+    {
+      icon: 'dashboard',
+      label: 'Dashboard',
+      route: 'dashboard'
+    },
+    
+    {
+      icon: 'meeting_room',
+      label: 'Request Leave',
+      route: 'leave'
+    },
+    {
+      icon: 'description',
+      label: 'Reports',
+      route: 'rfile'
+    },
+    {
+      icon: 'announcement',
+      label: 'Announcement',
+      route: 'Announcement'
+    },
+    {
+      icon: 'event',
+      label: 'Calendar',
+      route: 'calendar'
+    },
+    
+  ]);
 
   trackByFn(index: number, item: MenuItem) {
     return item.route; // or any unique identifier

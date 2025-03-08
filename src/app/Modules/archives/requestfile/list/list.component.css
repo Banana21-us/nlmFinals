@@ -89,15 +89,6 @@ i {
     color: #003d79;
   }
   
- 
-  .announcement-d {
-    margin: 0;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    max-width: 100px;
-    overflow: hidden; /* Hide content if it overflows */
-  }
-
   .announcement-p {
     margin: 0;
     line-height: 1.6;
@@ -106,7 +97,6 @@ i {
     word-wrap: break-word; /* Break long strings */
     overflow: hidden; /* Hide content if it overflows */
   }
-  
   
   .delete {
     background: linear-gradient(135deg, #ff6b6b, #c21807);
@@ -157,7 +147,11 @@ i {
     }
   }
   
-  
+  .announcement-p {
+    margin: 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
   
   @media (max-width: 480px) {
     .table-container {

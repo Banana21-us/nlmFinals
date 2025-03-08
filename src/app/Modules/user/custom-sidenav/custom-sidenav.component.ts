@@ -93,6 +93,11 @@ export class CustomSidenavComponent {
           route: 'leave'
         },
         {
+          icon: 'description',
+          label: 'Reports',
+          route: 'rfile'
+        },
+        {
           icon: 'announcement',
           label: 'Announcement',
           route: 'ann'
@@ -117,7 +122,11 @@ export class CustomSidenavComponent {
       label: 'Request Leave',
       route: 'leave'
     },
-    
+    {
+      icon: 'description',
+      label: 'Reports',
+      route: 'rfile'
+    },
     {
       icon: 'announcement',
       label: 'Announcement',
