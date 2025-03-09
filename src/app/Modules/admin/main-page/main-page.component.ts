@@ -18,11 +18,14 @@ import { ApiService } from '../../../api.service';
   styleUrl: './main-page.component.css'
 })
 export class MainPageComponent implements OnInit {
-
+  notifications: any[] = [];
+  notificationCount: number = 0;
+  userId: number = 1;
   getWidth: any;
   sidenavWidth:any;
   menunavWidth:any;
   navSize:any;
+  private intervalId: any;
   // adminPic: string | null = null;
   // user: any = null;
 
@@ -78,9 +81,34 @@ export class MainPageComponent implements OnInit {
     this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
     console.log(this.getWidth)
 
+    this.loadNotifications();
+    this.loadNotificationCount();
+
+    this.intervalId = setInterval(() => {
+      this.loadNotifications();
+      this.loadNotificationCount()
+    }, 10000)
     
   }
-  
+  loadNotifications() {
+    this.conn.getNotifications().subscribe((data: any) => {
+      this.notifications = data;
+      console.log('notif',this.notifications);
+    });
+  }
+  del(id: number) {
+    this.conn.markAsdelete(id).subscribe(() => {
+      this.loadNotifications(); // Refresh list
+      // this.router.navigate(['/admin-page/Employee/list']);
+    });
+  }
+  loadNotificationCount() {
+    this.conn.getNotificationCount(4).subscribe(data => {
+      this.notificationCount = data.count;
+      console.log('notif count',this.notificationCount);
+      
+    });
+  }
 
   onLogout() {
     this.conn.logout().subscribe(

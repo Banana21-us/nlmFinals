@@ -40,3 +40,47 @@ mat-sidenav, mat-sidenav-content {
   border-radius: 50%;
   object-fit: cover;
 }
+
+
+.notification-menu {
+  min-width: 300px;
+  max-width: 400px;
+  padding: 10px 0;
+  background-color: #f0f8ff; /* Light blue background */
+  border-radius: 6px;
+}
+
+.notification-list {
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid #d0e0f0;
+  background-color: #e8f4ff; /* Light blue for each item */
+  transition: background 0.3s ease;
+}
+
+.notification-item:hover {
+  background-color: #d6ebff; /* Slightly darker blue on hover */
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-message {
+  font-weight: 500;
+  color: #0056b3;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.notification-date {
+  font-size: 0.85rem;
+  color: #666;
+}

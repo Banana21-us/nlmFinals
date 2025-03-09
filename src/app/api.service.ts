@@ -215,4 +215,19 @@ export class ApiService {
   filerecords(): Observable<any> {
     return this.http.get(this.apiUrl + 'filerecords');
   } 
+
+
+  // notif 
+  getNotifications(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}notifications`);
+  }
+  markAsRead(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}notifications/${id}/read`, { is_read: true });
+  }
+  markAsdelete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}notifications/${id}`);
+  }
+  getNotificationCount(userId: number): Observable<{ count: number }> {
+    return this.http.get<{ count: number }>(`${this.apiUrl}notifications/unread-count/${userId}`);
+  }
 }
