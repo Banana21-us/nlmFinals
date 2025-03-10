@@ -10,6 +10,7 @@ import { EmployeeRoutes } from './Employees/employee.routes';
 import { LeaveManagementRoutes } from './LeaveManagement/leavemanagement.routes';
 import { LeaveRequest } from './LeaveRequest/leaverequest.routes';
 import { CalendarComponent } from './Calendar/calendar/calendar.component';
+import { requestfile } from '../user/requestfile/list/requestfile.routes';
 
 // 🛠 Admin Module Routes
 const routes: Routes = [
@@ -22,6 +23,9 @@ const routes: Routes = [
             { path: 'account',component: AccountComponent 
             },
             { path: 'calendar',component: CalendarComponent
+            },
+            { path: 'rfile', 
+              loadChildren: () => import('../user/requestfile/list/requestfile.routes').then(r => requestfile),
             },
             { path: 'Employee', 
               loadChildren: () => import('./Employees/employee.routes').then(r => EmployeeRoutes),

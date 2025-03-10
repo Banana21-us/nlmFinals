@@ -1,6 +1,6 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { RouterModule,Router} from '@angular/router';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -18,6 +18,7 @@ import { ApiService } from '../../../api.service';
   styleUrl: './main-page.component.css'
 })
 export class MainPageComponent implements OnInit {
+ 
   notifications: any[] = [];
   notificationCount: number = 0;
   userId: number = 1;
@@ -84,11 +85,29 @@ export class MainPageComponent implements OnInit {
     this.loadNotifications();
     this.loadNotificationCount();
 
-    this.intervalId = setInterval(() => {
-      this.loadNotifications();
-      this.loadNotificationCount()
-    }, 10000)
+    // this.intervalId = setInterval(() => {
+    //   this.loadNotifications();
+    //   this.loadNotificationCount()
+    // }, 10000)
     
+  }
+  
+  getRelativeTime(dateString: string): string {
+    const now = new Date();
+    const createdAt = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - createdAt.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    } else if (diffInSeconds < 3600) {
+      return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    } else if (diffInSeconds < 86400) {
+      return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    } else if (diffInSeconds < 30 * 86400) {
+      return `${Math.floor(diffInSeconds / 86400)} days ago`;
+    } else {
+      return createdAt.toLocaleDateString(); // Fallback to normal date
+    }
   }
   loadNotifications() {
     this.conn.getNotifications().subscribe((data: any) => {

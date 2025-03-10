@@ -22,11 +22,12 @@ export class AccountComponent implements OnInit{
     user: any;
     id: any;
     accountData: any;
-    
+    accountDetails: any;
     isEditing = false;
-
+    Editing = true;
     toggleEditMode(editMode: boolean) {
       this.isEditing = editMode;
+      this.Editing = !editMode;
     }
     cancelChanges() {
       // Your cancel logic here (e.g., reset form, hide edit mode)
