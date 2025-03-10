@@ -102,11 +102,11 @@ export class CustomSidenavComponent {
           label: 'Announcement',
           route: 'Announcement'
         },
-        {
-          icon: 'event',
-          label: 'Calendar',
-          route: 'calendar'
-        },
+        // {
+        //   icon: 'event',
+        //   label: 'Calendar',
+        //   route: 'calendar'
+        // },
       ]);
 
     }
@@ -132,11 +132,11 @@ export class CustomSidenavComponent {
       label: 'Announcement',
       route: 'Announcement'
     },
-    {
-      icon: 'event',
-      label: 'Calendar',
-      route: 'calendar'
-    },
+    // {
+    //   icon: 'event',
+    //   label: 'Calendar',
+    //   route: 'calendar'
+    // },
     
   ]);
 

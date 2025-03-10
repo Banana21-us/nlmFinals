@@ -19,6 +19,8 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
+  notifications: any[] = [];
+  notificationCount: number = 0;
   getWidth: any;
   sidenavWidth:any;
   menunavWidth:any;
@@ -65,7 +67,35 @@ export class MainPageComponent {
     //   this.adminPic = user.admin_pic;
     // }
   }
+  getRelativeTime(dateString: string): string {
+    const now = new Date();
+    const createdAt = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - createdAt.getTime()) / 1000);
 
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    } else if (diffInSeconds < 3600) {
+      return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    } else if (diffInSeconds < 86400) {
+      return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    } else if (diffInSeconds < 30 * 86400) {
+      return `${Math.floor(diffInSeconds / 86400)} days ago`;
+    } else {
+      return createdAt.toLocaleDateString(); // Fallback to normal date
+    }
+  }
+  loadNotifications() {
+    this.conn.getNotifications().subscribe((data: any) => {
+      this.notifications = data;
+      console.log('notif',this.notifications);
+    });
+  }
+  del(id: number) {
+    this.conn.markAsdelete(id).subscribe(() => {
+      this.loadNotifications(); // Refresh list
+      // this.router.navigate(['/admin-page/Employee/list']);
+    });
+  }
   onLogout() {
     this.conn.logout().subscribe(
         (response) => {

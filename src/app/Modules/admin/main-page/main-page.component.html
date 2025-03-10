@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z3">
+<mat-toolbar class="mat-elevation-z3" >
     <button mat-icon-button (click)="collapsed.set(!collapsed())">
         <mat-icon>menu</mat-icon>
     </button>
@@ -59,11 +59,11 @@
 
   <!-- Angular Material Menu -->
   <mat-menu #profileMenu="matMenu"
-    class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 my-2">
+    class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 my-2" >
     <!-- User Info -->
     <div class="px-4 py-3 text-sm text-black dark:text-white border-b border-gray-200 dark:border-gray-700"
-      *ngIf="user">
-      <div class="font-medium">{{ user.name }}</div>
+      *ngIf="user" >
+      <div class="font-medium" >{{ user.name }}</div>
       <div class="truncate">{{ user.email }}</div>
     </div>
 

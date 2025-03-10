@@ -1,8 +1,12 @@
-mat-toolbar{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+mat-toolbar {
   position: relative;
   z-index: 5;
   background-color: #001F3F;
+  
 }
+
 
 mat-icon{
   color: white;
