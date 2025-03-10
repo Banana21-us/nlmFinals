@@ -17,7 +17,7 @@
 <div class="card mb-4 bg-c-green order-card">
   <div class="card-body">
     <i class="fa fa-calendar card-icon"></i>
-    <!-- <h2 class="text-right"><span>Leave Type</span></h2> -->
+    <h2 class="text-right"><span>{{ eventsToday }}</span></h2>
     <P class="m-b-0 text-right ms-1">My Calendar</P>
   </div>
 </div>
@@ -30,7 +30,7 @@
           <!-- (click)="Modal(seniorHighTotal)" -->
         <div class="card-body">
           <i class="fa fa-sign-out card-icon"></i>
-          <!-- <h2 class="text-right"><span>interpulation</span></h2> -->
+          <h2 class="text-right"><span>{{ pending }}</span></h2>
           <p class="m-b-0 text-right ms-1">My Leave Request</p>
         </div>
       </div>
@@ -41,7 +41,7 @@
   <div class="card mb-4 bg-c-orange order-card">
     <div class="card-body">
       <i class="fa fa-check-circle-o card-icon"></i>
-      <!-- <h2 class="text-right"><span>interpulation</span></h2> -->
+      <h2 class="text-right"><span>{{ approved }}</span></h2>
       <p class="m-b-0 text-right ms-1">Approve Request</p>
     </div>
   </div>
@@ -53,7 +53,7 @@
     <div class="card mb-4 bg-c-blue order-card">
       <div class="card-body">
         <i class="fa fa-ban card-icon"></i>
-        <!-- <h2 class="text-right"><span>interpulation</span></h2> -->
+        <h2 class="text-right"><span>{{ rejected }}</span></h2>
         <p class="m-b-0 text-right ms-1">Reject Request</p>
       </div>
     </div>

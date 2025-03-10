@@ -1,0 +1,45 @@
+body {
+    font-family: 'Lato', sans-serif;
+  }
+  
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .rounded-image {
+    border-radius: 50%; /* Makes the image rounded */
+    width: 50px; /* Sets the width */
+    height: 50px; /* Sets the height */
+    object-fit: cover; /* Ensures the image fits within the bounds */
+    margin-right: 10px; /* Adds space between the image and the name */
+    display: inline-block; /* Ensures the image is displayed inline */
+    vertical-align: middle; /* Aligns the image vertically with the text */
+  }
+ 
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    padding: 20px 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Adds shadow */
+  }
+  th{
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  mat-form-field {
+    display: flex;
+    margin-left: auto; /* Pushes it to the right */
+  }
+  i{
+    cursor: pointer;
+  }
+  
+
+
+  
+  
+  

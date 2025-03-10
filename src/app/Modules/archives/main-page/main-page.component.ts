@@ -18,7 +18,10 @@ import { ApiService } from '../../../api.service';
   styleUrl: './main-page.component.css'
 })
 export class MainPageComponent {
-  notifications: any[] = [];
+  notifications: any = {
+    user_requests: [],
+    announcements: []
+  };
   notificationCount: number = 0;
   getWidth: any;
   sidenavWidth:any;
@@ -83,10 +86,15 @@ export class MainPageComponent {
       return createdAt.toLocaleDateString(); // Fallback to normal date
     }
   }
-  loadNotifications() {
-    this.conn.getNotifications().subscribe((data: any) => {
+  loadNotifications(): void {
+    const userId = Number(localStorage.getItem('userId'));
+    
+    if (!userId || isNaN(userId)) {
+        console.error('Invalid user ID');
+        return;
+    }
+    this.conn.getNotifications(userId).subscribe((data: any) => { 
       this.notifications = data;
-      console.log('notif',this.notifications);
     });
   }
   del(id: number) {

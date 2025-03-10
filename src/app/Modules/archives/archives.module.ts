@@ -8,6 +8,7 @@ import { CalendarComponent } from '../admin/Calendar/calendar/calendar.component
 import { annRoutes } from '../user/announcement/announcement.route';
 import { userLeaveRequest } from '../user/leave/leave.route';
 import { requestfile } from './requestfile/requestfile.routes';
+import { EmployeeRoutes } from './Employees/employee.routes';
 
 // 👤 archives Module Routes
 
@@ -22,6 +23,9 @@ const routes: Routes = [
             { path: 'account',component: AccountComponent 
             },
             { path: 'calendar',component: CalendarComponent 
+            },
+            { path: 'emplist', 
+              loadChildren: () => import('./Employees/employee.routes').then(r => EmployeeRoutes),
             },
             { path: 'Announcement', 
               loadChildren: () => import('../user/announcement/announcement.route').then(r => annRoutes),

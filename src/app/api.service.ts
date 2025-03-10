@@ -174,6 +174,13 @@ export class ApiService {
   reject(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-reqs/${id}/reject`, null);
   }
+  // countleavedash(userId: string): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}leave-count/${userId}`);
+  // }
+  countleavedash(userId: string): Observable<{ pending: number, approved: number, rejected: number, events_today: number }> {
+    return this.http.get<{ pending: number, approved: number, rejected: number, events_today: number }>(`${this.apiUrl}leave-count/${userId}`);
+  }
+  
 
   createEvent(eventData: any) {
     return this.http.post(this.apiUrl + 'events', eventData);
@@ -218,9 +225,12 @@ export class ApiService {
 
 
   // notif 
-  getNotifications(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}notifications`);
-  }
+  // getNotifications(): Observable<any> {
+  //   return this.http.get<any>(`${this.apiUrl}notifications`);
+  // }
+  getNotifications(userId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}notifications/${userId}`);
+}
   markAsRead(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}notifications/${id}/read`, { is_read: true });
   }

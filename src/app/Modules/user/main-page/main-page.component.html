@@ -22,28 +22,26 @@
   <mat-menu #notificationsMenu="matMenu" xPosition="before" class="notification-menu" >
     
     <div class="notification-list">
-      <div *ngIf="notifications && notifications.length > 0; else noNotifications">
+      <div *ngIf="notifications.length > 0; else noNotifications">
         <div *ngFor="let notification of notifications" class="notification-item">
-          <div class="notification-content" *ngIf="!notification.is_read" 
-            (click)="del(notification.id)">
+          <div class="notification-content" *ngIf="!notification.is_read" (click)="del(notification.id)">
             <p class="notification-message">
               {{ notification.message }} <br>
               <span class="mt-2" style="font-size: 0.85rem; color: #666;">                
                 {{ getRelativeTime(notification.created_at) }}
               </span>
             </p> 
-            
-            
           </div>
         </div>
       </div>
-      
+    
       <!-- This will be displayed if there are no unread notifications -->
       <ng-template #noNotifications>
         <p class="no-notifications-message">No new notifications</p>
       </ng-template>
-      
     </div>
+    
+    
   </mat-menu>
   
   

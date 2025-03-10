@@ -19,7 +19,11 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
-  notifications: any[] = [];
+  notifications: any = {
+    user_requests: [],
+    announcements: []
+  };
+  
   notificationCount: number = 0;
   getWidth: any;
   sidenavWidth:any;
@@ -66,6 +70,7 @@ export class MainPageComponent {
     // if (user && user.admin_pic) {
     //   this.adminPic = user.admin_pic;
     // }
+    this.loadNotifications();
   }
   getRelativeTime(dateString: string): string {
     const now = new Date();
@@ -84,12 +89,30 @@ export class MainPageComponent {
       return createdAt.toLocaleDateString(); // Fallback to normal date
     }
   }
-  loadNotifications() {
-    this.conn.getNotifications().subscribe((data: any) => {
-      this.notifications = data;
-      console.log('notif',this.notifications);
+
+  loadNotifications(): void {
+    const userId = Number(localStorage.getItem('user'));
+  
+    if (!userId || isNaN(userId)) {
+      console.error('Invalid user ID');
+      return;
+    }
+  
+    this.conn.getNotifications(userId).subscribe((data: any) => {
+      console.log('Raw response:', data);
+      this.notifications = [...data.user_requests, ...data.announcements]; // Merge both arrays
+      console.log('Merged notifications:', this.notifications);
+    }, (error) => {
+      console.error('Error fetching notifications:', error);
     });
   }
+  
+  
+
+
+  
+  
+
   del(id: number) {
     this.conn.markAsdelete(id).subscribe(() => {
       this.loadNotifications(); // Refresh list

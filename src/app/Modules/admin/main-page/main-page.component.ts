@@ -19,7 +19,11 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent implements OnInit {
  
-  notifications: any[] = [];
+  notifications: any = {
+    user_requests: [],
+    announcements: []
+  };
+
   notificationCount: number = 0;
   userId: number = 1;
   getWidth: any;
@@ -109,12 +113,18 @@ export class MainPageComponent implements OnInit {
       return createdAt.toLocaleDateString(); // Fallback to normal date
     }
   }
-  loadNotifications() {
-    this.conn.getNotifications().subscribe((data: any) => {
+  loadNotifications(): void {
+    const userId = Number(localStorage.getItem('userId'));
+    
+    if (!userId || isNaN(userId)) {
+        console.error('Invalid user ID');
+        return;
+    }
+    this.conn.getNotifications(userId).subscribe((data: any) => { 
       this.notifications = data;
-      console.log('notif',this.notifications);
     });
   }
+  
   del(id: number) {
     this.conn.markAsdelete(id).subscribe(() => {
       this.loadNotifications(); // Refresh list

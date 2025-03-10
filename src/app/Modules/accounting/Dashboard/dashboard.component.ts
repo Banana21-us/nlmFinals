@@ -29,6 +29,10 @@ import { ApiService } from '../../../api.service';
 })
 export class DashboardComponent implements OnInit {
   
+  pending = 0;
+  approved = 0;
+  rejected = 0;
+  eventsToday = 0;  
 
   appl: number = 0;
   appr: number = 0;
@@ -44,6 +48,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCounts();
+    this.countleavedash();
   }
 
   fetchCounts() {
@@ -58,7 +63,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
+  countleavedash(){
+    const userId = localStorage.getItem('user') ?? '';
+    
+    if (userId) {
+      this.dashboard.countleavedash(userId).subscribe(response => {
+        this.pending = response.pending;
+        this.approved = response.approved;
+        this.rejected = response.rejected;
+        this.eventsToday = response.events_today;
+      }, error => {
+        console.error('Error fetching dashboard data:', error);
+      });
+    } else {
+      console.error('User ID is null or undefined!');
+    }
+  }
 
 
 
