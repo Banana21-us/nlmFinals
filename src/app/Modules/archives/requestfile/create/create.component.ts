@@ -2,14 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatError } from '@angular/material/form-field';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../../../../api.service';
 @Component({
   selector: 'app-create',
-  imports: [CommonModule, ReactiveFormsModule,EditorModule,MatError],
+  imports: [CommonModule, ReactiveFormsModule,EditorModule,],
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })
@@ -32,7 +31,7 @@ export class CreateComponent implements OnInit {
   isLoading: boolean = false; 
   reqform = new FormGroup({
     userid: new FormControl(''),
-    description: new FormControl(''),
+    description: new FormControl('Service Records'),
     file: new FormControl(''),
   });
 

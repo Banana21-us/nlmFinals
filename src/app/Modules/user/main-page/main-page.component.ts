@@ -21,7 +21,9 @@ export class MainPageComponent {
 
   notifications: any = {
     user_requests: [],
-    announcements: []
+    announcements: [],
+    statementofaccouunt: [],
+    servicerecords:[]
   };
   
   notificationCount: number = 0;
@@ -100,7 +102,7 @@ export class MainPageComponent {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-      this.notifications = [...data.user_requests, ...data.announcements]; // Merge both arrays
+      this.notifications = [...data.user_requests, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords]; // Merge both arrays
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
