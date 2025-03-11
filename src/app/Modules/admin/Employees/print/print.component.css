@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    width: 800px;
+    margin: auto;
+}
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.header-left {
+    position: relative;
+}
+
+.header-left img.logo {
+    position: absolute;
+    top: -5px; /* Adjust this to move the logo upward */
+    left: 0;
+    width: 100px;
+    height: auto;
+}
+
+.header-right {
+    position: relative;
+    top: 15px; /* Adjust this to move the text downward */
+}
+
+.header h2, .header h3, .header p {
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+.section h3 {
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+}
+.details, .education, .employment {
+    width: 100%;
+    border-collapse: collapse;
+}
+.details td, .education td, .employment td {
+    padding: 5px;
+    border: 1px solid #000;
+}
+.details th, .education th, .employment th {
+    background-color: #f4f4f4;
+}
+@media print {
+    body {
+        font-size: 12px;
+    }
+    .btn-info {
+        display: none;
+    }
+}
