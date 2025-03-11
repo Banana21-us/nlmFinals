@@ -1,0 +1,226 @@
+<div class="container rounded-4 mt-3" id="print-container">
+  <div class="main-content">
+    <div class="header pb-8 pt-lg-8 d-flex align-items-center"
+    [ngStyle]="{
+      'min-height': '600px',  
+      'border-top-left-radius': '15px',
+      'border-top-right-radius': '15px',
+      'background-image': 'url(http://localhost:8000/assets/userPic/' + employee.employee.img + ')',
+      'background-size': 'cover',
+      'background-position': 'center top'
+    }">
+
+
+      <span class="mask bg-gradient-default opacity-4" style="border-top-left-radius: 15px;
+      border-top-right-radius: 15px;"></span>
+      <div class="container-fluid d-flex align-items-center ">
+        <div class="row">
+          <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white" style="width: 1000px;">{{ employee.employee.name }}</h1>
+            <p class="text-white mt-0 mb-5" style="width: 500px;">{{ employee.employee.department }} | {{ employee.employee.position }}
+              | {{ employee.employee.designation }}</p>
+            <p class="text-white mt-0 mb-5" style="width: 500px;">
+              <strong>Email:</strong> {{ employee.employee.email }} <br>
+              <strong>Contact:</strong> {{ employee.employee.phone_number }}
+            </p>
+
+            <a class="btn btn-info" (click)="printSection('print-container')">Print</a>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7 ">
+      <div class="row">
+
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0" *ngIf="employee.employee.status !== 'Single'">
+          <div class="card card-profile shadow bg-secondary ">
+
+            <div class="card-header bg-white border-0">
+              <div class="row ">
+                <div class="col-8">
+                  <h3 class="mb-0">Family Details</h3>
+                </div>
+              </div>
+            </div>
+            <!-- family det -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stat d-flex">
+                    @for (sp of employee.spouse; track $index) {
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-username">Spouse</label>
+                          <h3>{{ sp.name }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-email" style="width: 160px;">Date of
+                            Marraige</label>
+                          <h3> <h3>{{ sp.dateofmarriage }}</h3></h3>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  </div>
+                </div>
+              </div>
+              <div class="card-profile-stat">
+                @for (efam of employee.employfamily; track $index) {
+
+                <div class="row">
+                  <h6 class="heading-small text-muted mb-4">Children</h6>
+                  <div class="col-lg-4">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="input-username">Name</label>
+                      <h3>{{ efam.children }}</h3>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-email">Career</label>
+                      <h3>{{ efam.career }}</h3>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-email">Date of Birth</label>
+                      <h3>{{ efam.dateofbirth }}</h3>
+                    </div>
+                  </div>
+
+                </div>
+              }
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-xl order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">View Account</h3>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <h6 class="heading-small text-muted mb-4">Personal information</h6>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-username">Name</label>
+                        <h3>{{ employee.employee.name }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Contact</label>
+                        <h3>{{ employee.employee.phone_number }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Email address</label>
+                        <h3>{{ employee.employee.email }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-first-name">Address</label>
+                        <h3>{{ employee.employee.address }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Birth Date</label>
+                        <h3>{{ employee.employee.birthdate | date: 'MMMM d, y'}}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Birth Place</label>
+                        <h3>{{ employee.employee.birthplace }}</h3>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Education information</h6>
+                <div class="pl-lg-4">
+                  @for (edu  of employee.education; track $index) {
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Level</label>
+                        <h3>{{ edu.levels }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Date</label>
+                        <h3>{{ edu.year }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">Date</label>
+                        <h3>{{ edu.school }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">Graduate School</label>
+                        <h3>{{ edu.degree }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                }
+                </div>
+                <!-- employment -->
+                <h6 class="heading-small text-muted mb-4">Employment information</h6>
+                <div class="pl-lg-4">
+                  @for (emp of employee.employment; track $index) {
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Position</label>
+                        <h3>{{ emp.position }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Date</label>
+                        <h3>{{ emp.organization }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">Organization</label>
+                        <h3>{{ emp.dateofemp }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                }
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

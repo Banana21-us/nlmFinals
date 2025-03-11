@@ -11,6 +11,14 @@ import { ApiService } from '../../../../api.service';
 import { CommonModule } from '@angular/common';
 import { UpdateComponent } from '../update/update.component';
 import { ViewComponent } from '../view/view.component';
+import { MessageService, ConfirmationService } from 'primeng/api';
+
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+// import { ApiService } from '../../../../api.service';
+// import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 export interface Employee {
   id: number; // ✅ Added ID field
@@ -27,16 +35,18 @@ export interface Employee {
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,ToastModule,ButtonModule,RippleModule,ConfirmDialog],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService,ConfirmationService]
 })
 
 
 export class ListComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   readonly employeeService = inject(ApiService);
+  constructor(private messageService: MessageService,private api: ApiService, private confirmationService: ConfirmationService) {}
 
   displayedColumns: string[] = ['nameWithImage','department', 'phone_number','email','status', 'actions'];
   dataSource = new MatTableDataSource<Employee>([]);
@@ -72,9 +82,9 @@ export class ListComponent implements OnInit {
   viewemployee(element: any): void {
     const dialogRef = this.dialog.open(ViewComponent, {
       width: '95vw',
-      height: '90vh',
+      height: '85vh',
       maxWidth: '95vw',
-      maxHeight: '90vh', // Prevents it from being too tall
+      maxHeight: '85vh',// Prevents it from being too tall
       data: { empId: element.id }
        
     });
@@ -117,9 +127,35 @@ export class ListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteEmployee(id: number): void {
-      this.employeeService.deleteEmployee(id).subscribe(() => {
-        this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
-      });
-  }
+  // deleteEmployee(id: number): void {
+  //     this.employeeService.deleteEmployee(id).subscribe(() => {
+  //       this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+  //     });
+  // }
+  confirm(id: number) {
+    this.confirmationService.confirm({ 
+        header: 'Are you sure?',
+        message: 'Please confirm to proceed.',
+        accept: () => {
+            this.employeeService.deleteEmployee(id).subscribe(() => {
+              this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Success', 
+                    detail: 'Deleted successfully',
+                    life: 3000
+                });
+                this.getdata(); // Refresh the list after deletion
+            });
+        },
+        reject: () => {
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Cancel', 
+                detail: 'Deletion has been canceled' 
+            });
+        },
+    });
 }
+}
+

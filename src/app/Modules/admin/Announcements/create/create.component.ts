@@ -53,15 +53,18 @@ export class CreateComponent {
       'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
     ],
     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | insertfile',
-    file_picker_types: 'file',
+    file_picker_types: 'file image',
     file_picker_callback: this.filePickerCallback.bind(this) // Reference function
   };
-  
 
   filePickerCallback(callback: any, value: any, meta: any) {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('accept', '.pdf,.doc,.docx');
+    if (meta.filetype === 'image') {
+      input.setAttribute('accept', 'image/*');
+    } else {
+      input.setAttribute('accept', '.pdf,.doc,.docx');
+    }
 
     input.onchange = async (e: any) => {
       const file = e.target.files[0];

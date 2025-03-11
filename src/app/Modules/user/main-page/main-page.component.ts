@@ -19,6 +19,14 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
+  notifications: any = {
+    user_requests: [],
+    announcements: [],
+    statementofaccouunt: [],
+    servicerecords:[]
+  };
+  
+  notificationCount: number = 0;
   getWidth: any;
   sidenavWidth:any;
   menunavWidth:any;
@@ -64,8 +72,55 @@ export class MainPageComponent {
     // if (user && user.admin_pic) {
     //   this.adminPic = user.admin_pic;
     // }
+    this.loadNotifications();
+  }
+  getRelativeTime(dateString: string): string {
+    const now = new Date();
+    const createdAt = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - createdAt.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    } else if (diffInSeconds < 3600) {
+      return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    } else if (diffInSeconds < 86400) {
+      return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    } else if (diffInSeconds < 30 * 86400) {
+      return `${Math.floor(diffInSeconds / 86400)} days ago`;
+    } else {
+      return createdAt.toLocaleDateString(); // Fallback to normal date
+    }
   }
 
+  loadNotifications(): void {
+    const userId = Number(localStorage.getItem('user'));
+  
+    if (!userId || isNaN(userId)) {
+      console.error('Invalid user ID');
+      return;
+    }
+  
+    this.conn.getNotifications(userId).subscribe((data: any) => {
+      console.log('Raw response:', data);
+      this.notifications = [...data.user_requests, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords]; // Merge both arrays
+      console.log('Merged notifications:', this.notifications);
+    }, (error) => {
+      console.error('Error fetching notifications:', error);
+    });
+  }
+  
+  
+
+
+  
+  
+
+  del(id: number) {
+    this.conn.markAsdelete(id).subscribe(() => {
+      this.loadNotifications(); // Refresh list
+      // this.router.navigate(['/admin-page/Employee/list']);
+    });
+  }
   onLogout() {
     this.conn.logout().subscribe(
         (response) => {

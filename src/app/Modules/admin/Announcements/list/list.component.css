@@ -93,6 +93,9 @@ h2 {
   margin: 0;
   line-height: 1.6;
   white-space: pre-wrap;
+  max-width: 100%;
+  word-wrap: break-word; /* Break long strings */
+  overflow: hidden; /* Hide content if it overflows */
 }
 
 .delete {

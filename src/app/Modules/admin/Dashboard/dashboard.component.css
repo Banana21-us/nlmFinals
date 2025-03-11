@@ -15,6 +15,8 @@
   max-width: 100%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   gap: 20px;
+    justify-content: space-between; /* Ensures proper spacing */
+    flex-wrap: wrap; 
   
 }
 
@@ -62,17 +64,21 @@
   display: flex;
   gap: 15px;
   width: 100%;
+  padding-left: 2rem;
+  justify-content: flex-end; /* Adjust alignment */
 }
+
 
 .col {
   flex: 1;
 }
 
 .card {
+  
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border: none;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   transition: all 0.3s ease-in-out;
   width: 100%;
 }
@@ -109,6 +115,7 @@
   transition: transform 0.3s;
   height: 90px;
   display: flex;
+  max-width: 100%;
   align-items: center;
   padding: 15px;
 }

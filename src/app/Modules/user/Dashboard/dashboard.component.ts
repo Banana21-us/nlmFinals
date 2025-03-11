@@ -37,6 +37,11 @@ export class DashboardComponent implements OnInit {
   emp: number = 0;
   ann: number = 0;
 
+  pending = 0;
+  approved = 0;
+  rejected = 0;
+  eventsToday = 0;  
+  
   currentDate: Date = new Date();
   activeSection: string = 'dashboard'; 
 
@@ -44,6 +49,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCounts();
+    this.countleavedash();
   }
 
   fetchCounts() {
@@ -56,6 +62,22 @@ export class DashboardComponent implements OnInit {
         console.error('Error fetching counts', error);
       }
     });
+  }
+  countleavedash(){
+    const userId = localStorage.getItem('user') ?? '';
+    
+    if (userId) {
+      this.dashboard.countleavedash(userId).subscribe(response => {
+        this.pending = response.pending;
+        this.approved = response.approved;
+        this.rejected = response.rejected;
+        this.eventsToday = response.events_today;
+      }, error => {
+        console.error('Error fetching dashboard data:', error);
+      });
+    } else {
+      console.error('User ID is null or undefined!');
+    }
   }
 
 

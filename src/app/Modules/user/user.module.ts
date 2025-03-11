@@ -7,6 +7,8 @@ import { AccountComponent } from '../admin/Account/account.component'; // Reusin
 
 import { annRoutes } from './announcement/announcement.route';
 import { userLeaveRequest } from './leave/leave.route';
+import { CalendarComponent } from '../admin/Calendar/calendar/calendar.component';
+import { requestfile } from './requestfile/list/requestfile.routes';
 
 // 👤 User Module Routes
 
@@ -19,6 +21,11 @@ const routes: Routes = [
       { path: 'dashboard',component: DashboardComponent 
             },
             { path: 'account',component: AccountComponent 
+            },
+            { path: 'calendar',component: CalendarComponent 
+            },
+            { path: 'rfile', 
+              loadChildren: () => import('./requestfile/list/requestfile.routes').then(r => requestfile),
             },
             { path: 'leave', 
               loadChildren: () => import('./leave/leave.route').then(r => userLeaveRequest),
