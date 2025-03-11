@@ -16,7 +16,7 @@
       <div class="container-fluid d-flex align-items-center ">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white" style="width: 1000px;">{{ employee.employee.name }}</h1>
+            <h1 class="display-2 text-white" style="width: 1000px;">{{ employee?.name }}</h1>
             <p class="text-white mt-0 mb-5" style="width: 500px;">{{ employee.employee.department }} | {{ employee.employee.position }}
               | {{ employee.employee.designation }}</p>
             <p class="text-white mt-0 mb-5" style="width: 500px;">
@@ -24,12 +24,8 @@
               <strong>Contact:</strong> {{ employee.employee.phone_number }}
             </p>
 
-            <a class="btn btn-info" (click)="printemployee(employee)">Print</a>
-
-            <!-- (click)="printSection('print-container')" -->
+            <a class="btn btn-info" (click)="printemployee()">Print</a>
             <a class="btn btn-info" *ngIf="employee.employee.reg_approval == null" (click)="acceptemployee(employee)">Approve</a>
-
-
           </div>
         </div>
       </div>
