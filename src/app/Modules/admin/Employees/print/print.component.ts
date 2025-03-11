@@ -157,7 +157,7 @@ export class PrintComponent implements OnInit {
           </table>
             </div>
       
-            <div class="section" ${this.employee.employee.status !== 'Single' ? '' : 'style="display:none;"'}>
+            <div class="section" ${this.data.employee.employee.status !== 'Single' ? '' : 'style="display:none;"'}>
           <h3>Family Details</h3>
           <table class="details">
             <tr><td>Name of Spouse:</td><td>${this.employee.spouse.name}</td></tr>

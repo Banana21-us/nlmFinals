@@ -1,4 +1,5 @@
 <body>
+    <a class="btn btn-info ms-3 mt-3"(click)="printSection('print-container')">Print</a>
     <div class="container" id="print-container">
         <div class="header">
             <div class="header-left">
@@ -23,7 +24,32 @@
             </table>
         </div>
 
-        <div class="section" *ngIf="employee.employee.status !== 'Single'">
+        <div class="section">
+            <h3>Education</h3>
+            <table class="education">
+                <tr><th>Level</th><th>Year</th><th>School</th><th>Degree</th></tr>
+                <tr >
+                    <td>{{ data.employee.education[0].levels }}</td>
+                    <td>{{ data.employee.education[0].year }}</td>
+                    <td>{{ data.employee.education[0].school }}</td>
+                    <td>{{ data.employee.education[0].degree }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>Employment</h3>
+            <table class="employment">
+                <tr><th>Position</th><th>Date</th><th>Organization/Institution</th></tr>
+                <tr >
+                    <td>{{ data.employee.employment[0].position }}</td>
+                    <td>{{ data.employee.employment[0].dateofemp }}</td>
+                    <td>{{ data.employee.employment[0].organization }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section" *ngIf="data.employee.employee.status !== 'Single'">
             <h3>Family Details</h3>
             <table class="details">
                 <tr><td>Name of Spouse:</td><td>{{ employee.spouse[0]?.name }}</td></tr>
@@ -34,38 +60,13 @@
             <h4>Children</h4>
             <table class="details">
                 <tr><th>Name</th><th>Date of Birth</th><th>Career</th></tr>
-                <tr *ngFor="let efam of employee.employfamily">
-                    <td>{{ efam.children }}</td>
-                    <td>{{ efam.dateofbirth }}</td>
-                    <td>{{ efam.career }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <h3>Education</h3>
-            <table class="education">
-                <tr><th>Level</th><th>Year</th><th>School</th><th>Degree</th></tr>
-                <tr *ngFor="let edu of employee.education">
-                    <td>{{ edu.levels }}</td>
-                    <td>{{ edu.year }}</td>
-                    <td>{{ edu.school }}</td>
-                    <td>{{ edu.degree }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <h3>Employment</h3>
-            <table class="employment">
-                <tr><th>Position</th><th>Date</th><th>Organization/Institution</th></tr>
-                <tr *ngFor="let emp of employee.employment">
-                    <td>{{ emp.position }}</td>
-                    <td>{{ emp.dateofemp }}</td>
-                    <td>{{ emp.organization }}</td>
+                <tr >
+                    <td>{{ data.employee.employfamily[0].levels }}</td>
+                    <td>{{ data.employee.employfamily[0].levels }}</td>
+                    <td>{{ data.employee.employfamily[0].levels }}</td>
                 </tr>
             </table>
         </div>
     </div>
-    <a class="btn btn-info" (click)="printSection('print-container')">Print</a>
+    
 </body>
