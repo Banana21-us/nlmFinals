@@ -21,7 +21,7 @@ export class MainPageComponent implements OnInit {
  
   notifications: any = {
     user_requests: [],
-    announcements: [],
+    // announcements: [],
     statementofaccouunt: [],
     servicerecords:[],
     leavereq: [],
@@ -126,7 +126,7 @@ export class MainPageComponent implements OnInit {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-      this.notifications = [...data.user_requests, ...data.leavereq, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords, ]; // Merge both arrays
+      this.notifications = [...data.user_requests, ...data.leavereq, ...data.statementofaccouunt, ...data.servicerecords, ]; // Merge both arrays
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);

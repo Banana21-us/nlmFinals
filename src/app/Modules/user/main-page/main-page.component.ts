@@ -24,7 +24,7 @@ export class MainPageComponent {
       announcements: [],
       statementofaccouunt: [],
       servicerecords:[],
-      leavereq: [],
+      leaveapproval: []
     };
   
   notificationCount: number = 0;
@@ -103,12 +103,38 @@ export class MainPageComponent {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-      this.notifications = [...data.user_requests, ...data.leavereq, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords, ]; // Merge both arrays
-      console.log('Merged notifications:', this.notifications);
+  
+      // Define a proper type for notifications
+      interface Notification {
+        id: number;
+        userid: number;
+        message: string;
+        type: string;
+        is_read: boolean;
+        created_at: string;
+        updated_at: string;
+      }
+  
+      // Merge all notification types
+      this.notifications = [
+        ...data.user_requests,
+        ...data.announcements,
+        ...data.statementofaccouunt,
+        ...data.servicerecords,
+        ...data.leaveapproval
+      ] as Notification[]; // Cast to Notification[]
+  
+      // Sort notifications by created_at (descending order)
+      this.notifications.sort((a: Notification, b: Notification) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+  
+      console.log('Sorted notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
     });
   }
+  
   
   
 
