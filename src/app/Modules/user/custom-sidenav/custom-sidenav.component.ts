@@ -92,11 +92,21 @@ export class CustomSidenavComponent {
           label: 'Request Leave',
           route: 'leave'
         },
+        // {
+        //   icon: 'description',
+        //   label: 'Reports',
+        //   route: 'rfile'
+        // },
         {
           icon: 'announcement',
           label: 'Announcement',
           route: 'ann'
         },
+        // {
+        //   icon: 'event',
+        //   label: 'Calendar',
+        //   route: 'calendar'
+        // },
       ]);
 
     }
@@ -112,12 +122,21 @@ export class CustomSidenavComponent {
       label: 'Request Leave',
       route: 'leave'
     },
-    
+    // {
+    //   icon: 'description',
+    //   label: 'Reports',
+    //   route: 'rfile'
+    // },
     {
       icon: 'announcement',
       label: 'Announcement',
       route: 'ann'
     },
+    // {
+    //   icon: 'event',
+    //   label: 'Calendar',
+    //   route: 'calendar'
+    // },
     
   ]);
 

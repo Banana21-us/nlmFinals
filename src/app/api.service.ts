@@ -174,4 +174,60 @@ export class ApiService {
   reject(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-reqs/${id}/reject`, null);
   }
+
+  createEvent(eventData: any) {
+    return this.http.post(this.apiUrl + 'events', eventData);
+  }
+  // getEvents(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}events`);
+  // }
+  getEventsByUserId(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}events/user/${userId}`);
+  }
+  updateEvents(id: number, event: any) {
+    return this.http.put(`${this.apiUrl}events/${id}`, event);
+  }
+  deleteEvents(id: number) {
+    return this.http.delete(`${this.apiUrl}events/${id}`);
+  }
+
+  // files
+  // getFiles(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.apiUrl + 'requestfile');
+  // }
+  getrecordsByUserId(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}requestfile/records/${userId}`);
+  }
+  getFiles(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'soarecords');
+  }
+  createFile(data: any): Observable<any> {
+    return this.http.post(this.apiUrl + 'requestfile', data);
+  }
+  deleteFile(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}requestfile/${id}`);
+  }
+  updateFile(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}requestfile/${id}`, data);
+  }
+
+  // archive
+  filerecords(): Observable<any> {
+    return this.http.get(this.apiUrl + 'filerecords');
+  } 
+
+
+  // notif 
+  getNotifications(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}notifications`);
+  }
+  markAsRead(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}notifications/${id}/read`, { is_read: true });
+  }
+  markAsdelete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}notifications/${id}`);
+  }
+  getNotificationCount(userId: number): Observable<{ count: number }> {
+    return this.http.get<{ count: number }>(`${this.apiUrl}notifications/unread-count/${userId}`);
+  }
 }

@@ -84,8 +84,9 @@ export class UpdateComponent implements OnInit{
       this.messageService.add({ 
         severity: 'warn', 
         summary: 'Invalid', 
-        detail: 'New Password must be at least 8 characters long' 
-    });
+        detail: 'Provide password to save changes \n New Password must be at least 8 characters long',
+        life: 5000
+      });
     }
   }
   

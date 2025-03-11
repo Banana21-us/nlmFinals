@@ -1,0 +1,29 @@
+<section class="announcement-form">
+    <header>Statement of Account: {{data.name}}</header>
+
+    <form class="mt-3" [formGroup]="reqform" (ngSubmit)="postannouncement()" id="reqForm">
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input type="text" id="description" formControlName="description" name="description" required>
+          @if (reqform.get('description')?.invalid && reqform.get('description')?.touched) {
+              <mat-error class="text-danger">Description Field is required.</mat-error>
+          }
+      </div>
+        <input type="text" formControlName="userid" name="userid" hidden>
+        <div class="form-group">
+          <label for="announcement">File:</label>
+          <editor
+            id="announcement"
+            name="announcement"
+            apiKey="pvzhrqp0z0j938n50tduwjbic2v0krqxkj91yk2b98jsrtq5"
+            [init]="editorConfig"
+            [(ngModel)]="editorContent"
+            formControlName="file"
+          ></editor>
+        </div>
+        <button class="mb-4" type="submit">
+           Post
+        </button>
+    </form>
+    
+</section>

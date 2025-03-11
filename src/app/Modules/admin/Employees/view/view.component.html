@@ -1,9 +1,17 @@
 <div class="container rounded-4 mt-3" id="print-container">
   <div class="main-content">
     <div class="header pb-8 pt-lg-8 d-flex align-items-center"
-      style="min-height:  600px; border-top-left-radius: 15px;
-      border-top-right-radius: 15px; background-image: url(assets/dio.JPG); background-size: cover; background-position: center top;">
-      <span class="mask bg-gradient-default opacity-8" style="border-top-left-radius: 15px;
+    [ngStyle]="{
+      'min-height': '600px',  
+      'border-top-left-radius': '15px',
+      'border-top-right-radius': '15px',
+      'background-image': 'url(http://localhost:8000/assets/userPic/' + employee.employee.img + ')',
+      'background-size': 'cover',
+      'background-position': 'center top'
+    }">
+
+
+      <span class="mask bg-gradient-default opacity-4" style="border-top-left-radius: 15px;
       border-top-right-radius: 15px;"></span>
       <div class="container-fluid d-flex align-items-center ">
         <div class="row">
@@ -16,7 +24,9 @@
               <strong>Contact:</strong> {{ employee.employee.phone_number }}
             </p>
 
-            <a class="btn btn-info" (click)="printSection('print-container')">Print</a>
+            <a class="btn btn-info" (click)="printemployee(employee)">Print</a>
+
+            <!-- (click)="printSection('print-container')" -->
             <a class="btn btn-info" *ngIf="employee.employee.reg_approval == null" (click)="acceptemployee(employee)">Approve</a>
 
 

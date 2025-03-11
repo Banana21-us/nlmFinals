@@ -1,8 +1,12 @@
-mat-toolbar{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+mat-toolbar {
   position: relative;
   z-index: 5;
   background-color: #001F3F;
+  
 }
+
 
 mat-icon{
   color: white;
@@ -40,3 +44,58 @@ mat-sidenav, mat-sidenav-content {
   border-radius: 50%;
   object-fit: cover;
 }
+
+.notification-menu {
+  min-width: 300px;
+  max-width: 400px;
+  background-color: #f0f8ff;
+  border-radius: 6px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.notification-list {
+  overflow-y: auto;
+  border-radius: 8px;
+  margin-top: -10px;
+}
+
+
+
+.notification-item {
+  border-bottom: 1px solid #d0e0f0;
+  background-color: #e8f4ff; /* Light blue for each item */
+  transition: background 0.3s ease;
+}
+::ng-deep .cdk-overlay-pane {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+::ng-deep .mat-menu-panel {
+  min-height: auto !important;
+}
+::ng-deep .mat-menu-panel {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  max-height: none !important;
+}
+
+
+
+.notification-item:hover {
+  background-color: #d6ebff; /* Slightly darker blue on hover */
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-message {
+  font-weight: 500;
+  color: #0056b3;
+  cursor: pointer;
+  padding: 1.2rem;
+}
+

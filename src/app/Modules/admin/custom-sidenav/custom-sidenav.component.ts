@@ -36,7 +36,7 @@ export class CustomSidenavComponent {
   unreadMessagesCount: any = 0;
   
   constructor() {}
-
+  
   ngOnInit(): void {
     // this.uid = localStorage.getItem('admin_id')
     this.loadUserData();
@@ -113,46 +113,66 @@ export class CustomSidenavComponent {
         label: 'Announcement',
         route: 'Announcement'
       },
+      // {
+      //   icon: 'description',
+      //   label: 'Reports',
+      //   route: 'reports'
+      // },
+      // {
+      //   icon: 'event',
+      //   label: 'Calendar',
+      //   route: 'calendar'
+      // },
       
       
     ]);
 
-    updateMenuItems() {
-      this.menuItems.set([
-        {
-          icon: 'dashboard',
-          label: 'Dashboard',
-          route: 'dashboard'
-        },
-        {
-          icon: 'class',
-          label: 'Employees',
-          route: 'Employee'
-        },
-        {
-          icon: 'meeting_room',
-          label: 'Leave Management',
-          route: 'LeaveManagement'
-        },
+    // updateMenuItems() {
+    //   this.menuItems.set([
+    //     {
+    //       icon: 'dashboard',
+    //       label: 'Dashboard',
+    //       route: 'dashboard'
+    //     },
+    //     {
+    //       icon: 'class',
+    //       label: 'Employees',
+    //       route: 'Employee'
+    //     },
+    //     {
+    //       icon: 'meeting_room',
+    //       label: 'Leave Management',
+    //       route: 'LeaveManagement'
+    //     },
         
-        {
-          icon: 'person',
-          label: 'Leave Request',
-          route: 'LeaveRequest'
-        },
-        {
-          icon: 'announcement',
-          label: 'Announcement',
-          route: 'announcement'
-        },
-      ]);
+    //     {
+    //       icon: 'person',
+    //       label: 'Leave Request',
+    //       route: 'LeaveRequest'
+    //     },
+    //     {
+    //       icon: 'announcement',
+    //       label: 'Announcement',
+    //       route: 'announcement'
+    //     },
+    //     // {
+    //     //   icon: 'description',
+    //     //   label: 'Reports',
+    //     //   route: 'reports'
+    //     // },
+    //     {
+    //       icon: 'event',
+    //       label: 'Calendar',
+    //       route: 'calendar'
+    //     },
+    //   ]);
 
-    }
+    // }
   
 
   trackByFn(index: number, item: MenuItem) {
     return item.route; // or any unique identifier
   }
-
+  
   profilePicSize = computed( ()=> this.sideNavCollapsed() ? '50' : '100');
 }
