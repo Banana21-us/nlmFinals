@@ -24,7 +24,9 @@
               <strong>Contact:</strong> {{ employee.employee.phone_number }}
             </p>
 
-            <a class="btn btn-info" (click)="printSection('print-container')">Print</a>
+            <a class="btn btn-info" (click)="printemployee(employee)">Print</a>
+
+            <!-- (click)="printSection('print-container')" -->
             <a class="btn btn-info" *ngIf="employee.employee.reg_approval == null" (click)="acceptemployee(employee)">Approve</a>
 
 
