@@ -9,6 +9,7 @@ import { departmentsRoutes } from './Departments/dapartmets.routes';
 import { EmployeeRoutes } from './Employees/employee.routes';
 import { LeaveManagementRoutes } from './LeaveManagement/leavemanagement.routes';
 import { LeaveRequest } from './LeaveRequest/leaverequest.routes';
+import { CalendarComponent } from './Calendar/calendar/calendar.component';
 
 // 🛠 Admin Module Routes
 const routes: Routes = [
@@ -19,6 +20,8 @@ const routes: Routes = [
       { path: 'dashboard',component: DashboardComponent 
             },
             { path: 'account',component: AccountComponent 
+            },
+            { path: 'calendar',component: CalendarComponent
             },
             { path: 'Employee', 
               loadChildren: () => import('./Employees/employee.routes').then(r => EmployeeRoutes),

@@ -16,8 +16,10 @@
       <ng-container matColumnDef="nameWithImage">
         <th mat-header-cell *matHeaderCellDef> Employee Name </th>
         <td mat-cell *matCellDef="let element">
-          <img [src]="'http://localhost:8000/assets/userPic/' + element.img" alt="{{element.name}}" width="50" height="50" class="rounded-image">
-          {{element.name}}
+          <div class="d-flex align-items-center">
+            <img [src]="'http://localhost:8000/assets/userPic/' + element.img" alt="{{element.name}}" width="50" height="50" class="rounded-image me-2">
+            <span>{{element.name}}</span>
+          </div>
         </td>
       </ng-container>
       
