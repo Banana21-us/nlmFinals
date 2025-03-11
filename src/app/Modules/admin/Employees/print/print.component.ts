@@ -160,21 +160,18 @@ export class PrintComponent implements OnInit {
             <div class="section" ${this.data.employee.employee.status !== 'Single' ? '' : 'style="display:none;"'}>
           <h3>Family Details</h3>
           <table class="details">
-            <tr><td>Name of Spouse:</td><td>${this.employee.spouse.name}</td></tr>
-            <tr><td>Date of Marriage:</td><td>${this.employee.spouse.marriage_date}</td></tr>
-            <tr><td>Mother's Maiden Name:</td><td>${this.employee.employee.mother_maiden_name}</td></tr>
+            <tr><td>Name of Spouse:</td><td>${this.data.employee.spouse[0]?.name}</td></tr>
+            <tr><td>Date of Marriage:</td><td>${this.data.employee.spouse[0]?.dateofmarriage}</td></tr>
           </table>
       
           <h4>Children</h4>
           <table class="details">
             <tr><th>Name</th><th>Date of Birth</th><th>Career</th></tr>
-            ${this.employee.employfamily.map((efam: { name: string; birthdate: string; career: string; }) => `
               <tr>
-            <td>${efam.name}</td>
-            <td>${efam.birthdate}</td>
-            <td>${efam.career}</td>
+            <td>${this.data.employee.employfamily[0]?.name} </td>
+            <td>${this.data.employee.employfamily[0]?.birthdate} </td>
+            <td>${this.data.employee.employfamily[0]?.career} </td>
               </tr>
-            `).join('')}
           </table>
             </div>
       
@@ -182,14 +179,13 @@ export class PrintComponent implements OnInit {
           <h3>Education</h3>
           <table class="education">
             <tr><th>Level</th><th>Year</th><th>School</th><th>Degree</th></tr>
-            ${this.employee.education.map((edu: { level: string; year: string; school: string; degree: string; }) => `
+        
               <tr>
-            <td>${edu.level}</td>
-            <td>${edu.year}</td>
-            <td>${edu.school}</td>
-            <td>${edu.degree}</td>
+            <td>${this.data.employee.education[0]?.levels}</td>
+            <td>${this.data.employee.education[0]?.year}</td>
+            <td>${this.data.employee.education[0]?.school}</td>
+            <td>${this.data.employee.education[0]?.degree}</td>
               </tr>
-            `).join('')}
           </table>
             </div>
       
@@ -197,13 +193,11 @@ export class PrintComponent implements OnInit {
           <h3>Employment</h3>
           <table class="employment">
             <tr><th>Position</th><th>Date</th><th>Organization/Institution</th></tr>
-            ${this.employee.employment.map((emp: { position: string; date: string; organization: string; }) => `
               <tr>
-            <td>${emp.position}</td>
-            <td>${emp.date}</td>
-            <td>${emp.organization}</td>
+            <td>${this.data.employee.employment[0]?.position}</td>
+            <td>${this.data.employee.employment[0]?.dateofemp}</td>
+            <td>${this.data.employee.employment[0]?.organization}</td>
               </tr>
-            `).join('')}
           </table>
             </div>
           </div>

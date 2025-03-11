@@ -20,11 +20,12 @@ import { ApiService } from '../../../api.service';
 export class MainPageComponent {
 
   notifications: any = {
-    user_requests: [],
-    announcements: [],
-    statementofaccouunt: [],
-    servicerecords:[]
-  };
+      user_requests: [],
+      announcements: [],
+      statementofaccouunt: [],
+      servicerecords:[],
+      leavereq: [],
+    };
   
   notificationCount: number = 0;
   getWidth: any;
@@ -102,7 +103,7 @@ export class MainPageComponent {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-      this.notifications = [...data.user_requests, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords]; // Merge both arrays
+      this.notifications = [...data.user_requests, ...data.leavereq, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords, ]; // Merge both arrays
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);

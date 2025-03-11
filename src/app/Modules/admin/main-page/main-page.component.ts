@@ -21,7 +21,10 @@ export class MainPageComponent implements OnInit {
  
   notifications: any = {
     user_requests: [],
-    announcements: []
+    announcements: [],
+    statementofaccouunt: [],
+    servicerecords:[],
+    leavereq: [],
   };
 
   notificationCount: number = 0;
@@ -114,17 +117,21 @@ export class MainPageComponent implements OnInit {
     }
   }
   loadNotifications(): void {
-    const userId = Number(localStorage.getItem('userId'));
-    
+    const userId = Number(localStorage.getItem('user'));
+  
     if (!userId || isNaN(userId)) {
-        console.error('Invalid user ID');
-        return;
+      console.error('Invalid user ID');
+      return;
     }
-    this.conn.getNotifications(userId).subscribe((data: any) => { 
-      this.notifications = data;
+  
+    this.conn.getNotifications(userId).subscribe((data: any) => {
+      console.log('Raw response:', data);
+      this.notifications = [...data.user_requests, ...data.leavereq, ...data.announcements, ...data.statementofaccouunt, ...data.servicerecords, ]; // Merge both arrays
+      console.log('Merged notifications:', this.notifications);
+    }, (error) => {
+      console.error('Error fetching notifications:', error);
     });
   }
-  
   del(id: number) {
     this.conn.markAsdelete(id).subscribe(() => {
       this.loadNotifications(); // Refresh list
