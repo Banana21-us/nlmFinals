@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../api.service';
 import { ButtonModule } from 'primeng/button';
+
 export interface LeaveRequest {
   id: number;
   name: string;
@@ -21,7 +22,7 @@ export interface LeaveRequest {
 
 @Component({
   selector: 'app-list',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule,ButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
