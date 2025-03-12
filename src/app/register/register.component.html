@@ -1,13 +1,16 @@
 <div class="py-10 px-10">
     <header class="text-2xl font-semibold mb-6">Registration</header>
     <form [formGroup]="userform" (ngSubmit)="registers()">
+        <div class="toast-container" >
+            <p-toast position="top-right" class="ms-3"></p-toast>
+        </div>
         <div class="border-b border-gray-900/10 pb-12">
             <h2 class="text-base font-semibold text-gray-900">Personal Details</h2>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-3">
                     <label class="block text-sm font-medium text-gray-900">Full Name</label>
                     <div class="mt-2">
-                        <input type="text" formControlName="name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your name" oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
+                        <input type="text" formControlName="name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter full name" oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
                     </div>
                 </div>
                 <div class="sm:col-span-3">
@@ -63,7 +66,7 @@
                 <div class="sm:col-span-3">
                     <label class="block text-sm font-medium text-gray-900">Password</label>
                     <div class="mt-2">
-                        <input type="password" formControlName="password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your password">
+                        <input type="password" formControlName="password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Password must be 8 Characters long.">
                     </div>
                 </div>
             </div>
@@ -72,4 +75,5 @@
             <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
         </div>
     </form>
+    
 </div>

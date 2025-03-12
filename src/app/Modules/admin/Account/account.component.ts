@@ -249,7 +249,8 @@ export class AccountComponent implements OnInit{
           // Additional logic to handle the updated profile picture
           this.acc.updateUserPic(newImageUrl);
           console.log('User Picture URL:', newImageUrl);
-          
+          this.loadUserData();
+          this.loadAccountDetails();
       }, error => {
           console.error('Error uploading image:', error);
       });
@@ -281,6 +282,8 @@ export class AccountComponent implements OnInit{
                 console.log('Data saved successfully:', response);
                 localStorage.setItem('users', JSON.stringify(allData));
                 this.showBottomRight();
+                this.loadUserData();
+                this.loadAccountDetails();
             },
             (error) => {
                 console.error('Error saving data:', error);

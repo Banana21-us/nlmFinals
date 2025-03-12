@@ -5,10 +5,9 @@
     margin: 15px auto;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-
+    height: auto;
     /* Ensure scrolling works properly */
-    max-height: 90vh; /* Ensures the container doesn't exceed viewport height */
-    overflow-y: auto; /* Enables vertical scrolling only */
+    overflow-y: hidden; /* Enables vertical scrolling only */
     
     /* Prevent horizontal scrolling */
     overflow-x: hidden;
@@ -17,14 +16,9 @@
     -webkit-overflow-scrolling: touch;
 }
 
-/* Ensure the parent container allows scrolling */
-body, html {
-    height: 100%;
-    overflow: hidden; /* Prevents double scrollbars */
-}
 
 /* Make sure the form content is not causing overflow */
 .py-10 {
-    max-height: calc(90vh - 60px); /* Adjust based on your layout */
+    max-height: calc(95vh - 60px); /* Adjust based on your layout */
     overflow-y: auto;
 }

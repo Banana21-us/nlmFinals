@@ -5,6 +5,8 @@ import { RouterModule,Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { RegisterComponent } from '../register/register.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +14,31 @@ import { MatDialog } from '@angular/material/dialog';
   imports: [
     RouterModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    ToastModule
   ],
+  styles: [`
+    :host ::ng-deep .p-toast {
+      width: 335px; /* Adjust width as needed */
+      font-size: 0.8rem; /* Adjust font size as needed */
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    :host ::ng-deep .p-toast-message-content {
+      padding: 0.75rem; /* Adjust padding as needed */
+    }
+
+    :host ::ng-deep .p-toast-summary {
+      font-weight: bold;
+    }
+  `],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  providers: [MessageService]
 })
 export class LoginComponent {
-  constructor(private conn: ApiService, private router: Router) {}
+  constructor(private conn: ApiService, private router: Router,private messageService: MessageService) {}
   readonly dialog = inject(MatDialog);
   loginForm = new FormGroup({
     email: new FormControl(''),
@@ -78,15 +98,16 @@ export class LoginComponent {
       },
       (error) => {
         console.error('Login failed', error);
+        this.messageService.add({ 
+          severity: 'warn', 
+          summary: 'Invalid', 
+          detail: 'Invalid Credentials',
+          life: 3000
+      });
       }
     );
   }
   
-  
-  
-  
-  
-
 
   openDialog() {
     const dialogRef = this.dialog.open(RegisterComponent, {
@@ -98,8 +119,13 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) { // Only call getdata() if the dialog closed after successful submission
-        // this.getdata();
+      if (result) { 
+        this.messageService.add({ 
+          severity: 'success', 
+          summary: 'Pending', 
+          detail: 'Please wait for your account approval.',
+          life: 3000
+      });
       }
     });
   }

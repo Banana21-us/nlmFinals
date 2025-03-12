@@ -18,11 +18,11 @@
           <div class="col-lg-7 col-md-10">
             
             <h1 class="display-2 text-white" style="width: 1000px;">{{ user.name }}
-              <div class="upload-container">
-                <label for="fileUpload" class="upload-icon">
-                  <i class="bi bi-camera"></i>
-                </label>
-                <input type="file" id="fileUpload" class="d-none" (change)="onFileChange($event)">
+              <div class="upload-container" style="display: inline-block; margin-left: 10px;">
+              <label for="fileUpload" class="upload-icon">
+                <i class="bi bi-camera " style="font-size: 2rem; border: 2px solid white; border-radius: 50%; padding: 0.5rem; width: 3.5rem; height: 3.5rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"></i>
+              </label>
+              <input type="file" id="fileUpload" class="d-none" (change)="onFileChange($event)">
               </div>
             </h1>
             <p class="text-white mt-0 mb-5" style="width: 500px;">{{ accountData.department }} | {{ accountData.position }} |
