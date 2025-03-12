@@ -90,6 +90,9 @@ export class ListComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      if (result) { // Only call getdata() if the dialog closed after successful submission
+        this.getdata();
+      }
     });
   }
   

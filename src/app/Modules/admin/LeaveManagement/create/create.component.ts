@@ -3,10 +3,11 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { ApiService } from '../../../../api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-create',
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule,ButtonModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })

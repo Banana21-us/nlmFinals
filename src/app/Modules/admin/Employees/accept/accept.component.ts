@@ -69,6 +69,7 @@ export class AcceptComponent {
       response => {
         console.log("Employee updated successfully:", response);
         this.dialogRef.close(true);
+        
       },
       error => {
         console.error("Error updating employee:", error);

@@ -54,8 +54,8 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-          <i class="bi bi-check2-circle ms-2" (click)="acceptRequest(element)"></i>
-          <i class="bi bi-x-circle ms-3" (click)="rejectRequest(element)"></i>
+          <p-button icon="bi bi-check2" class="me-2 mb-2" (click)="acceptRequest(element)"></p-button>
+          <p-button icon="bi bi-x-circle" class="me-2 mb-2" (click)="rejectRequest(element)" styleClass="p-button-danger"></p-button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

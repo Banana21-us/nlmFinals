@@ -11,7 +11,11 @@ import {
 import { CreateComponent } from '../create/create.component';
 import { ApiService } from '../../../../api.service';
 import { UpdateComponent } from '../update/update.component';
-
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { MessageService, ConfirmationService } from 'primeng/api';
 export interface leavemanagement {
   id: number;
   type: string;
@@ -22,15 +26,19 @@ export interface leavemanagement {
 
 @Component({
   selector: 'app-list',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,
+  ToastModule,ButtonModule,RippleModule,ConfirmDialog],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.css'
+  styleUrl: './list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService,ConfirmationService]
 })
 
 export class ListComponent implements OnInit{
   readonly dialog = inject(MatDialog)
-  readonly leavemanagementService = inject(ApiService);
-  
+
+  constructor(private messageService: MessageService,private leavemanagementService: ApiService, private confirmationService: ConfirmationService) {}
+
   dataSource = new MatTableDataSource<leavemanagement>([]);
   displayedColumns: string[] = ['type', 'days_allowed','description', 'actions'];
 
@@ -78,12 +86,37 @@ export class ListComponent implements OnInit{
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  deleteleave(id: number): void {
-    this.leavemanagementService.deleteleave(id).subscribe(() => {
-      this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
-    });
+  confirm(id: number) {
+      this.confirmationService.confirm({ 
+          header: 'Are you sure?',
+          message: 'Please confirm to proceed.',
+          accept: () => {
+            this.leavemanagementService.deleteleave(id).subscribe(() => {
+              this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+            
+                  this.messageService.add({ 
+                      severity: 'success', 
+                      summary: 'Success', 
+                      detail: 'Deleted successfully',
+                      life: 3000
+                  });
+                  this.getdata(); // Refresh the list after deletion
+              });
+          },
+          reject: () => {
+              this.messageService.add({ 
+                  severity: 'info', 
+                  summary: 'Cancel', 
+                  detail: 'Deletion has been canceled' 
+              });
+          },
+      });
   }
+  // deleteleave(id: number): void {
+  //   this.leavemanagementService.deleteleave(id).subscribe(() => {
+  //     this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+  //   });
+  // }
 }
 
 

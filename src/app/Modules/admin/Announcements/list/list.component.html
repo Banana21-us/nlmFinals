@@ -1,10 +1,5 @@
 <div class="container">
     <h2>Announcements</h2>
-    <!-- <button type="button" class="btn mb-2" 
-    style="width:5%"  mat-mini-fab
-    (click)="openDialog()"> 
-    <i class="bi bi-pencil-square"></i>
-    </button> -->
 
     <button mat-mini-fab type="button" class="btn mb-2" (click)="openDialog()"> 
         <i class="bi bi-pencil-square"></i>
@@ -28,8 +23,10 @@
                             {{ ann.created_at | date: 'medium' }}
                         </span>
                         <div class="announcement-actions ms-3">
-                            <i class="bi bi-pencil ms-3" (click)="onUpdate(ann)"></i>
-                            <i class="bi bi-trash3 ms-3" (click)="onDelete(ann.id)" ></i>
+                            <p-toast  position="bottom-right" />
+                            <p-button icon="bi bi-pencil" class="me-2 mb-2" (click)="onUpdate(ann)"></p-button>
+                            <p-button icon="bi bi-trash3" class="me-2 mb-2" (click)="confirm(ann.id)"
+                            styleClass="p-button-danger"></p-button>
                         </div>
                     </div>
                     <p class="announcement-p" [innerHTML]="getSanitizedHtml(ann.announcement)"></p>
@@ -38,4 +35,24 @@
             </div>
         </section>
     </div>
+    <div class="card flex justify-center" >
+        <p-toast position="bottom-right" key="br"/>
+      </div>
 </div>
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+            <i class="bi bi-question-lg"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <p-button label="Delete" (onClick)="onAccept()"  styleClass="p-button-danger w-32"></p-button>
+                <p-button label="Cancel" [outlined]="true" (onClick)="onReject()"  styleClass="w-32"></p-button>
+            </div>
+        </div>
+    </ng-template>
+  </p-confirmdialog>

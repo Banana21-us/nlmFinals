@@ -14,6 +14,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from '../../../../api.service';
 import { UpdateComponent } from '../update/update.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
 // import Swal from 'sweetalert2'; 
 
 @Component({
@@ -21,10 +26,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   standalone: true,
   imports: [MatExpansionModule,CommonModule,
     ReactiveFormsModule, RouterModule,FormsModule,
-    MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
+    MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule
+  ,ToastModule,ButtonModule,RippleModule,ConfirmDialog],
     
   templateUrl: './list.component.html',
-  styleUrl: './list.component.css'
+  styleUrl: './list.component.css',
+  providers: [MessageService,ConfirmationService]
+  
 })
 export class ListComponent implements OnInit{
   readonly dialog = inject(MatDialog);
@@ -33,7 +41,7 @@ export class ListComponent implements OnInit{
   announcements: any[] = [];
   filteredAnnouncements: any[] = []; // New filtered array
 
-  constructor(private router: Router, private ser: ApiService,private sanitizer: DomSanitizer) {}
+  constructor(private router: Router, private ser: ApiService,private sanitizer: DomSanitizer,private messageService: MessageService,private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
     this.getdata();
@@ -73,16 +81,7 @@ export class ListComponent implements OnInit{
   }
   
 
-  onDelete(id: number): void {
-      this.ser.deleteAnnouncement(id).subscribe({
-        next: () => {
-          this.announcements = this.announcements.filter(ann => ann.id !== id);
-          this.dataSource.data = this.announcements; 
-          this.filteredAnnouncements = this.filteredAnnouncements.filter(ann => ann.id !== id);
-        }
-      });
-    
-  }
+  
 
   onUpdate(element: any) {
       const dialogRef = this.dialog.open(UpdateComponent, {
@@ -99,5 +98,44 @@ export class ListComponent implements OnInit{
         }
       });
     }
-  
+    onDelete(id: number): void {
+      this.ser.deleteAnnouncement(id).subscribe({
+        next: () => {
+          this.announcements = this.announcements.filter(ann => ann.id !== id);
+          this.dataSource.data = this.announcements; 
+          this.filteredAnnouncements = this.filteredAnnouncements.filter(ann => ann.id !== id);
+        }
+      });
+    
+  }
+    confirm(id: number) {
+      this.confirmationService.confirm({ 
+          header: 'Are you sure?',
+          message: 'Please confirm to proceed.',
+          accept: () => {
+            this.ser.deleteAnnouncement(id).subscribe(() => {
+              next: () => {
+                this.announcements = this.announcements.filter(ann => ann.id !== id);
+                this.dataSource.data = this.announcements; 
+                this.filteredAnnouncements = this.filteredAnnouncements.filter(ann => ann.id !== id);
+              }
+            
+                  this.messageService.add({ 
+                      severity: 'success', 
+                      summary: 'Success', 
+                      detail: 'Deleted successfully',
+                      life: 3000
+                  });
+                  this.getdata(); // Refresh the list after deletion
+              });
+          },
+          reject: () => {
+              this.messageService.add({ 
+                  severity: 'info', 
+                  summary: 'Cancel', 
+                  detail: 'Deletion has been canceled' 
+              });
+          },
+      });
+  }
 }
