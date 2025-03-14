@@ -16,12 +16,13 @@
       
               <div *ngIf="name.value.files.length > 0">
                 <div *ngFor="let ann of name.value.files" class="announcement">
+                  <span class="date">{{ ann.time | date: 'medium' }}</span>
+
                   <div class="announcement-header">
                     <p class="announcement-d mb-3"><strong>{{ ann.description }}</strong></p>
                     <p class="announcement-p" [innerHTML]="getSanitizedHtml(ann.file)"></p>
       
                     <div class="announcement-actions ms-3">
-                      <span class="date">{{ ann.time | date: 'medium' }}</span>
                     </div>
                   </div>
                 </div>

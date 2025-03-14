@@ -2,13 +2,12 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatError } from '@angular/material/form-field';
 import { ApiService } from '../../../../api.service';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-update',
-  imports: [CommonModule, ReactiveFormsModule,EditorModule,MatError],
+  imports: [CommonModule, ReactiveFormsModule,EditorModule,],
   templateUrl: './update.component.html',
   styleUrl: './update.component.css'
 })
@@ -23,7 +22,7 @@ export class UpdateComponent {
 
   reqform = new FormGroup({
     userid: new FormControl(''),
-    description: new FormControl(''),
+    description: new FormControl('Service Records'),
     file: new FormControl(''),
   });
   editorContent: string = '';

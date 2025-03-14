@@ -13,6 +13,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from '../../../../api.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UpdateComponent } from '../update/update.component';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-list',
@@ -25,10 +30,14 @@ import { UpdateComponent } from '../update/update.component';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    ButtonModule,
+    ToastModule,ConfirmDialog
   ],
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.css'],
+  providers: [MessageService,ConfirmationService]
+  
 })
 export class ListComponent {
 
@@ -37,7 +46,7 @@ export class ListComponent {
   files: any[] = [];
   filteredFiles: any[] = [];
 
-  constructor(private router: Router, private ser: ApiService, private sanitizer: DomSanitizer) { }
+  constructor(private router: Router, private ser: ApiService, private sanitizer: DomSanitizer, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.getFile();
@@ -100,16 +109,45 @@ export class ListComponent {
     }
   }
 
-  onDelete(id: number): void {
-    this.ser.deleteFile(id).subscribe({
-      next: () => {
-        this.files = this.files.filter(ann => ann.id !== id);
-        this.filteredFiles = this.files;
-        this.getFile();
-      }
-    });
+  // onDelete(id: number): void {
+  //   this.ser.deleteFile(id).subscribe({
+  //     next: () => {
+  //       this.files = this.files.filter(ann => ann.id !== id);
+  //       this.filteredFiles = this.files;
+  //       this.getFile();
+  //     }
+  //   });
+  // }
+  confirm(id: number) {
+      this.confirmationService.confirm({ 
+          header: 'Are you sure?',
+          message: 'Please confirm to proceed.',
+          accept: () => {
+            this.ser.deleteFile(id).subscribe(() => {
+              next: () => {
+                this.files = this.files.filter(ann => ann.id !== id);
+                this.filteredFiles = this.files;
+                this.messageService.add({ 
+                  severity: 'success', 
+                  summary: 'Success', 
+                  detail: 'Deleted successfully',
+                  life: 3000
+              });
+              
+              }
+            
+              this.getFile();// Refresh the list after deletion
+              });
+          },
+          reject: () => {
+              this.messageService.add({ 
+                  severity: 'info', 
+                  summary: 'Cancel', 
+                  detail: 'Deletion has been canceled' 
+              });
+          },
+      });
   }
-
   onUpdate(element: any) {
         const dialogRef = this.dialog.open(UpdateComponent, {
           width: '90vw',

@@ -7,6 +7,7 @@ export const requestfile: Routes = [
     {path: 'create', component: CreateComponent},
     {path: 'list', component: ListComponent},
     {path: 'update', component: UpdateComponent},
+
     {path: '', redirectTo: 'list', pathMatch: 'full'}
     ];
 
