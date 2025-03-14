@@ -1,11 +1,11 @@
 <div class="container">
-    <header>Edit Department</header>
+    <header>Edit Role</header>
     <form [formGroup]="deptformupdate" (ngSubmit)="update()">
         <div class="form first">
             <div class="details personal">
                 <div class="fields">
                     <div class="input-field">
-                        <label>Department</label>
+                        <label>Role</label>
                         <input type="text" formControlName="name" class="form-control" 
                         required placeholder="Enter type" oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\/\'.]/g, '');">
                     </div>

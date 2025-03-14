@@ -1,13 +1,13 @@
 <div class="container">
-    <header>Edit Position</header>
-    <form [formGroup]="posformupdate" (ngSubmit)="update()">
+    <header>Edit Work Status</header>
+    <form [formGroup]="wstatusformupdate" (ngSubmit)="update()">
         <div class="form first">
             <div class="details personal">
                 <div class="fields">
                     <div class="input-field">
-                        <label>Position</label>
+                        <label>Work Status</label>
                         <input type="text" formControlName="name" class="form-control" 
-                        required oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\/\',.]/g, '');">
+                        required placeholder="Enter type" oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\/\'.]/g, '');">
                     </div>
                 </div>
             </div>

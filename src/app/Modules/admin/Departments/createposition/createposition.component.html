@@ -4,24 +4,12 @@
         <div class="form first">
             <div class="details personal">
                 <div class="fields">
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-field ms-1">
-                                <label>Position</label>
-                                <input type="text" formControlName="name" class="form-control" 
-                                required oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\/\'.,]/g, '');">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-field">
-                                <label>Rate</label>
-                                <input type="text" formControlName="salary" class="form-control" 
-                                required >
-                            </div>
-                        </div>
+                    <div class="input-field ms-1">
+                        <label>Position</label>
+                        <input type="text" formControlName="name" class="form-control" 
+                        required oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\/\'.]/g, '');">
+                        
                     </div>
-                    
-                    
                 </div>
             </div>
         </div>

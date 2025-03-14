@@ -33,6 +33,28 @@
                             }
                         </select>
                     </div>
+
+                    <div class="input-field">
+                        <label>Work Status</label>
+                        <select formControlName="workstat" class="form-control" required>
+                            @for (ws of workstat; track $index) {
+                            <option [value]="ws.name">{{ ws.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>Category</label>
+                        <select formControlName="category" class="form-control" required>
+                            @for (cat of category; track $index) {
+                            <option [value]="cat.name">{{ cat.name }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="input-field">
+                        
+                    </div>
                 </div>
             </div>
         </div>

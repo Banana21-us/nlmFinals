@@ -17,11 +17,16 @@ export class AcceptComponent {
   departments: any[] = [];
   positions: any[] = [];
   designations: any[] = [];
+  category: any[] = [];
+  workstat: any[] = [];
 
   acceptform = new FormGroup({
     department: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     designation: new FormControl('', Validators.required),
+    workstat: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    
   });
 
   constructor(
@@ -54,7 +59,16 @@ export class AcceptComponent {
     this.empService.getposition().subscribe(data => {
       this.positions = data;
     });
+
+    this.empService.getcategory().subscribe(data => {
+      this.category = data;
+    });
+
+    this.empService.getworkstatus().subscribe(data => {
+      this.workstat = data;
+    });
   }
+
 
   accept() {
     if (this.acceptform.invalid) {

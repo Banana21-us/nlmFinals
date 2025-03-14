@@ -21,11 +21,15 @@ export class UpdateComponent implements OnInit{
   departments: any[] = [];
   positions: any[] = [];
   designations: any[] = [];
+  category: any[] = [];
+  workstat: any[] = [];
 
   empformupdate = new FormGroup({
     department: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     designation: new FormControl('', Validators.required),
+    workstat: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
     email : new FormControl('', [Validators.required, Validators.email]),
     password : new FormControl('', [Validators.required, Validators.minLength(8)])
   });
@@ -59,6 +63,14 @@ export class UpdateComponent implements OnInit{
 
     this.empService.getdesignation().subscribe(data => {
       this.designations = data;
+    });
+
+    this.empService.getcategory().subscribe(data => {
+      this.category = data;
+    });
+
+    this.empService.getworkstatus().subscribe(data => {
+      this.workstat = data;
     });
   }
 

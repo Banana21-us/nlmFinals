@@ -4,38 +4,39 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../../../api.service';
 import { Inject } from '@angular/core';
-@Component({
-  selector: 'app-updateposition',
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule],
-  templateUrl: './updateposition.component.html',
-  styleUrl: './updateposition.component.css'
-})
-export class UpdatepositionComponent {
 
+@Component({
+  selector: 'app-updateworkstatus',
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule],
+  templateUrl: './updateworkstatus.component.html',
+  styleUrl: './updateworkstatus.component.css'
+})
+export class UpdateworkstatusComponent {
+  
   isLoading: boolean = false;
 
-  posformupdate = new FormGroup({
+  wstatusformupdate = new FormGroup({
     name: new FormControl('', Validators.required),
-
   });
 
   constructor(
-    private posService: ApiService,
-    private dialogRef: MatDialogRef<UpdatepositionComponent>,
+    private wstatusService: ApiService,
+    private dialogRef: MatDialogRef<UpdateworkstatusComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any // Inject the data passed to the dialog
   ) {}
 
   ngOnInit(): void {
-    if (this.data.pos) {
-      this.posformupdate.patchValue({
-        name: this.data.pos.name,
+    console.log('Dialog received data:', this.data.name);
+    if (this.data.workstatusData) {
+      this.wstatusformupdate.patchValue({
+        name: this.data.workstatusData.name
       });
     }
   }
 
   update() {
-    if (this.posformupdate.valid) {
-      this.posService.updatepos(this.data.pos.id, this.posformupdate.value).subscribe({
+    if (this.wstatusformupdate.valid) {
+      this.wstatusService.updateworkstatus(this.data.workstatusData.id, this.wstatusformupdate.value).subscribe({
         next: (response) => {
           this.dialogRef.close(true);
         },

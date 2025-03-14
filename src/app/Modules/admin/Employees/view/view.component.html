@@ -1,22 +1,16 @@
 <div class="container rounded-4 mt-3" id="print-container">
   <div class="main-content">
     <div class="header pb-8 pt-lg-8 d-flex align-items-center"
-    [ngStyle]="{
-      'min-height': '600px',  
-      'border-top-left-radius': '15px',
-      'border-top-right-radius': '15px',
-      'background-image': 'url(http://localhost:8000/assets/userPic/' + employee.employee.img + ')',
-      'background-size': 'cover',
-      'background-position': 'center top'
-    }">
+    [ngStyle]="getBackgroundStyle(employee.employee.img)"
+    >
 
 
-      <span class="mask bg-gradient-default opacity-4" style="border-top-left-radius: 15px;
-      border-top-right-radius: 15px;"></span>
+      <span class="mask bg-gradient-default opacity-8"
+      style="border-top-left-radius: 15px; border-top-right-radius: 15px;"></span>
       <div class="container-fluid d-flex align-items-center ">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white" style="width: 1000px;">{{ employee?.name }}</h1>
+            <h1 class="display-2 text-white" style="width: 1000px;">{{ employee.employee.name }}</h1>
             <p class="text-white mt-0 mb-5" style="width: 500px;">{{ employee.employee.department }} | {{ employee.employee.position }}
               | {{ employee.employee.designation }}</p>
             <p class="text-white mt-0 mb-5" style="width: 500px;">

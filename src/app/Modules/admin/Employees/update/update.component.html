@@ -5,7 +5,7 @@
             <div class="details personal">
                 <div class="fields">
                     <div class="input-field">
-                        <label>Department</label>
+                        <label>Role</label>
                         <select formControlName="department" class="form-control" required>
                             @for (department of departments; track $index) {
                             <option  
@@ -32,6 +32,27 @@
                             <option [value]="designation.name">{{ designation.name }}</option>
                             }
                         </select>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Work Status</label>
+                        <select formControlName="workstat" class="form-control" required>
+                            @for (ws of workstat; track $index) {
+                            <option [value]="ws.name">{{ ws.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>Category</label>
+                        <select formControlName="category" class="form-control" required>
+                            @for (cat of category; track $index) {
+                            <option [value]="cat.name">{{ cat.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field">
+
                     </div>
                     <div class="input-field4">
                         <label>Email</label>

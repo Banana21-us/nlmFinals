@@ -1,36 +1,37 @@
 <div class="container">
     <h2>Job Management</h2>
     <div class="con">
-
-      <button type="button" class="btn" style="width:20%" mat-fab>
-        <a class="navlink" [routerLink]="['w']" routerLinkActive="active-link">
-          <i class="bi bi-person-lines-fill me-1"></i><span>Status</span>
-        </a>
-      </button>
-
-      <button type="button" class="btn" style="width:20%" mat-fab>
-        <a class="navlink" [routerLink]="['d']" routerLinkActive="active-link">
-          <i class="bi bi-person-lines-fill me-1"></i><span>Category</span>
-        </a>
-      </button>
-
-      <button type="button" class="btn" style="width:20%" mat-fab>
-        <a class="navlink" [routerLink]="['dept']" routerLinkActive="active-link">
-          <i class="bi bi-person-lines-fill me-1"></i><span>Department</span>
-        </a>
-      </button>
-      
-      <button type="button" class="btn ms-3" style="width:20%" mat-fab>
-        <a class="navlink" [routerLink]="['designation']" routerLinkActive="active-link">
-          <i class="bi bi-buildings me-1"></i><span>Designation</span>
-        </a>
-      </button>
-      
-      <button type="button" class="btn ms-3" style="width:20%" mat-fab>
-        <a class="navlink" [routerLink]="['position']" routerLinkActive="active-link">
-          <i class="bi bi-file-earmark-person me-1"></i><span>Position</span>
-        </a>
-      </button>
+      <div class="d-flex">
+        <button type="button" class="btn" style="width:14%" mat-fab>
+          <a class="navlink" [routerLink]="['dept']" routerLinkActive="active-link">
+            <i class="bi bi-person-lines-fill me-1"></i><span>Role</span>
+          </a>
+        </button>
+        
+        <button type="button" class="btn ms-3" style="width:14%" mat-fab>
+          <a class="navlink" [routerLink]="['designation']" routerLinkActive="active-link">
+            <i class="bi bi-buildings me-1"></i><span>Designation</span>
+          </a>
+        </button>
+        
+        <button type="button" class="btn ms-3" style="width:14%" mat-fab>
+          <a class="navlink" [routerLink]="['position']" routerLinkActive="active-link">
+            <i class="bi bi-file-earmark-person me-1"></i><span>Position</span>
+          </a>
+        </button>
+  
+        <button type="button" class="btn ms-3" style="width:14%" mat-fab>
+          <a class="navlink" [routerLink]="['workstatus']" routerLinkActive="active-link">
+            <i class="bi bi-person-square me-1"></i><span>Work Status</span>
+          </a>
+        </button>
+  
+        <button type="button" class="btn ms-3" style="width:14%" mat-fab>
+          <a class="navlink" [routerLink]="['category']" routerLinkActive="active-link">
+            <i class="bi bi-tag me-1"></i><span>Category</span>
+          </a>
+        </button>
+      </div>
     </div>
     
     <br>

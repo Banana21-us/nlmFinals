@@ -127,6 +127,35 @@ export class ApiService {
     return this.http.patch(`${this.apiUrl}position/${id}`, pos);
   }
 
+  // workstatus
+  getworkstatus(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'workstatus');
+  }
+  deleteworkstatus(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}workstatus/${id}`);
+  }
+  updateworkstatus(id: number, wstat: any) {
+    return this.http.patch(`${this.apiUrl}workstatus/${id}`, wstat);
+  }
+  createworkstatus(workstatusData:any):Observable<any>{
+    return this.http.post<any>(this.apiUrl + 'workstatus',workstatusData)
+  }
+
+  //category
+  getcategory(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'category');
+  }
+  deletecategory(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}category/${id}`);
+  }
+  updatecategory(id: number, wstat: any) {
+    return this.http.patch(`${this.apiUrl}category/${id}`, wstat);
+  }
+  createcategory(categoryData:any):Observable<any>{
+    return this.http.post<any>(this.apiUrl + 'category',categoryData)
+  }
+
+
   // announcement
   createAnnouncement(data: any): Observable<any> {
     return this.http.post(this.apiUrl + 'announcements', data);

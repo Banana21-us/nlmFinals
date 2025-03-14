@@ -4,38 +4,40 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../../../api.service';
 import { Inject } from '@angular/core';
-@Component({
-  selector: 'app-updateposition',
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule],
-  templateUrl: './updateposition.component.html',
-  styleUrl: './updateposition.component.css'
-})
-export class UpdatepositionComponent {
 
+@Component({
+  selector: 'app-updatecategory',
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule],
+  templateUrl: './updatecategory.component.html',
+  styleUrl: './updatecategory.component.css'
+})
+export class UpdatecategoryComponent {
+
+  
   isLoading: boolean = false;
 
-  posformupdate = new FormGroup({
+  categformupdate = new FormGroup({
     name: new FormControl('', Validators.required),
-
   });
 
   constructor(
-    private posService: ApiService,
-    private dialogRef: MatDialogRef<UpdatepositionComponent>,
+    private categService: ApiService,
+    private dialogRef: MatDialogRef<UpdatecategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any // Inject the data passed to the dialog
   ) {}
 
   ngOnInit(): void {
-    if (this.data.pos) {
-      this.posformupdate.patchValue({
-        name: this.data.pos.name,
+    console.log('Dialog received data:', this.data.name);
+    if (this.data.categoryData) {
+      this.categformupdate.patchValue({
+        name: this.data.categoryData.name
       });
     }
   }
 
   update() {
-    if (this.posformupdate.valid) {
-      this.posService.updatepos(this.data.pos.id, this.posformupdate.value).subscribe({
+    if (this.categformupdate.valid) {
+      this.categService.updatecategory(this.data.categoryData.id, this.categformupdate.value).subscribe({
         next: (response) => {
           this.dialogRef.close(true);
         },

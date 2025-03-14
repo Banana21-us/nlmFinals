@@ -29,7 +29,21 @@
       private route: ActivatedRoute,
       @Inject(MAT_DIALOG_DATA) public data: any) { }
     readonly dialog = inject(MatDialog);
+    
+    getBackgroundStyle(img: string | null | undefined): { [key: string]: string } {
+      const imageUrl = img ? `http://localhost:8000/assets/userPic/${img}` : 'http://localhost:4200/default-profile.png';
+      
+      return {
+        'min-height': '600px',  
+        'border-top-left-radius': '15px',
+        'border-top-right-radius': '15px',
+        'background-image': `url(${imageUrl})`,
+        'background-size': 'cover',
+        'background-position': 'center top'
+      };
+    }
 
+    
     acceptemployee(element: any) {
       if (!element) {
         console.error("Employee data is undefined!");
