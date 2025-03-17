@@ -143,6 +143,35 @@ form .buttons{
 form .buttons button , .backBtn{
     margin-right: 14px;
 }
+
+.mat-form-field {
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+}
+
+.mat-select {
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.mat-checkbox {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.mat-checkbox .mat-checkbox-label {
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+/* Fix Input Focus */
+.input-field input:focus,
+.input-field select:focus {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+}
+
 @media (max-width: 750px) {
     .container form{
         overflow-y: scroll;
@@ -158,4 +187,28 @@ form .buttons button , .backBtn{
     form .fields .input-field{
         width: 100%;
     }
+}
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: #f9f9f9;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+}
+
+.dropdown-content.show {
+  display: block;
 }

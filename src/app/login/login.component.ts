@@ -76,21 +76,69 @@ export class LoginComponent {
           console.log('Admin picture updated:', user.img);
           setTimeout(() => {
             const position = localStorage.getItem('position');
-            console.log('Updated position:', position);
-  
-            if (position === 'hr') {
-              this.router.navigate(['/admin-page/dashboard']);
-            } 
-            else if (position === 'accounting') { // Redirect to accounting page
-              this.router.navigate(['/accounting-page/dashboard']);
+            const usersData = localStorage.getItem('users'); // Get users JSON string
+          
+            let department = null;
+            if (usersData) {
+              try {
+                const users = JSON.parse(usersData); // Parse JSON string
+                department = users.department; // Get department
+              } catch (error) {
+                console.error('Error parsing users data:', error);
+              }
             }
-            else if (position === 'archives') { // Redirect to archives page
-              this.router.navigate(['/archives-page/dashboard']);
+          
+            if (position) {
+              const positionsArray = position.split(',').map(p => p.trim()); // Split and trim spaces
+              console.log('Updated positions:', positionsArray);
+              console.log('User department:', department);
+          
+              if (department === 'Secretariat' && positionsArray.includes('Executive Secretary')) {
+                this.router.navigate(['/archives-page/dashboard']);
+              } 
+              else if (department === 'Administrators' && positionsArray.includes('Executive Secretary')) {
+                this.router.navigate(['/admin-page/dashboard']);
+              } 
+              else if (
+                department === 'Accounting Personnel' && 
+                (positionsArray.includes('Chief Accountant') || positionsArray.includes('Disbursing Accountant'))
+              ) { 
+                this.router.navigate(['/accounting-page/dashboard']);
+              }
+              else {
+                this.router.navigate(['/user-page/dashboard']);
+              }
+            } else {
+              console.error('No position found in localStorage');
+              this.router.navigate(['/user-page/dashboard']); // Default route
             }
-            else {
-              this.router.navigate(['/user-page/dashboard']);
-            }
-          }, 300); // Slightly longer delay ensures updates before navigation
+          }, 300);  // Slightly longer delay ensures updates before navigation
+          
+          // setTimeout(() => {
+          //   const position = localStorage.getItem('position');
+          
+          //   if (position) {
+          //     const positionsArray = position.split(',').map(p => p.trim()); // Split and trim spaces
+          //     console.log('Updated positions:', positionsArray);
+          
+          //     if (positionsArray.includes('Executive Secretary')) {
+          //       this.router.navigate(['/admin-page/dashboard']);
+          //     } 
+          //     else if (positionsArray.includes('Chief Accountant') || positionsArray.includes('Disbursing Accountant')) { 
+          //       this.router.navigate(['/accounting-page/dashboard']);
+          //     }
+            
+          //     else if (positionsArray.includes('archives')) { 
+          //       this.router.navigate(['/archives-page/dashboard']);
+          //     }
+          //     else {
+          //       this.router.navigate(['/user-page/dashboard']);
+          //     }
+          //   } else {
+          //     console.error('No position found in localStorage');
+          //     this.router.navigate(['/user-page/dashboard']); // Default route
+          //   }
+          // }, 300);  // Slightly longer delay ensures updates before navigation
           
         }
 
@@ -112,9 +160,9 @@ export class LoginComponent {
   openDialog() {
     const dialogRef = this.dialog.open(RegisterComponent, {
       width: '95vw',
-      height: '95vh',
+      height: '87vh',
       maxWidth: '95vw',
-      maxHeight: '95vh',
+      maxHeight: '87vh',
       
     });
 

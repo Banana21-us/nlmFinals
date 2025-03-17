@@ -5,9 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../../../api.service';
 import { Inject } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-accept',
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule,MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,],
   templateUrl: './accept.component.html',
   styleUrl: './accept.component.css'
 })
@@ -18,13 +23,13 @@ export class AcceptComponent {
   positions: any[] = [];
   designations: any[] = [];
   category: any[] = [];
-  workstat: any[] = [];
+  work_status: any[] = [];
 
   acceptform = new FormGroup({
     department: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     designation: new FormControl('', Validators.required),
-    workstat: new FormControl('', Validators.required),
+    work_status: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     
   });
@@ -42,7 +47,9 @@ export class AcceptComponent {
       this.acceptform.patchValue({
         department: this.data.department,
         designation: this.data.designation,
-        position: this.data.position
+        position: this.data.position,
+        work_status: this.data.work_status,
+        category: this.data.category
        
       });
     }
@@ -65,7 +72,7 @@ export class AcceptComponent {
     });
 
     this.empService.getworkstatus().subscribe(data => {
-      this.workstat = data;
+      this.work_status = data;
     });
   }
 
@@ -77,7 +84,14 @@ export class AcceptComponent {
     }
   
     const employeeId = this.data.employee.id; // ✅ Correctly extract ID
-    const payload = this.acceptform.value;
+    const positionValue = Array.isArray(this.acceptform.value.position) 
+    ? this.acceptform.value.position.join(', ') 
+    : this.acceptform.value.position;
+
+  const payload = {
+    ...this.acceptform.value,
+    position: positionValue
+  };
   
     this.empService.acceptemployee(employeeId, payload).subscribe(
       response => {

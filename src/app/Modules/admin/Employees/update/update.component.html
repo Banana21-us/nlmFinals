@@ -14,7 +14,7 @@
                         </select>
                     </div>
 
-                    <div class="input-field">
+                    <!-- <div class="input-field">
                         <label>Position</label>
                       
                         <select formControlName="position" class="form-control" required>
@@ -23,7 +23,7 @@
                             }
                         </select>
                         
-                    </div>
+                    </div> -->
 
                     <div class="input-field">
                         <label>Designation</label>
@@ -35,8 +35,17 @@
                     </div>
 
                     <div class="input-field">
+                        <label>Position</label>
+                          <mat-select formControlName="position" multiple class="form-control" style="height: 43px; border-color: #9ca3af; font-size: 14px; color:#6b7280" >
+                            @for (position of positions; track $index) {
+                              <mat-option [value]="position.name" style="font-size: 14px; color:#6b7280">{{ position.name }}</mat-option>
+                            }
+                          </mat-select>
+                      </div>
+
+                    <div class="input-field">
                         <label>Work Status</label>
-                        <select formControlName="workstat" class="form-control" required>
+                        <select formControlName="work_status" class="form-control" required>
                             @for (ws of workstat; track $index) {
                             <option [value]="ws.name">{{ ws.name }}</option>
                             }

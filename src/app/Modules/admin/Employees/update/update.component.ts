@@ -7,9 +7,10 @@ import { Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-update',
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule,CommonModule,FormsModule,ToastModule],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule,CommonModule,FormsModule,ToastModule,MatSelectModule],
   templateUrl: './update.component.html',
   styleUrl: './update.component.css',
     providers: [MessageService]
@@ -28,7 +29,7 @@ export class UpdateComponent implements OnInit{
     department: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     designation: new FormControl('', Validators.required),
-    workstat: new FormControl('', Validators.required),
+    work_status: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     email : new FormControl('', [Validators.required, Validators.email]),
     password : new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -50,6 +51,8 @@ export class UpdateComponent implements OnInit{
         position: this.data.emp.position,
         designation: this.data.emp.designation,
         email: this.data.emp.email,
+        category: this.data.emp.category,
+        work_status: this.data.emp.work_status,
       });
     }
   }
@@ -77,8 +80,15 @@ export class UpdateComponent implements OnInit{
   update() {
     if (this.empformupdate.valid) {
       const formData = this.empformupdate.value;
+  
+      // Ensure 'position' is treated as a comma-separated string
+      const positionValue = Array.isArray(formData.position)
+        ? formData.position.join(', ')
+        : formData.position;
+  
       const filteredData = Object.fromEntries(
-        Object.entries(formData).filter(([key, value]) => value !== '' && value !== null)
+        Object.entries({ ...formData, position: positionValue }) // Include modified position
+          .filter(([key, value]) => value !== '' && value !== null)
       );
   
       console.log('Updating emp with ID:', this.data.emp.id);
@@ -88,7 +98,6 @@ export class UpdateComponent implements OnInit{
         },
         error: (error) => {
           console.error('Error updating employee:', error);
-          
         }
       });
     } else {
@@ -101,5 +110,6 @@ export class UpdateComponent implements OnInit{
       });
     }
   }
+  
   
 }
