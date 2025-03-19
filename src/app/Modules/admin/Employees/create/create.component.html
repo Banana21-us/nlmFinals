@@ -71,16 +71,39 @@
                     </div>
                 </div>
                 <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium text-gray-900">Designation</label>
+                    <label class="block text-sm font-medium text-gray-900">Work Status</label>
                     <div class="mt-2">
                         <select formControlName="designation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
-                            <option disabled selected>Select Designation</option>
+                            <option disabled selected>Work Status</option>
                             @for (designation of designations; track $index) {
                                 <option [value]="designation.name">{{ designation.name }}</option>
                                 }                        
                         </select>
                     </div>
                 </div>
+                <div class="sm:col-span-3">
+                    <label class="block text-sm font-medium text-gray-900">Category</label>
+                    <div class="mt-2">
+                        <select formControlName="category" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
+                            <option disabled selected>Category</option>
+                            @for (cat of category; track $index) {
+                                <option [value]="cat.name">{{ cat.name }}</option>
+                                }                        
+                        </select>
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <label class="block text-sm font-medium text-gray-900">Designation</label>
+                    <div class="mt-2">
+                        <select formControlName="work_status" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
+                            <option disabled selected>Select Work Status</option>
+                            @for (work of work_status; track $index) {
+                                <option [value]="work.name">{{ work.name }}</option>
+                                }                        
+                        </select>
+                    </div>
+                </div>
+
                 <div class="sm:col-span-3">
                     <label class="block text-sm font-medium text-gray-900">Mobile Number</label>
                     <div class="mt-2">

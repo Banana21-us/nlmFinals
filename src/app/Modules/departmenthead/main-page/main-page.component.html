@@ -1,0 +1,104 @@
+<mat-toolbar class="mat-elevation-z3">
+  <button mat-icon-button (click)="collapsed.set(!collapsed())">
+      <mat-icon>menu</mat-icon>
+  </button>
+  <img [width]="180" [height]="40" src="whitetext.png"/>
+  <span class="example-spacer"></span>
+  
+  <button mat-icon-button 
+      class="example-icon me-3 notification-button" 
+      [matMenuTriggerFor]="notificationsMenu" 
+      aria-label="Notifications" 
+      aria-haspopup="true"
+      >
+
+    <!-- Material Badge (Use Angular Binding) -->
+    <mat-icon [matBadge]="notificationCount" 
+              [matBadgeHidden]="notificationCount === 0" 
+              matBadgeColor="accent">
+      notifications
+    </mat-icon>
+  </button>
+
+  <mat-menu #notificationsMenu="matMenu" xPosition="before" class="notification-menu" >
+    
+    <div class="notification-list">
+      <div *ngIf="notifications.length > 0; else noNotifications">
+        <div *ngFor="let notification of notifications" class="notification-item">
+          <div class="notification-content" *ngIf="!notification.is_read" (click)="del(notification.id)">
+            <p class="notification-message">
+              {{ notification.message }} <br>
+              <span class="mt-2" style="font-size: 0.85rem; color: #666;">                
+                {{ getRelativeTime(notification.created_at) }}
+              </span>
+            </p> 
+          </div>
+        </div>
+      </div>
+    
+      <!-- This will be displayed if there are no unread notifications -->
+      <ng-template #noNotifications>
+        <p class="no-notifications-message">No new notifications</p>
+      </ng-template>
+    </div>
+    
+    
+  </mat-menu>
+  
+  
+  
+
+  <button mat-icon-button
+  class="example-icon circle-btn ms-2 me-2 flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+  [matMenuTriggerFor]="profileMenu">
+  <img [src]="adminPic ? adminPic : 'default-profile.png'" class="w-8 h-8 me-2 rounded-full prof-image">
+
+
+</button>
+
+<!-- Angular Material Menu -->
+<mat-menu #profileMenu="matMenu"
+  class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 my-2">
+  <!-- User Info -->
+  <div class="px-4 py-3 text-sm text-black dark:text-white border-b border-gray-200 dark:border-gray-700"
+    *ngIf="user">
+    <div class="font-medium">{{ user.name }}</div>
+    <div class="truncate">{{ user.email }}</div>
+  </div>
+
+
+  <!-- Menu Items -->
+  <button mat-menu-item [routerLink]="['/user-page/account/']">
+    <mat-icon>settings</mat-icon>
+    <span>Account Settings</span>
+  </button>
+  <button mat-menu-item [routerLink]="['/user-page/rfile/list']">
+    <mat-icon>dashboard</mat-icon>
+    <span>Peronal Records</span>
+  </button>
+  <button mat-menu-item [routerLink]="['/user-page/calendar']">
+    <mat-icon>events</mat-icon>
+    <span>My Calendar</span>
+  </button>
+  <button mat-menu-item (click)="onLogout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Logout</span>
+  </button>
+</mat-menu>
+
+
+</mat-toolbar> 
+
+<mat-sidenav-container>
+  
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()" autosize>
+    
+    <app-custom-sidenav [collapsed]="collapsed()"/>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

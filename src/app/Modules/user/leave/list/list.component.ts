@@ -19,8 +19,10 @@ export interface LeaveRequest {
   from: Date;
   to: Date;
   submittedon: Date;
-  status: string;
   reason: string;
+  dept_head: string;
+  exec_sec: string;
+  president: string;
 }
 
 
@@ -37,7 +39,7 @@ export interface LeaveRequest {
 export class ListComponent implements OnInit{
   readonly dialog = inject(MatDialog)
   dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['type', 'from', 'to','submittedon','reason','status','actions'];
+  displayedColumns: string[] = ['submittedon','type', 'from', 'to','reason','dept_head','exec_sec','president','actions'];
   element: any;
   leaveRequests:any;
   constructor(private messageService: MessageService,private api: ApiService,private confirmationService: ConfirmationService) {}
@@ -125,8 +127,10 @@ export class ListComponent implements OnInit{
                   from: new Date(item.from),  
                   to: new Date(item.to),  
                   submittedon: new Date(item.created_at), 
-                  status: item.status,
-                  reason: item.reason  
+                  reason: item.reason,
+                  dept_head: item.dept_head,
+                  exec_sec: item.exec_sec,
+                  president: item.president,
               }));
   
               this.dataSource.data = formattedData;

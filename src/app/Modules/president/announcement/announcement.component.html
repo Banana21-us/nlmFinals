@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Announcements</h2>
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search . . ." #input>
+    </mat-form-field>
+
+    <div class="table-container table-responsive" >
+        <section class="announcement-list" >
+            <div id="announcementsContainer">
+                @for (ann of filteredAnnouncements.length ? filteredAnnouncements : announcements; track ann) {
+                <div class="announcement">
+                    <div class="announcement-header">
+                        <h3>
+                            {{ ann.title }}
+                        </h3>
+                        <span class="date">
+                            {{ ann.created_at | date: 'medium' }}
+                        </span>
+                    </div>
+                     <p class="announcement-p" [innerHTML]="ann.announcement"></p> 
+                </div>
+                }
+            </div>
+        </section>
+    </div>
+</div>

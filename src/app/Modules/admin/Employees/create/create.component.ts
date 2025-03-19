@@ -17,6 +17,8 @@ export class CreateComponent implements OnInit{
   departments: any[] = [];
   positions: any[] = [];
   designations: any[] = [];
+  work_status: any[] = [];
+  category: any[] = [];
 
   ngOnInit(): void {
     this.users.getdepartment().subscribe(data => {
@@ -28,6 +30,13 @@ export class CreateComponent implements OnInit{
 
     this.users.getposition().subscribe(data => {
       this.designations = data;
+    });
+    this.users.getcategory().subscribe(data => {
+      this.category = data;
+    });
+
+    this.users.getworkstatus().subscribe(data => {
+      this.work_status = data;
     });
   }
 
@@ -42,6 +51,8 @@ export class CreateComponent implements OnInit{
     department: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     designation: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    work_status: new FormControl('', Validators.required),
     email : new FormControl('', [Validators.required, Validators.email]),
     password : new FormControl('', [Validators.required, Validators.minLength(8)])
   });

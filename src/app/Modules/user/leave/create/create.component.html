@@ -2,9 +2,9 @@
     <form [formGroup]="leavereqform"  (ngSubmit)="onSubmit()">
         <div class="border-b border-gray-900/10 pb-12">
             <h2 class="text-base/7 font-semibold text-gray-900">Leave Details</h2>
-            <p class="mt-1 text-sm/6 text-gray-600">Use a permanent address where you can receive mail.</p>
+            <p class="mt-1 text-sm/6 text-gray-600">Fill the leave form properly</p>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-3">
                     <label for="country" class="block text-sm/6 font-medium text-gray-900">Leave Type</label>
                     <div class="mt-2 grid grid-cols-1">
                       <select id="leavetypeid" formControlName="leavetypeid" class="w-full rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm/6">
@@ -13,7 +13,16 @@
                     </div>
                   </div>
 
-              <div class="sm:col-span-2">
+                  <div class="sm:col-span-3">
+                    <label for="country" class="block text-sm/6 font-medium text-gray-900">Department Head</label>
+                    <div class="mt-2 grid grid-cols-1">
+                      <select id="DHead" formControlName="DHead" class="w-full rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm/6">
+                        <option *ngFor="let dh of depthead" [value]="dh.id">{{ dh.name }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+              <div class="sm:col-span-3">
                   <label for="From" class="block text-sm/6 font-medium text-gray-900">From</label>
                   <div class="mt-2">
                     <div class="mt-2 relative">
@@ -26,8 +35,8 @@
                     </div>
                   </div>
               </div>
-      
-              <div class="sm:col-span-2">
+              
+              <div class="sm:col-span-3">
                 <label for="To" class="block text-sm/6 font-medium text-gray-900">To</label>
                 <div class="mt-2">
                   <div class="mt-2 relative">
@@ -40,6 +49,9 @@
                   </div>
                 </div>
               </div>
+
+              
+              
       
               <div class="sm:col-span-6">
                 <label for="reason" class="block text-sm/6 font-medium text-gray-900">Reason</label>
@@ -48,10 +60,6 @@
                 </div>
               </div>
 
-             
-              
-
-              
             </div>
             <div class="mt-10 flex items-center gap-x-6 justify-end">
                 <button type="button" class="text-sm/6 font-semibold text-gray-900" (click)="close()">Cancel</button>

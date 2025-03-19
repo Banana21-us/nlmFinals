@@ -49,6 +49,16 @@ export const routes: Routes = [
     // canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/archives/archives.module').then(m => m.ArchivesModule),
   },
+  {
+    path: 'president-page',
+    // canActivate: [authGuard], // Protect user routes
+    loadChildren: () => import('./Modules/president/president.module').then(m => m.PresidentModule),
+  },
+  {
+    path: 'departmenthead-page',
+    // canActivate: [authGuard], // Protect user routes
+    loadChildren: () => import('./Modules/departmenthead/depthead.module').then(m => m.DepartmentheadModule),
+  },
 
   
   { path: '', redirectTo: 'login', pathMatch: 'full' }

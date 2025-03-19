@@ -71,6 +71,7 @@ export class ApiService {
   }
 
   // leave
+  
   createLeaveType(leaveData:any):Observable<any>{
     return this.http.post<any>(this.apiUrl + 'leave-types',leaveData)
   }
@@ -183,7 +184,9 @@ export class ApiService {
   }
 
   // reqleave user
-  
+  getdepthead(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'departmentheads');
+  }
   submitLeaveRequest(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}leaverequests`, data);
   }
@@ -196,14 +199,39 @@ export class ApiService {
   updatedetails(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-requests/userupdate/${id}`, data);
   }
-  getLeaveRequests(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + 'leaverequests');
+  // getLeaveRequests(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.apiUrl + 'leaverequests');
+  // }
+  getLeaveRequestsByDHead(dheadId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}leave-requests/dhead/${dheadId}`);
   }
+  getLeaveRequestsByexecsec(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'executivesec');
+  }
+  getLeaveRequestsBypresident(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + 'president');
+  }
+  // dhead 
   accept(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-reqs/${id}/approve`, null); // Pass null as the body since no data is needed
   }
   reject(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-reqs/${id}/reject`, null);
+  }
+  // exec 
+  acceptexecsec(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-execsec/${id}/approve`, null); // Pass null as the body since no data is needed
+  }
+  rejectexecsec(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-execsec/${id}/reject`, null);
+  }
+  // pres 
+
+  acceptpres(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-pres/${id}/approve`, null); // Pass null as the body since no data is needed
+  }
+  rejectpres(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-pres/${id}/reject`, null);
   }
   // countleavedash(userId: string): Observable<any[]> {
   //   return this.http.get<any[]>(`${this.apiUrl}leave-count/${userId}`);

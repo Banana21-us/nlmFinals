@@ -15,6 +15,11 @@ interface LeaveType {
   reason: string;
 }
 
+interface dhead {
+  id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-create',
   imports: [CommonModule,ReactiveFormsModule,FormsModule,ToastModule,ButtonModule,RippleModule],
@@ -25,23 +30,33 @@ interface LeaveType {
 export class CreateComponent implements OnInit{
 
   leaveTypes: LeaveType[] = [];
+  depthead: dhead[] = [];
 
   leavereqform = new FormGroup({
     leavetypeid: new FormControl(''),
     from: new FormControl(''),
     to: new FormControl(''),
-    reason: new FormControl('')
+    reason: new FormControl(''),
+    DHead: new FormControl('')
   });
 
   constructor(private api: ApiService,private messageService: MessageService,private dialogRef: MatDialogRef<CreateComponent>) {}
   
   ngOnInit(): void {
     this.getLeaveTypes();
+    this.getdepthead();
+    console.log('dhead',this.depthead);
   }
 
   getLeaveTypes() {
     this.api.getleave().subscribe(data => {
       this.leaveTypes = data;
+    });
+  }
+
+  getdepthead() {
+    this.api.getdepthead().subscribe(data => {
+      this.depthead = data;
     });
   }
   close() {

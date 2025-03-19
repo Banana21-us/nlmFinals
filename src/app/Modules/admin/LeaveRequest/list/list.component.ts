@@ -15,8 +15,9 @@ export interface LeaveRequest {
   from: Date;
   to: Date;
   submittedon: Date;
-  status: string;
   reason: string;
+  dept_head: string;
+  exec_sec: string;
 }
 
 
@@ -34,11 +35,11 @@ export class ListComponent implements OnInit {
   }
 
 dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason','status','actions'];
+  displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason','dept_head','exec_sec','actions'];
 
   
   getdata(){
-    this.leavemanagementService.getLeaveRequests().subscribe(data => {
+    this.leavemanagementService.getLeaveRequestsByexecsec().subscribe(data => {
       this.dataSource.data = data;
       console.log("hell",this.dataSource.data);
     });
@@ -50,14 +51,14 @@ dataSource = new MatTableDataSource<LeaveRequest>([]);
   }
 
   acceptRequest(element: LeaveRequest) {
-    this.leavemanagementService.accept(element.id).subscribe(response => {
+    this.leavemanagementService.acceptexecsec(element.id).subscribe(response => {
       console.log('Request accepted', response);
       this.getdata(); // Refresh the data after accepting the request
     });
   }
 
   rejectRequest(element: LeaveRequest) {
-    this.leavemanagementService.reject(element.id).subscribe(response => {
+    this.leavemanagementService.rejectexecsec(element.id).subscribe(response => {
       console.log('Request rejected', response);
       this.getdata(); // Refresh the data after accepting the request
     });

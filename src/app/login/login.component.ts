@@ -92,20 +92,45 @@ export class LoginComponent {
               const positionsArray = position.split(',').map(p => p.trim()); // Split and trim spaces
               console.log('Updated positions:', positionsArray);
               console.log('User department:', department);
-          
+
+              // archives and records and admin
               if (department === 'Secretariat' && positionsArray.includes('Executive Secretary')) {
                 this.router.navigate(['/archives-page/dashboard']);
               } 
+
               else if (department === 'Administrators' && positionsArray.includes('Executive Secretary')) {
                 this.router.navigate(['/admin-page/dashboard']);
               } 
+
+              // accounting 
               else if (
                 department === 'Accounting Personnel' && 
                 (positionsArray.includes('Chief Accountant') || positionsArray.includes('Disbursing Accountant'))
               ) { 
                 this.router.navigate(['/accounting-page/dashboard']);
               }
-              else {
+              else if (
+                department === 'Administrators' && 
+                (positionsArray.includes('Treasurer'))
+              ) { 
+                this.router.navigate(['/departmenthead-page/dashboard']);
+              }
+
+              // directors
+              else if (
+                department === 'Directors' && 
+                  ['Communication Ministry', 'Spirit of Prophecy', 'Education', 'Ministerial'].some(pos => positionsArray.includes(pos))
+              ) {
+                  this.router.navigate(['/departmenthead-page/dashboard']);
+              }
+              // president 
+              else if (
+                department === 'Administrators' && 
+                (positionsArray.includes('President'))
+              ) { 
+                this.router.navigate(['/president-page/dashboard']);
+              }
+                else {
                 this.router.navigate(['/user-page/dashboard']);
               }
             } else {
