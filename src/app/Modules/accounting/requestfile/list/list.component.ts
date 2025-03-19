@@ -48,6 +48,38 @@ export class ListComponent {
 
   constructor(private router: Router, private ser: ApiService, private sanitizer: DomSanitizer, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
+  selectedFiles: File[] = [];
+
+  onFileChange(event: any) {
+    this.selectedFiles = Array.from(event.target.files);
+  }
+
+  submit() {
+    if (this.selectedFiles.length === 0) {
+      alert('Please select files to upload.');
+      return;
+    }
+  
+    this.ser.uploadFiles(this.selectedFiles).subscribe(
+      response => {
+        console.log('Upload successful', response);
+        
+        // Clear selected files and reset file input
+        this.selectedFiles = [];
+        
+        // Reset the file input field to allow re-selection of the same files
+        const fileInput = document.getElementById('file') as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
+        this.getFile();
+      },
+      error => console.error('Upload failed', error)
+    );
+  }
+  
+  
+  
   ngOnInit(): void {
     this.getFile();
   }

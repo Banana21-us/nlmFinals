@@ -22,6 +22,13 @@ export class ApiService {
 
   // private userPicSubject = new BehaviorSubject<string | null>(null); // Store user image URL
   // userPic$ = this.userPicSubject.asObservable();
+  uploadFiles(files: File[]): Observable<any> {
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('files[]', file);
+    }
+    return this.http.post(this.apiUrl + 'upload-files', formData);
+  }
 
   private adminPicSubject = new BehaviorSubject<string | null>(null); // This will store the admin image URL
   adminPic$ = this.adminPicSubject.asObservable();

@@ -98,27 +98,93 @@ i {
     overflow: hidden; /* Hide content if it overflows */
   }
   
-  .delete {
-    background: linear-gradient(135deg, #ff6b6b, #c21807);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 24px;
-    /* Adjust size as needed */
-  }
   
-  .edit {
-    background: linear-gradient(135deg, #1e90ff, #008080);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 24px;
-    /* Adjust size as needed */
-  }
   
   mat-form-field {
     display: flex;
     margin-left: auto; /* Pushes it to the right */
   }
-  
+  /* File Upload Form */
+.file-upload-form {
+  margin: 20px auto;
+  max-width: 100%;
+  padding: 20px;
+  background-color: #f0f0f0; /* Form background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.file-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.file-input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f8f8; /* File input background */
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+
+
+.image-preview-container {
+  margin-top: 12px;
+  background-color: #f5f5f5; /* Image preview background */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Image preview grid */
+.image-previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Adjusts column size */
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+/* Individual image preview */
+.image-preview {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  max-width: 100%;
+}
+
+/* Responsive styles for smaller screens */
+  @media (max-width: 1024px) {
+    .image-previews {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Larger columns on tablets */
+      gap: 15px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .image-previews {
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* More flexible for mobile */
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .image-previews {
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Smaller columns for small devices */
+      gap: 5px;
+    }
+  }
+
+
+
   /* Media Queries */
   @media (max-width: 768px) {
     .table-container {

@@ -6,6 +6,26 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Search . . ." #input>
     </mat-form-field>
 
+      <form (ngSubmit)="submit()" class="file-upload-form">
+        <div class="form-group">
+          <label for="file" class="ms-2"><strong>Upload Multiple Files</strong></label>
+          <input type="file" id="file" (change)="onFileChange($event)" multiple class="file-input" />
+        </div>  
+      
+        <div *ngIf="selectedFiles.length" class="image-preview-container">
+          <h3>Previews:</h3>
+          <div class="image-previews">
+            <div *ngFor="let file of selectedFiles" class="image-preview">
+              <p>{{ file.name }}</p>
+            </div>
+          </div>
+        </div>
+
+        <p-button type="submit" icon="bi bi-upload" label="Upload" class="me-2 mb-2" severity="secondary"></p-button>
+
+      </form>
+    
+
     <div class="table-container">
         <section class="announcement-list">
           <div id="announcementsContainer">
