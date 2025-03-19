@@ -16,8 +16,6 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
-// import { ApiService } from '../../../../api.service';
-// import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 
 export interface Employee {

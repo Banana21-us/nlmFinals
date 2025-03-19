@@ -13,6 +13,11 @@ import { CreateworkstatusComponent } from '../createworkstatus/createworkstatus.
 import { UpdateworkstatusComponent } from '../updateworkstatus/updateworkstatus.component';
 import { CreatecategoryComponent } from '../createcategory/createcategory.component';
 import { UpdatecategoryComponent } from '../updatecategory/updatecategory.component';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 export interface category {
   id:number;
@@ -21,14 +26,18 @@ export interface category {
 }
 @Component({
   selector: 'app-category',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule, ],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule,
+    ToastModule,ButtonModule,RippleModule,ConfirmDialog
+  ],
   templateUrl: './category.component.html',
-  styleUrl: './category.component.css'
+  styleUrl: './category.component.css',
+  providers: [MessageService,ConfirmationService]
 })
 export class CategoryComponent {
 
   readonly dialog = inject(MatDialog);
-  readonly workstatusService = inject(ApiService);
+  constructor(private messageService: MessageService,private category: ApiService, private confirmationService: ConfirmationService) {}
+
   dataSource = new MatTableDataSource<category>([]);
   displayedColumns: string[] = ['name', 'actions'];
 
@@ -37,7 +46,7 @@ export class CategoryComponent {
   }
 
   getdata(){
-    this.workstatusService.getcategory().subscribe(data => {
+    this.category.getcategory().subscribe(data => {
       this.dataSource.data = data;
     });
   }
@@ -55,7 +64,7 @@ export class CategoryComponent {
       }
     });
   }
-  editdept(element: any) {
+  editcateg(element: any) {
       const dialogRef = this.dialog.open(UpdatecategoryComponent, {
         width: 'auto',
         height: 'auto',
@@ -68,13 +77,33 @@ export class CategoryComponent {
         }
       });
   }
-
-  deletedept(id: number): void {
-    this.workstatusService.deletecategory(id).subscribe(() => {
-      this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
-    });
-  }
-  
+  confirm(id: number) {
+    this.confirmationService.confirm({ 
+        header: 'Are you sure?',
+        message: 'Please confirm to proceed.',
+        accept: () => {
+          this.category.deletecategory(id).subscribe(() => {
+            this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+          
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Success', 
+                    detail: 'Deleted successfully',
+                    life: 3000
+                });
+               // Refresh the list after deletion
+            });
+        },
+        reject: () => {
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Cancel', 
+                detail: 'Deletion has been canceled' 
+            });
+        },
+        
+    }); this.getdata(); 
+}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

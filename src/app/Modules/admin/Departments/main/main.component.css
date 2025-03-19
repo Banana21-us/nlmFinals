@@ -67,7 +67,7 @@ button {
 }
 
 /* Hide text on small screens */
-@media (max-width: 768px) {
+@media (max-width: 990px) {
   .navlink {
     display: flex;
     justify-content: center;
@@ -84,7 +84,7 @@ button {
 }
 
 /* Show text on larger screens */
-@media (min-width: 769px) {
+@media (min-width: 990px) {
   .navlink span {
     display: inline-block; /* Show text */
     margin-left: 8px;

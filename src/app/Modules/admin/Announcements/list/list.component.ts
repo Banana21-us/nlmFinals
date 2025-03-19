@@ -98,16 +98,6 @@ export class ListComponent implements OnInit{
         }
       });
     }
-    onDelete(id: number): void {
-      this.ser.deleteAnnouncement(id).subscribe({
-        next: () => {
-          this.announcements = this.announcements.filter(ann => ann.id !== id);
-          this.dataSource.data = this.announcements; 
-          this.filteredAnnouncements = this.filteredAnnouncements.filter(ann => ann.id !== id);
-        }
-      });
-    
-  }
     confirm(id: number) {
       this.confirmationService.confirm({ 
           header: 'Are you sure?',

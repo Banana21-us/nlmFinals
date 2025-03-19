@@ -63,7 +63,7 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element" >
             <p-toast  position="bottom-right" />
-            <ng-container *ngIf="element.status !== 'Rejected' && element.status !== 'Approved'">
+            <ng-container *ngIf="element.president !== 'Rejected' && element.president !== 'Approved'">
               <p-button icon="bi bi-pencil-square" (click)="edits(element)" styleClass="p-button-success me-1"></p-button>
               <p-button icon="bi bi-trash3" (click)="confirm(element.id)" styleClass="p-button-danger"></p-button>
             </ng-container>

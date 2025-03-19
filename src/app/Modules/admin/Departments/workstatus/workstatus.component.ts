@@ -12,6 +12,11 @@ import { ApiService } from '../../../../api.service';
 import { UpdatedeptComponent } from '../updatedept/updatedept.component';
 import { CreateworkstatusComponent } from '../createworkstatus/createworkstatus.component';
 import { UpdateworkstatusComponent } from '../updateworkstatus/updateworkstatus.component';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 export interface workstatus {
   id:number;
@@ -21,14 +26,18 @@ export interface workstatus {
 
 @Component({
   selector: 'app-workstatus',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule, ],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule, 
+     ToastModule,ButtonModule,RippleModule,ConfirmDialog
+  ],
   templateUrl: './workstatus.component.html',
-  styleUrl: './workstatus.component.css'
+  styleUrl: './workstatus.component.css',
+  providers: [MessageService,ConfirmationService]
 })
 export class WorkstatusComponent {
 
   readonly dialog = inject(MatDialog);
-  readonly workstatusService = inject(ApiService);
+  constructor(private messageService: MessageService,private workstatusService: ApiService, private confirmationService: ConfirmationService) {}
+
   dataSource = new MatTableDataSource<workstatus>([]);
   displayedColumns: string[] = ['name', 'actions'];
 
@@ -55,7 +64,7 @@ export class WorkstatusComponent {
       }
     });
   }
-  editdept(element: any) {
+  editorkstat(element: any) {
       const dialogRef = this.dialog.open(UpdateworkstatusComponent, {
         width: 'auto',
         height: 'auto',
@@ -69,12 +78,33 @@ export class WorkstatusComponent {
       });
   }
 
-  deletedept(id: number): void {
-    this.workstatusService.deleteworkstatus(id).subscribe(() => {
-      this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
-    });
-  }
-  
+  confirm(id: number) {
+    this.confirmationService.confirm({ 
+        header: 'Are you sure?',
+        message: 'Please confirm to proceed.',
+        accept: () => {
+          this.workstatusService.deleteworkstatus(id).subscribe(() => {
+            this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+          
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Success', 
+                    detail: 'Deleted successfully',
+                    life: 3000
+                });
+               // Refresh the list after deletion
+            });
+        },
+        reject: () => {
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Cancel', 
+                detail: 'Deletion has been canceled' 
+            });
+        },
+        
+    }); this.getdata(); 
+}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

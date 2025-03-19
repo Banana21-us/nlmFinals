@@ -12,6 +12,11 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CreatedesignationComponent } from '../createdesignation/createdesignation.component';
 import { ApiService } from '../../../../api.service';
 import { UpdatedesignationComponent } from '../updatedesignation/updatedesignation.component';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 export interface designation {
   id:number;
@@ -20,14 +25,17 @@ export interface designation {
 }
 @Component({
   selector: 'app-designation',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule, ],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule, 
+    ToastModule,ButtonModule,RippleModule,ConfirmDialog
+  ],
   templateUrl: './designation.component.html',
-  styleUrl: './designation.component.css'
+  styleUrl: './designation.component.css',
+  providers: [MessageService,ConfirmationService]
 })
 export class DesignationComponent implements OnInit{
  
   readonly dialog = inject(MatDialog);
-  readonly desigmanagementService = inject(ApiService);
+  constructor(private messageService: MessageService,private desigmanagementService: ApiService, private confirmationService: ConfirmationService) {}
 
   dataSource = new MatTableDataSource<designation>([]);
   displayedColumns: string[] = ['name', 'actions'];
@@ -56,11 +64,7 @@ export class DesignationComponent implements OnInit{
       }
     });
   }
-  deletedesig(id: number): void {
-    this.desigmanagementService.deletedesig(id).subscribe(() => {
-      this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
-    });
-  }
+  
   
   editdesignation(element: any) {
         const dialogRef = this.dialog.open(UpdatedesignationComponent, {
@@ -75,7 +79,34 @@ export class DesignationComponent implements OnInit{
           }
         });
     }
-  
+
+    confirm(id: number) {
+      this.confirmationService.confirm({ 
+          header: 'Are you sure?',
+          message: 'Please confirm to proceed.',
+          accept: () => {
+            this.desigmanagementService.deletedesig(id).subscribe(() => {
+              this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+            
+                  this.messageService.add({ 
+                      severity: 'success', 
+                      summary: 'Success', 
+                      detail: 'Deleted successfully',
+                      life: 3000
+                  });
+                 // Refresh the list after deletion
+              });
+          },
+          reject: () => {
+              this.messageService.add({ 
+                  severity: 'info', 
+                  summary: 'Cancel', 
+                  detail: 'Deletion has been canceled' 
+              });
+          },
+      });
+      this.getdata(); 
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -10,6 +10,11 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CreatedeptComponent } from '../createdept/createdept.component';
 import { ApiService } from '../../../../api.service';
 import { UpdatedeptComponent } from '../updatedept/updatedept.component';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 export interface departments {
   id:number;
@@ -19,13 +24,16 @@ export interface departments {
 
 @Component({
   selector: 'app-dept',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule, ],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, RouterModule,
+     ToastModule,ButtonModule,RippleModule,ConfirmDialog
+   ],
   templateUrl: './dept.component.html',
-  styleUrl: './dept.component.css'
+  styleUrl: './dept.component.css',
+  providers: [MessageService,ConfirmationService]
 })
 export class DeptComponent implements OnInit{
   readonly dialog = inject(MatDialog);
-  readonly DeptmanagementService = inject(ApiService);
+    constructor(private messageService: MessageService,private DeptmanagementService: ApiService, private confirmationService: ConfirmationService) {}
   
   dataSource = new MatTableDataSource<departments>([]);
   displayedColumns: string[] = ['name', 'actions'];
@@ -66,17 +74,38 @@ export class DeptComponent implements OnInit{
         }
       });
   }
-
-  deletedept(id: number): void {
-    this.DeptmanagementService.deletedept(id).subscribe(() => {
-      this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
-    });
-  }
   
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  confirm(id: number) {
+    this.confirmationService.confirm({ 
+        header: 'Are you sure?',
+        message: 'Please confirm to proceed.',
+        accept: () => {
+          this.DeptmanagementService.deletedept(id).subscribe(() => {
+            this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+          
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Success', 
+                    detail: 'Deleted successfully',
+                    life: 3000
+                });
+            });
+        },
+        reject: () => {
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Cancel', 
+                detail: 'Deletion has been canceled' 
+            });
+        },
+    });
+    this.getdata(); 
+}
 }
 
 
