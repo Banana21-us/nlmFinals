@@ -1,0 +1,42 @@
+body {
+    font-family: 'Lato', sans-serif;
+  }
+  
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    padding: 20px 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Adds shadow */
+  }
+  th{
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  mat-form-field {
+    display: flex;
+    margin-left: auto; /* Pushes it to the right */
+  }
+  
+  
+  
+  
+  
+    .status-pending {
+      color: orange;
+    }
+
+    .status-approved {
+      color: green;
+    }
+
+    .status-rejected {
+      color: red;
+    }

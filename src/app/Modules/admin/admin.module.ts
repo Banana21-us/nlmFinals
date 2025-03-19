@@ -11,6 +11,7 @@ import { LeaveManagementRoutes } from './LeaveManagement/leavemanagement.routes'
 import { LeaveRequest } from './LeaveRequest/leaverequest.routes';
 import { CalendarComponent } from './Calendar/calendar/calendar.component';
 import { requestfile } from '../user/requestfile/list/requestfile.routes';
+import { userLeaveRequest } from './leave/leave.route';
 
 // 🛠 Admin Module Routes
 const routes: Routes = [
@@ -41,6 +42,9 @@ const routes: Routes = [
             },
             { path: 'LeaveRequest', 
               loadChildren: () => import('./LeaveRequest/leaverequest.routes').then(r => LeaveRequest),
+            },
+            { path: 'leave', 
+              loadChildren: () => import('./leave/leave.route').then(r => userLeaveRequest),
             },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

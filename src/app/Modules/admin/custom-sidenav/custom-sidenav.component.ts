@@ -90,7 +90,11 @@ export class CustomSidenavComponent {
         label: 'Employees',
         route: 'Employee'
       },
-      
+      {
+        icon: 'person',
+        label: 'File a Leave',
+        route: 'leave'
+      },
       {
         icon: 'person',
         label: 'Leave Request',
