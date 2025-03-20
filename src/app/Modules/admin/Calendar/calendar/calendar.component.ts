@@ -47,9 +47,12 @@ interface CalendarDay {
   providers: [MessageService]
 })
 export class CalendarComponent implements OnInit {
-  constructor(private eventService: ApiService, private messageService: MessageService) { }
+  constructor(private eventService: ApiService, private messageService: MessageService) { 
+    this.getUserPosition();
+  }
   isDialogOpenupdate = false;
   isDialogOpen = false;
+  isDialogtoall= false;
   title = '';
   time = '';
   calendarDays: any[] = [];
@@ -60,12 +63,23 @@ export class CalendarComponent implements OnInit {
   date: Date = new Date();
   events: any[] = []; // Make sure events is initialized as an array
   eventId = 0;
-
+  position: string = '';
   loadEvents() {
     const userId = Number(localStorage.getItem('user'));
     this.loadEventsbyuser(userId);
   }
-
+  getUserPosition() {
+    const userData = localStorage.getItem('position'); 
+    console.log('Raw user data from localStorage:', userData); // Debug log
+  
+    if (userData) {
+      const positionsArray = userData.split(',').map(pos => pos.trim()); // Split & trim spaces
+      console.log('Split positions:', positionsArray); // Debug log
+  
+      this.position = positionsArray.includes('Executive Secretary') ? 'Executive Secretary' : ''; // Check if exists
+      console.log('Extracted Position:', this.position); // Debug log
+    }
+  }
   ngOnInit(): void {
     this.generateCalendar();
     this.loadEvents();
@@ -85,7 +99,16 @@ export class CalendarComponent implements OnInit {
       const localTime = new Date(eventTime.getTime() - eventTime.getTimezoneOffset() * 60000);
       this.time = localTime.toISOString().slice(0, 16); // Format for datetime-local input
   }
-}
+  }
+
+  openDialogcreatetoall() {
+    this.isDialogtoall = true;
+    this.title ="";
+  }
+  closeDialogcreatetoall() {
+    this.isDialogtoall = false;
+    this.title ="";
+  }
 
 
   closeDialog() {
@@ -153,6 +176,23 @@ export class CalendarComponent implements OnInit {
     );
   }
 
+  submitnlmEvent() {
+    const eventData = {
+      title: this.title,
+      time: this.time,
+    };
+    this.eventService.createnlmEvent(eventData).subscribe(
+      (response) => {
+        console.log('Event created successfully:', response);
+        this.loadEvents();
+        this.closeDialogcreatetoall();
+      },
+      (error) => {
+        console.error('Error creating event:', error);
+      }
+    );
+  }
+  
   previousMonth() {
     this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, 1);
     this.generateCalendar();

@@ -247,13 +247,13 @@ export class ApiService {
     return this.http.get<{ pending: number, approved: number, rejected: number, events_today: number }>(`${this.apiUrl}leave-count/${userId}`);
   }
   
+  // getEvents(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}events`);
+  // }
 
   createEvent(eventData: any) {
     return this.http.post(this.apiUrl + 'events', eventData);
   }
-  // getEvents(): Observable<any[]> {
-  //   return this.http.get<any[]>(`${this.apiUrl}events`);
-  // }
   getEventsByUserId(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}events/user/${userId}`);
   }
@@ -263,7 +263,10 @@ export class ApiService {
   deleteEvents(id: number) {
     return this.http.delete(`${this.apiUrl}events/${id}`);
   }
-
+   
+  createnlmEvent(eventData: any) {
+    return this.http.post(this.apiUrl + 'nlmevents', eventData);
+  }
   // files
   // getFiles(): Observable<any[]> {
   //   return this.http.get<any[]>(this.apiUrl + 'requestfile');

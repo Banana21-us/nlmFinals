@@ -1,7 +1,7 @@
 <div class="container">
   <!-- Banner Section -->
   <div class="banner">
-    <div class="text-content">
+    <div class="text-content text-black">
       <div class="date">{{ currentDate | date: 'EEEE, MMMM d, y' }}</div>
       <h1 class="welcome-message">Welcome back!</h1>
       <p class="subtext">Stay informed, stay engaged, and take charge of your workday. Let’s make today a success!</p>
@@ -16,7 +16,7 @@
     <div class="col-12 col-md-6">
   <div class="card mb-4 bg-c-green order-card">
     <div class="card-body">
-      <i class="fa fa-calendar card-icon"></i>
+      <i class="fa fa-calendar card-icon text-black"></i>
       <h2 class="text-right"><span>{{ eventsToday }}</span></h2>
       <P class="m-b-0 text-right ms-1">My Calendar</P>
     </div>
@@ -29,7 +29,7 @@
         <div class="card mb-4 bg-c-red order-card" >
             <!-- (click)="Modal(seniorHighTotal)" -->
           <div class="card-body">
-            <i class="fa fa-sign-out card-icon"></i>
+            <i class="fa fa-sign-out card-icon text-black"></i>
             <h2 class="text-right"><span>{{ pending }}</span></h2>
             <p class="m-b-0 text-right ms-1">My Leave Request</p>
           </div>
@@ -40,7 +40,7 @@
     <!-- Senior High Card -->
     <div class="card mb-4 bg-c-orange order-card">
       <div class="card-body">
-        <i class="fa fa-check-circle-o card-icon"></i>
+        <i class="fa fa-check-circle-o card-icon text-black"></i>
         <h2 class="text-right"><span>{{ approved }}</span></h2>
         <p class="m-b-0 text-right ms-1">Approve Request</p>
       </div>
@@ -52,7 +52,7 @@
       <!-- Total Students Card -->
       <div class="card mb-4 bg-c-blue order-card">
         <div class="card-body">
-          <i class="fa fa-ban card-icon"></i>
+          <i class="fa fa-ban card-icon text-black"></i>
           <h2 class="text-right"><span>{{ rejected }}</span></h2>
           <p class="m-b-0 text-right ms-1">Reject Request</p>
         </div>
