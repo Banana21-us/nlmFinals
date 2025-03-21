@@ -15,7 +15,9 @@ export interface LeaveRequest {
   to: string;
   created_at: string;
   dept_head: string;
+  exec_sec: string;
   reason: string;
+  president: string;
 }
 
 @Component({
@@ -27,7 +29,7 @@ export interface LeaveRequest {
 export class ListComponent implements OnInit {
   readonly leavemanagementService = inject(ApiService);
   dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['name', 'leave_type', 'from', 'to', 'submittedon', 'reason', 'dept_head', 'actions'];
+  displayedColumns: string[] = ['name', 'leave_type', 'from', 'to', 'submittedon', 'reason','dept_head', 'exec_sec','president', 'actions'];
 
   ngOnInit(): void {
     this.getdata();
@@ -49,6 +51,8 @@ export class ListComponent implements OnInit {
               to: item.to,
               created_at: item.created_at,
               dept_head: item.dept_head,
+              exec_sec: item.exec_sec,
+              president: item.president,
               reason: item.reason,
             }));
           },

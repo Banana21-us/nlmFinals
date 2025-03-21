@@ -263,7 +263,6 @@ export class ApiService {
   deleteEvents(id: number) {
     return this.http.delete(`${this.apiUrl}events/${id}`);
   }
-   
   createnlmEvent(eventData: any) {
     return this.http.post(this.apiUrl + 'nlmevents', eventData);
   }
@@ -300,12 +299,17 @@ export class ApiService {
   getNotifications(userId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}notifications/${userId}`);
 }
-  markAsRead(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}notifications/${id}/read`, { is_read: true });
+  // markAsRead(id: number): Observable<any> {
+  //   return this.http.patch(`${this.apiUrl}notif/${id}/read`, { is_read: true });
+  // }
+ 
+  markAsRead(notificationId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}notifications/${notificationId}/read`, {});
   }
   markAsdelete(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}notifications/${id}`);
   }
+  
   getNotificationCount(userId: number): Observable<{ count: number }> {
     return this.http.get<{ count: number }>(`${this.apiUrl}notifications/unread-count/${userId}`);
   }

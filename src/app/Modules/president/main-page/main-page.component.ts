@@ -24,7 +24,8 @@ export class MainPageComponent {
       announcements: [],
       statementofaccouunt: [],
       servicerecords:[],
-      leaveapproval: []
+      leaveapproval: [],
+      leavereq: [],
     };
   
   notificationCount: number = 0;
@@ -121,7 +122,8 @@ export class MainPageComponent {
         ...data.announcements,
         ...data.statementofaccouunt,
         ...data.servicerecords,
-        ...data.leaveapproval
+        ...data.leaveapproval,
+        ...data.leavereq
       ] as Notification[]; // Cast to Notification[]
   
       // Sort notifications by created_at (descending order)
@@ -135,18 +137,11 @@ export class MainPageComponent {
     });
   }
   
-  
-  
-
-
-  
-  
-
-  del(id: number) {
-    this.conn.markAsdelete(id).subscribe(() => {
-      this.loadNotifications(); // Refresh list
-      // this.router.navigate(['/admin-page/Employee/list']);
-    });
+  markNotificationAsRead(id: number) {
+    this.conn.markAsRead(id).subscribe(
+      response => console.log(response),
+      error => console.error(error)
+    );
   }
   onLogout() {
     this.conn.logout().subscribe(

@@ -22,6 +22,7 @@ export interface LeaveRequest {
   reason: string;
   dept_head: string;
   exec_sec: string;
+  president: string;
 }
 
 
@@ -42,7 +43,7 @@ export class ListComponent implements OnInit {
   }
 
 dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason','dept_head','exec_sec','actions'];
+  displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason','dept_head','exec_sec','president','actions'];
 
   
   getdata(){

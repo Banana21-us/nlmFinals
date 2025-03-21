@@ -24,6 +24,7 @@ export class MainPageComponent {
       announcements: [],
       statementofaccouunt: [],
       servicerecords:[],
+      leavereq:[],
       leaveapproval: []
     };
   
@@ -48,32 +49,55 @@ export class MainPageComponent {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    console.log('notifcon',this.notifications)
     const storedUser = localStorage.getItem('users');
     if (storedUser) {
       console.log('Stored user:', storedUser);
       this.user = JSON.parse(storedUser);
     }
-    // Get the current window width
+    // Subscribe to the adminPic$ observable to get the image URL
+    this.conn.adminPic$.subscribe((newImageUrl) => {
+      if (newImageUrl) {
+        this.adminPic = newImageUrl; // Update the component's admin picture
+        localStorage.setItem('admin_pic', JSON.stringify({ img: newImageUrl })); // Store the latest image
+      }
+    });
+  
+    const storedAdminPic = localStorage.getItem('admin_pic');
+    if (storedAdminPic) {
+      try {
+        const user = JSON.parse(storedAdminPic);
+        if (user && user.img) {
+          this.adminPic = user.img;
+        }
+      } catch (error) {
+        console.error('Error parsing admin_pic:', error);
+      }
+    }
+
     this.onResize();
     // Set the initial width of the sidenav
 
     this.sidenavWidth = computed(() => this.collapsed() ? '65px' : this.navSize);
     this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
     console.log(this.getWidth)
-    // Subscribe to the adminPic$ observable to get the image URL
-    // this.conn.adminPic$.subscribe((newImageUrl) => {
-    //   if (newImageUrl) {
-    //     this.adminPic = newImageUrl; // Update the component's admin picture
-    //   }
-    // });
 
-    // // Optionally, initialize with the image from localStorage
-    // const user = JSON.parse(localStorage.getItem('user') || '{}');
-    // if (user && user.admin_pic) {
-    //   this.adminPic = user.admin_pic;
-    // }
     this.loadNotifications();
+    // this.loadNotificationCount();
+
+    // this.intervalId = setInterval(() => {
+    //   this.loadNotifications();
+    //   this.loadNotificationCount()
+    // }, 10000)
+    
+  }
+
+  markNotificationAsRead(id: number) {
+    this.conn.markAsRead(id).subscribe(
+      response => console.log(response),
+      error => console.error(error)
+    );
   }
   getRelativeTime(dateString: string): string {
     const now = new Date();
@@ -121,6 +145,7 @@ export class MainPageComponent {
         ...data.announcements,
         ...data.statementofaccouunt,
         ...data.servicerecords,
+        ...data.leavereq,
         ...data.leaveapproval
       ] as Notification[]; // Cast to Notification[]
   
@@ -135,19 +160,6 @@ export class MainPageComponent {
     });
   }
   
-  
-  
-
-
-  
-  
-
-  del(id: number) {
-    this.conn.markAsdelete(id).subscribe(() => {
-      this.loadNotifications(); // Refresh list
-      // this.router.navigate(['/admin-page/Employee/list']);
-    });
-  }
   onLogout() {
     this.conn.logout().subscribe(
         (response) => {

@@ -67,21 +67,23 @@ export class MainPageComponent implements OnInit {
     // Subscribe to the adminPic$ observable to get the image URL
     this.conn.adminPic$.subscribe((newImageUrl) => {
       if (newImageUrl) {
-        
         this.adminPic = newImageUrl; // Update the component's admin picture
+        localStorage.setItem('admin_pic', JSON.stringify({ img: newImageUrl })); // Store the latest image
       }
     });
   
-    // const user = JSON.parse(localStorage.getItem('admin_pic') || '{}');
-    // if (user && user.img) {
-    //   this.adminPic = user.img;
-    // }
-    // const storedUser = localStorage.getItem('users');
-    // if (storedUser) {
-    //   console.log('Stored user:', storedUser);
-    //   this.user = JSON.parse(storedUser);
-    // }
-    // Get the current window width
+    const storedAdminPic = localStorage.getItem('admin_pic');
+    if (storedAdminPic) {
+      try {
+        const user = JSON.parse(storedAdminPic);
+        if (user && user.img) {
+          this.adminPic = user.img;
+        }
+      } catch (error) {
+        console.error('Error parsing admin_pic:', error);
+      }
+    }
+
     this.onResize();
     // Set the initial width of the sidenav
 
@@ -132,12 +134,14 @@ export class MainPageComponent implements OnInit {
       console.error('Error fetching notifications:', error);
     });
   }
-  del(id: number) {
-    this.conn.markAsdelete(id).subscribe(() => {
-      this.loadNotifications(); // Refresh list
-      // this.router.navigate(['/admin-page/Employee/list']);
-    });
+  
+  markNotificationAsRead(id: number) {
+    this.conn.markAsRead(id).subscribe(
+      response => console.log(response),
+      error => console.error(error)
+    );
   }
+
   loadNotificationCount() {
     this.conn.getNotificationCount(4).subscribe(data => {
       this.notificationCount = data.count;
