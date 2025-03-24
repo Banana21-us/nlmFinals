@@ -183,11 +183,16 @@
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group focused">
-                          <label class="form-control-label" for="input-last-name">Birth Date</label>
-                          <input type="date" id="input-last-name" class="form-control form-control-alternative"
-                            [readonly]="!isEditing" formControlName="birthdate">
+                            <label class="form-control-label" for="input-status">Marital Status</label>
+                            <select id="input-status" class="form-control form-control-alternative" 
+                                formControlName="status" [attr.disabled]="!isEditing ? true : null">
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                            </select>
                         </div>
-                      </div>
+                    </div>
+                    
+                      
                       <div class="col-lg-4">
                         <div class="form-group focused">
                           <label class="form-control-label" for="input-last-name">Birth Place</label>

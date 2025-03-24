@@ -6,19 +6,19 @@
     <span class="example-spacer"></span>
     
     <button mat-icon-button 
-        class="relative me-3" 
-        [matMenuTriggerFor]="notificationsMenu" 
-        aria-label="Notifications" 
-        aria-haspopup="true">
-  <mat-icon class="text-gray-700" 
-            [matBadge]="notificationCount" 
-            [matBadgeHidden]="notificationCount === 0" 
-            matBadgeColor="accent">
-    notifications
-  </mat-icon>
-</button>
+            class="relative me-3" 
+            [matMenuTriggerFor]="notificationsMenu" 
+            aria-label="Notifications" 
+            aria-haspopup="true">
+      <mat-icon class="text-gray-700" 
+                [matBadge]="notificationCount" 
+                [matBadgeHidden]="notificationCount === 0" 
+                matBadgeColor="accent">
+        notifications
+      </mat-icon>
+    </button>
 
-    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72">
+    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72 mt-2">
       <div class="p-3 bg-white rounded-md shadow-md">
         <div *ngIf="notifications && notifications.length > 0; else noNotifications">
           <div *ngFor="let notification of notifications" 

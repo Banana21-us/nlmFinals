@@ -83,7 +83,7 @@ export class MainPageComponent {
     console.log(this.getWidth)
 
     this.loadNotifications();
-    // this.loadNotificationCount();
+    this.loadNotificationCount();
 
     // this.intervalId = setInterval(() => {
     //   this.loadNotifications();
@@ -92,7 +92,30 @@ export class MainPageComponent {
     
   }
 
-  
+  loadNotificationCount() {
+    const storedUser = localStorage.getItem('users'); // ✅ Get 'users' instead of 'user'
+    if (storedUser) {
+        this.user = JSON.parse(storedUser); // Parse JSON to object
+    }
+
+    if (this.user?.id) { // Ensure user and id exist
+        const userId = Number(this.user.id);
+        console.log('Fetching notification count for user ID:', userId); // Debugging log
+
+        this.conn.getNotificationCount(userId).subscribe({
+            next: (data) => {
+                this.notificationCount = data.count;
+                console.log('Notification Count:', this.notificationCount);
+            },
+            error: (error) => {
+                console.error('Error fetching notifications:', error);
+            }
+        });
+    } else {
+        console.warn('User ID not found in local storage.');
+    }
+}
+
   getRelativeTime(dateString: string): string {
     const now = new Date();
     const createdAt = new Date(dateString);
@@ -161,7 +184,7 @@ export class MainPageComponent {
       
     );
     this.loadNotifications();
-  }
+    this.loadNotificationCount();  }
   onLogout() {
     this.conn.logout().subscribe(
         (response) => {

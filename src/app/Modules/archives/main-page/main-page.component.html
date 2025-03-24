@@ -6,45 +6,40 @@
   <span class="example-spacer"></span>
   
   <button mat-icon-button 
-      class="example-icon me-3 notification-button" 
-      [matMenuTriggerFor]="notificationsMenu" 
-      aria-label="Notifications" 
-      aria-haspopup="true">
+        class="relative me-3" 
+        [matMenuTriggerFor]="notificationsMenu" 
+        aria-label="Notifications" 
+        aria-haspopup="true">
+  <mat-icon class="text-gray-700" 
+            [matBadge]="notificationCount" 
+            [matBadgeHidden]="notificationCount === 0" 
+            matBadgeColor="accent">
+    notifications
+  </mat-icon>
+</button>
 
-    <!-- Material Badge (Use Angular Binding) -->
-    <mat-icon [matBadge]="notificationCount" 
-              [matBadgeHidden]="notificationCount === 0" 
-              matBadgeColor="accent">
-      notifications
-    </mat-icon>
-  </button>
-
-  <mat-menu #notificationsMenu="matMenu" xPosition="before" class="notification-menu" >
-    
-    <div class="notification-list">
-      <div *ngIf="notifications && notifications.length > 0; else noNotifications">
-        <div *ngFor="let notification of notifications" class="notification-item">
-          <div class="notification-content" *ngIf="!notification.is_read" 
-            (click)="del(notification.id)">
-            <p class="notification-message">
-              {{ notification.message }} <br>
-              <span class="mt-2" style="font-size: 0.85rem; color: #666;">                
-                {{ getRelativeTime(notification.created_at) }}
-              </span>
-            </p> 
-            
-            
-          </div>
-        </div>
-      </div>
-      
-      <!-- This will be displayed if there are no unread notifications -->
-      <ng-template #noNotifications>
-        <p class="no-notifications-message">No new notifications</p>
-      </ng-template>
-      
+    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72 mt-2">
+      <div class="p-3 bg-white rounded-md shadow-md">
+        <div *ngIf="notifications && notifications.length > 0; else noNotifications">
+          <div *ngFor="let notification of notifications" 
+        class="p-2 border-b last:border-none transition cursor-pointer rounded-md"
+        [ngClass]="{'bg-gray-200': notification.is_read, 'bg-blue-100 hover:bg-blue-200': !notification.is_read}"
+        (click)="markNotificationAsRead(notification.id)">
+      <p class="text-sm text-black">  <!-- Adjust text color for contrast -->
+        {{ notification.message }} 
+        <br>
+        <span class="text-xs text-black">                
+          {{ getRelativeTime(notification.created_at) }}
+        </span>
+      </p>
     </div>
-  </mat-menu>
+
+    </div>
+    <ng-template #noNotifications>
+      <p class="text-center text-sm text-gray-500">No new notifications</p>
+    </ng-template>
+  </div>
+</mat-menu>
   
   
   

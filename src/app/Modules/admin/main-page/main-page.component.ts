@@ -21,14 +21,14 @@ export class MainPageComponent implements OnInit {
  
   notifications: any = {
     user_requests: [],
-    // announcements: [],
+    announcements: [],
     statementofaccouunt: [],
     servicerecords:[],
     leavereq: [],
   };
 
   notificationCount: number = 0;
-  userId: number = 1;
+  
   getWidth: any;
   sidenavWidth:any;
   menunavWidth:any;
@@ -128,7 +128,7 @@ export class MainPageComponent implements OnInit {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-      this.notifications = [...data.user_requests, ...data.leavereq, ...data.statementofaccouunt, ...data.servicerecords, ]; // Merge both arrays
+      this.notifications = [...data.user_requests, ...data.leavereq, ...data.statementofaccouunt,...data.announcements, ...data.servicerecords, ]; // Merge both arrays
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
@@ -140,15 +140,36 @@ export class MainPageComponent implements OnInit {
       response => console.log(response),
       error => console.error(error)
     );
+    this.loadNotifications();
+    this.loadNotificationCount();
   }
 
   loadNotificationCount() {
-    this.conn.getNotificationCount(4).subscribe(data => {
-      this.notificationCount = data.count;
-      console.log('notif count',this.notificationCount);
-      
-    });
-  }
+    const storedUser = localStorage.getItem('users'); // ✅ Get 'users' instead of 'user'
+    if (storedUser) {
+        this.user = JSON.parse(storedUser); // Parse JSON to object
+    }
+
+    if (this.user?.id) { // Ensure user and id exist
+        const userId = Number(this.user.id);
+        console.log('Fetching notification count for user ID:', userId); // Debugging log
+
+        this.conn.getNotificationCount(userId).subscribe({
+            next: (data) => {
+                this.notificationCount = data.count;
+                console.log('Notification Count:', this.notificationCount);
+            },
+            error: (error) => {
+                console.error('Error fetching notifications:', error);
+            }
+        });
+    } else {
+        console.warn('User ID not found in local storage.');
+    }
+}
+
+
+
 
   onLogout() {
     this.conn.logout().subscribe(

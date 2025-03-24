@@ -18,8 +18,11 @@ import { RippleModule } from 'primeng/ripple';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
+  standalone: true,
   selector: 'app-list',
   imports: [
     MatExpansionModule,
@@ -32,7 +35,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
     MatTableModule,
     MatButtonModule,
     ButtonModule,
-    ToastModule,ConfirmDialog
+    ToastModule,ConfirmDialog,DialogModule,InputTextModule
   ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
@@ -40,15 +43,40 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   
 })
 export class ListComponent {
-
+  visible: boolean = false;
+  accCode: string = '';
+  userId: number = 1;
   readonly dialog = inject(MatDialog);
   dataSource = new MatTableDataSource<any>([]);
   files: any[] = [];
   filteredFiles: any[] = [];
+  selectedFiles: File[] = [];
 
   constructor(private router: Router, private ser: ApiService, private sanitizer: DomSanitizer, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
-  selectedFiles: File[] = [];
+
+  showDialog(userId: number, currentAccCode: string | null) {
+    this.userId = userId;
+    this.accCode = currentAccCode || ''; // If null, set as empty string
+    this.visible = true;
+  }
+  
+  saveAccCode() {
+    if (!this.accCode) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Account code is required' });
+      return;
+    }
+
+    this.ser.storeOrUpdateAccCode(this.userId, this.accCode).subscribe(
+      (response) => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message });
+        this.visible = false;
+      },
+      (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update account code' });
+      }
+    );
+  }
 
   onFileChange(event: any) {
     this.selectedFiles = Array.from(event.target.files);
@@ -82,6 +110,7 @@ export class ListComponent {
   
   ngOnInit(): void {
     this.getFile();
+    console.log(this.filteredFiles)
   }
 
   getSanitizedHtml(content: string): SafeHtml {

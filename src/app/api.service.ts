@@ -270,6 +270,9 @@ export class ApiService {
   // getFiles(): Observable<any[]> {
   //   return this.http.get<any[]>(this.apiUrl + 'requestfile');
   // }
+  storeOrUpdateAccCode(userId: number, accCode: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}store-or-update-acc-code/${userId}`, { acc_code: accCode });
+  }
   getrecordsByUserId(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}requestfile/records/${userId}`);
   }
@@ -309,7 +312,6 @@ export class ApiService {
   markAsdelete(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}notifications/${id}`);
   }
-  
   getNotificationCount(userId: number): Observable<{ count: number }> {
     return this.http.get<{ count: number }>(`${this.apiUrl}notifications/unread-count/${userId}`);
   }

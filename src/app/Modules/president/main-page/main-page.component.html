@@ -18,7 +18,7 @@
   </mat-icon>
 </button>
 
-    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72">
+    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72 mt-2">
       <div class="p-3 bg-white rounded-md shadow-md">
         <div *ngIf="notifications && notifications.length > 0; else noNotifications">
           <div *ngFor="let notification of notifications" 
@@ -64,15 +64,15 @@
 
 
   <!-- Menu Items -->
-  <button mat-menu-item [routerLink]="['/user-page/account/']">
+  <button mat-menu-item [routerLink]="['/president-page/account/']">
     <mat-icon>settings</mat-icon>
     <span>Account Settings</span>
   </button>
-  <button mat-menu-item [routerLink]="['/user-page/rfile/list']">
+  <button mat-menu-item [routerLink]="['/president-page/rfile/list']">
     <mat-icon>dashboard</mat-icon>
     <span>Peronal Records</span>
   </button>
-  <button mat-menu-item [routerLink]="['/user-page/calendar']">
+  <button mat-menu-item [routerLink]="['/president-page/calendar']">
     <mat-icon>events</mat-icon>
     <span>My Calendar</span>
   </button>

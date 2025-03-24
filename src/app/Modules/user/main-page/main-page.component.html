@@ -18,7 +18,7 @@
     </mat-icon>
   </button>
 
-    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72">
+    <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72 mt-2">
       <div class="p-3 bg-white rounded-md shadow-md">
         <div *ngIf="notifications && notifications.length > 0; else noNotifications">
           <div *ngFor="let notification of notifications" 

@@ -119,7 +119,7 @@ export class LoginComponent {
               // directors
               else if (
                 department === 'Directors' && 
-                  ['Communication Ministry', 'Spirit of Prophecy', 'Education', 'Ministerial'].some(pos => positionsArray.includes(pos))
+                  ['Communication Ministry', 'Spirit of Prophecy', 'Education', 'Ministerial','Stewardship Ministry','Youth Ministries','Women Ministry','Sabbath School Personal Ministries'].some(pos => positionsArray.includes(pos))
               ) {
                   this.router.navigate(['/departmenthead-page/dashboard']);
               }

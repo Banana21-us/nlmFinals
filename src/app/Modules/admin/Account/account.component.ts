@@ -46,7 +46,7 @@ export class AccountComponent implements OnInit{
             phone_number: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             address: [''],
-            birthdate: [''],
+            status: [{ value: 'Single', disabled: !this.isEditing }],
             birthplace: [''],
             education: this.fb.array([]),
             spouse: [''],
@@ -107,7 +107,7 @@ export class AccountComponent implements OnInit{
             phone_number: this.accountData?.phone_number || '', // Use accountData.phone_number
             email: this.accountData?.email || '',// Use accountData.email
             address: this.accountData?.address || '', // Use accountData.address
-            birthdate: this.accountData?.birthdate || '', // Use accountData.birthdate
+            status: this.accountData?.status || '', // Use accountData.status
             birthplace: this.accountData?.birthplace || '',// Use accountData.birthplace
             spouse: this.accountData?.spouse?.name || '',
             dateofmarriage: this.accountData?.spouse?.dateofmarriage || ''
