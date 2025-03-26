@@ -26,6 +26,7 @@ export class MainPageComponent {
       servicerecords:[],
       leaveapproval: [],
       leavereq: [],
+      events: [],
     };
   
   notificationCount: number = 0;
@@ -110,38 +111,19 @@ export class MainPageComponent {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-  
-      // Define a proper type for notifications
-      interface Notification {
-        id: number;
-        userid: number;
-        message: string;
-        type: string;
-        is_read: boolean;
-        created_at: string;
-        updated_at: string;
-      }
-  
-      // Merge all notification types
       this.notifications = [
-        ...data.user_requests,
-        ...data.announcements,
-        ...data.statementofaccouunt,
+        ...data.leaveapproval, 
+        ...data.statementofaccount,
+        ...data.announcements, 
+        ...data.leavereq,
         ...data.servicerecords,
-        ...data.leaveapproval,
-        ...data.leavereq
-      ] as Notification[]; // Cast to Notification[]
-  
-      // Sort notifications by created_at (descending order)
-      this.notifications.sort((a: Notification, b: Notification) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      );
-  
-      console.log('Sorted notifications:', this.notifications);
+        ...data.events ]; // Merge both arrays
+      console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
     });
   }
+
   loadNotificationCount() {
     const storedUser = localStorage.getItem('users'); // ✅ Get 'users' instead of 'user'
     if (storedUser) {
@@ -183,6 +165,8 @@ export class MainPageComponent {
       'Statement of Account': '/president-page/rfile/list',
       'Service Records': '/president-page/rfile/list',
       'Leave Approval': '/president-page/LeaveRequest',
+      'Leave Request': '/president-page/leave/list',
+      'Event': '/president-page/calendar'
     };
 
     const route = routes[notification.type] || '/president-page/dashboard';

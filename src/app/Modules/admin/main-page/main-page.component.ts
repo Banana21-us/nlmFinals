@@ -22,9 +22,11 @@ export class MainPageComponent implements OnInit {
   notifications: any = {
     user_requests: [],
     announcements: [],
-    statementofaccouunt: [],
+    statementofaccount: [],
     servicerecords:[],
     leavereq: [],
+    leaveapproval: [],
+    events: [],
   };
 
   notificationCount: number = 0;
@@ -128,7 +130,7 @@ export class MainPageComponent implements OnInit {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
-      this.notifications = [...data.user_requests, ...data.leavereq, ...data.statementofaccouunt,...data.announcements, ...data.servicerecords, ]; // Merge both arrays
+      this.notifications = [...data.user_requests, ...data.leavereq, ...data.leaveapproval, ...data.statementofaccount, ...data.announcements, ...data.servicerecords,...data.events ];
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
@@ -154,7 +156,8 @@ export class MainPageComponent implements OnInit {
       'Statement of Account': '/admin-page/rfile/list',
       'Service Records': '/admin-page/rfile/list',
       'Leave Request': '/admin-page/LeaveRequest/list',
-      'Leave Approval': '/admin-page/LeaveRequest/list'
+      'Leave Approval': '/admin-page/LeaveRequest/list',
+      'Event': '/admin-page/calendar'
     };
 
     const route = routes[notification.type] || '/notifications';

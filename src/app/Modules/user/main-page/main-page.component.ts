@@ -21,10 +21,10 @@ export class MainPageComponent {
 
   notifications: any = {
       announcements: [],
-      statementofaccouunt: [],
+      statementofaccount: [],
       servicerecords:[],
       leaveapproval: [],
-      
+      events: [],
     };
   
   notificationCount: number = 0;
@@ -159,9 +159,10 @@ export class MainPageComponent {
       this.notifications = [
         ...data.user_requests,
         ...data.announcements,
-        ...data.statementofaccouunt,
+        ...data.statementofaccount,
         ...data.servicerecords,
         ...data.leaveapproval,
+        ...data.events,
         
       ] as Notification[]; // Cast to Notification[]
   
@@ -194,6 +195,7 @@ export class MainPageComponent {
       'Statement of Account': '/user-page/rfile/list',
       'Service Records': '/user-page/rfile/list',
       'has Approved': '/user-page/leave/list',
+      'Event': '/president-page/calendar'
     };
 
     const route = routes[notification.type] || '/user-page/dashboard';

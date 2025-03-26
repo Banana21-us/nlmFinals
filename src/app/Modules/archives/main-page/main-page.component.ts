@@ -19,8 +19,11 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
   notifications: any = {
-    user_requests: [],
-    announcements: []
+    announcements: [],
+    statementofaccount: [],
+    servicerecords:[],
+    leaveapproval: [],
+    events: [],
   };
   notificationCount: number = 0;
   getWidth: any;
@@ -56,18 +59,6 @@ export class MainPageComponent {
     this.sidenavWidth = computed(() => this.collapsed() ? '65px' : this.navSize);
     this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
     console.log(this.getWidth)
-    // Subscribe to the adminPic$ observable to get the image URL
-    // this.conn.adminPic$.subscribe((newImageUrl) => {
-    //   if (newImageUrl) {
-    //     this.adminPic = newImageUrl; // Update the component's admin picture
-    //   }
-    // });
-
-    // // Optionally, initialize with the image from localStorage
-    // const user = JSON.parse(localStorage.getItem('user') || '{}');
-    // if (user && user.admin_pic) {
-    //   this.adminPic = user.admin_pic;
-    // }
     this.loadNotifications();
     this.loadNotificationCount();
   }
@@ -89,14 +80,24 @@ export class MainPageComponent {
     }
   }
   loadNotifications(): void {
-    const userId = Number(localStorage.getItem('userId'));
-    
+    const userId = Number(localStorage.getItem('user'));
+  
     if (!userId || isNaN(userId)) {
-        console.error('Invalid user ID');
-        return;
+      console.error('Invalid user ID');
+      return;
     }
-    this.conn.getNotifications(userId).subscribe((data: any) => { 
-      this.notifications = data;
+  
+    this.conn.getNotifications(userId).subscribe((data: any) => {
+      console.log('Raw response:', data);
+      this.notifications = [
+        ...data.leaveapproval, 
+        ...data.statementofaccount,
+        ...data.announcements, 
+        ...data.servicerecords,
+        ...data.events ]; // Merge both arrays
+      console.log('Merged notifications:', this.notifications);
+    }, (error) => {
+      console.error('Error fetching notifications:', error);
     });
   }
   markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
