@@ -26,44 +26,86 @@ export class MainPageComponent {
     events: [],
   };
   notificationCount: number = 0;
-  getWidth: any;
   sidenavWidth:any;
   menunavWidth:any;
-  navSize:any;
   adminPic: string | null = null;
   user: any = null;
 
   collapsed = signal(true)
-
+  getWidth: number = window.innerWidth;
+  collapsedState = signal(false);  
+  navSize: string = '100%';
   constructor(private conn: ApiService, private router: Router) {}
 
-   onResize() {
-    this.getWidth = window.innerWidth
+  onResize() {
+    this.getWidth = window.innerWidth;
     if (this.getWidth > 414) {
       this.navSize = '250px';
+      this.collapsedState.set(false); 
     } else {
       this.navSize = '100%';
+      this.collapsedState.set(true);
+       // Collapse on small screens
     }
   }
+  closeMenu() {
+    if (this.getWidth <= 414) {
+      this.collapsedState.set(true); // Close menu on small screens
+    }
+  }
+  
+  onMenuItemClick() {
+    this.closeMenu(); // Close the menu when a menu item is clicked
+  }
 
-  ngOnInit() {
+  toggleMenu() {
+    this.collapsedState.set(!this.collapsedState());
+    console.log('Collapsed State:', this.collapsedState());
+  }
+
+  ngOnInit(): void {
+    window.addEventListener('resize', () => this.onResize());
+    this.onResize();
+
+    console.log('notifcon',this.notifications)
     const storedUser = localStorage.getItem('users');
     if (storedUser) {
       console.log('Stored user:', storedUser);
       this.user = JSON.parse(storedUser);
     }
-    // Get the current window width
-    this.onResize();
-    // Set the initial width of the sidenav
-
-    this.sidenavWidth = computed(() => this.collapsed() ? '65px' : this.navSize);
-    this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
+    // Subscribe to the adminPic$ observable to get the image URL
+    this.conn.adminPic$.subscribe((newImageUrl) => {
+      if (newImageUrl) {
+        this.adminPic = newImageUrl; // Update the component's admin picture
+        localStorage.setItem('admin_pic', JSON.stringify({ img: newImageUrl })); // Store the latest image
+      }
+    });
+  
+    const storedAdminPic = localStorage.getItem('admin_pic');
+    if (storedAdminPic) {
+      try {
+        const user = JSON.parse(storedAdminPic);
+        if (user && user.img) {
+          this.adminPic = user.img;
+        }
+      } catch (error) {
+        console.error('Error parsing admin_pic:', error);
+      }
+    }
+    this.sidenavWidth = computed(() => this.collapsedState() ? '65px' : this.navSize);
+    this.menunavWidth = computed(() => this.collapsedState() ? '65px' : '450px');
     console.log(this.getWidth)
-    
+
     this.loadNotifications();
     this.loadNotificationCount();
+
+    // this.intervalId = setInterval(() => {
+    //   this.loadNotifications();
+    //   this.loadNotificationCount()
+    // }, 10000)
     
   }
+  
   getRelativeTime(dateString: string): string {
     const now = new Date();
     const createdAt = new Date(dateString);
