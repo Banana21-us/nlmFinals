@@ -5,7 +5,10 @@ mat-toolbar {
   z-index: 5;
   background-color: #364b44;
 }
-
+.img-small {
+  width: 150px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
 
 mat-icon{
   color: white;

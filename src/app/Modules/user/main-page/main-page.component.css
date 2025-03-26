@@ -7,6 +7,10 @@ mat-toolbar {
   
 }
 
+.img-small {
+  width: 150px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
 
 mat-icon{
   color: white;

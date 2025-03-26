@@ -2,7 +2,8 @@
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
       <mat-icon>menu</mat-icon>
   </button>
-  <img [width]="180" [height]="40" src="logotrans.png"/>
+  <img class="ms-2 img-small" src="logotrans.png"/>
+
   <span class="example-spacer"></span>
   
   <button mat-icon-button 
@@ -88,7 +89,6 @@
 <mat-sidenav-container>
   
   <mat-sidenav opened mode="side" [style.width]="sidenavWidth()" autosize>
-    
     <app-custom-sidenav [collapsed]="collapsed()"/>
   </mat-sidenav>
 

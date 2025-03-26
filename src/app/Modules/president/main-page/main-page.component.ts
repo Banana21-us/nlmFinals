@@ -56,25 +56,11 @@ export class MainPageComponent {
       console.log('Stored user:', storedUser);
       this.user = JSON.parse(storedUser);
     }
-    // Get the current window width
     this.onResize();
-    // Set the initial width of the sidenav
 
     this.sidenavWidth = computed(() => this.collapsed() ? '65px' : this.navSize);
     this.menunavWidth = computed(() => this.collapsed() ? '65px' : '450px');
     console.log(this.getWidth)
-    // Subscribe to the adminPic$ observable to get the image URL
-    // this.conn.adminPic$.subscribe((newImageUrl) => {
-    //   if (newImageUrl) {
-    //     this.adminPic = newImageUrl; // Update the component's admin picture
-    //   }
-    // });
-
-    // // Optionally, initialize with the image from localStorage
-    // const user = JSON.parse(localStorage.getItem('user') || '{}');
-    // if (user && user.admin_pic) {
-    //   this.adminPic = user.admin_pic;
-    // }
     this.loadNotifications();
     this.loadNotificationCount();
 

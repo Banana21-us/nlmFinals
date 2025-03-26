@@ -31,32 +31,32 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   {
     path: 'admin-page',
-    // canActivate: [authGuard], // Protect admin routes
+    canActivate: [authGuard], // Protect admin routes
     loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule),
   },
   {
     path: 'user-page',
-    // canActivate: [authGuard], // Protect user routes
+    canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/user/user.module').then(m => m.UserModule),
   },
   {
     path: 'accounting-page',
-    // canActivate: [authGuard], // Protect user routes
+    canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/accounting/accounting.module').then(m => m.AccountingModule),
   },
   {
     path: 'archives-page',
-    // canActivate: [authGuard], // Protect user routes
+    canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/archives/archives.module').then(m => m.ArchivesModule),
   },
   {
     path: 'president-page',
-    // canActivate: [authGuard], // Protect user routes
+    canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/president/president.module').then(m => m.PresidentModule),
   },
   {
     path: 'departmenthead-page',
-    // canActivate: [authGuard], // Protect user routes
+    canActivate: [authGuard], // Protect user routes
     loadChildren: () => import('./Modules/departmenthead/depthead.module').then(m => m.DepartmentheadModule),
   },
 
