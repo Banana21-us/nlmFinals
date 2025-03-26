@@ -46,7 +46,7 @@ export class AccountComponent implements OnInit{
             phone_number: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             address: [''],
-            status: [{ value: 'Single', disabled: !this.isEditing }],
+            status: ['', Validators.required],
             birthplace: [''],
             education: this.fb.array([]),
             spouse: [''],

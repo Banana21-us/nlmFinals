@@ -20,7 +20,6 @@ import { ApiService } from '../../../api.service';
 export class MainPageComponent {
 
   notifications: any = {
-      user_requests: [],
       announcements: [],
       statementofaccouunt: [],
       servicerecords:[],
@@ -177,14 +176,29 @@ export class MainPageComponent {
     });
   }
   
-  markNotificationAsRead(id: number) {
-    this.conn.markAsRead(id).subscribe(
-      response => console.log(response),
-      error => console.error(error),
-      
+  markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
+    this.conn.markAsRead(notification.id).subscribe(
+      response => {
+        console.log(response);
+        this.routeToPage(notification); // Call routeToPage with the notification object
+        this.loadNotifications();
+        this.loadNotificationCount();
+      },
+      error => console.error(error)
     );
-    this.loadNotifications();
-    this.loadNotificationCount();  }
+  }
+
+  routeToPage(notification: any) {
+    const routes: { [key: string]: string } = {
+      'Announcements': '/user-page/ann/announcement',
+      'Statement of Account': '/user-page/rfile/list',
+      'Service Records': '/user-page/rfile/list',
+      'has Approved': '/user-page/leave/list',
+    };
+
+    const route = routes[notification.type] || '/user-page/dashboard';
+    this.router.navigate([route]);
+  }
   onLogout() {
     this.conn.logout().subscribe(
         (response) => {

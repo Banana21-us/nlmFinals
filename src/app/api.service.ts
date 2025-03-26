@@ -43,8 +43,20 @@ export class ApiService {
     const headers = {'Authorization': 'Bearer ' + this.token};
     return this.http.post(this.apiUrl + 'logout', {}, { headers });
   }
-  getCounts(): Observable<{ total_users: number; total_announcements: number }> {
-    return this.http.get<{ total_users: number; total_announcements: number }>(this.apiUrl  + 'users/count');
+  getCounts(): Observable<{ approved_users: number; pending_users:number; total_announcements: number }> {
+    return this.http.get<{ approved_users: number; pending_users:number; total_announcements: number }>(this.apiUrl  + 'users/count');
+  }
+  leavecount(): Observable<{  pending_exec_sec: number }> {
+    return this.http.get<{  pending_exec_sec: number }>(this.apiUrl  + 'leavecount');
+  }
+  leavecountpresident(): Observable<{  pending_pres: number }> {
+    return this.http.get<{  pending_pres: number }>(this.apiUrl  + 'presapplieadleave');
+  }
+  getDashboardData(userId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}dashboard-data/${userId}`);
+  }
+  dashdheaddata(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}dheadapplieadleave/${id}`);
   }
   uploadImage(formData: FormData): Observable<any> {
     return this.http.post('http://localhost:8000/api/upload-image', formData);

@@ -164,14 +164,29 @@ export class MainPageComponent {
     } else {
         console.warn('User ID not found in local storage.');
     }
-}
-  markNotificationAsRead(id: number) {
-    this.conn.markAsRead(id).subscribe(
-      response => console.log(response),
+  }
+  markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
+    this.conn.markAsRead(notification.id).subscribe(
+      response => {
+        console.log(response);
+        this.routeToPage(notification); // Call routeToPage with the notification object
+        this.loadNotifications();
+        this.loadNotificationCount();
+      },
       error => console.error(error)
     );
-    this.loadNotifications();
-    this.loadNotificationCount();
+  }
+
+  routeToPage(notification: any) {
+    const routes: { [key: string]: string } = {
+      'Announcements': 'president-page/ann/announcement',
+      'Statement of Account': '/president-page/rfile/list',
+      'Service Records': '/president-page/rfile/list',
+      'Leave Approval': '/president-page/LeaveRequest',
+    };
+
+    const route = routes[notification.type] || '/president-page/dashboard';
+    this.router.navigate([route]);
   }
   onLogout() {
     this.conn.logout().subscribe(

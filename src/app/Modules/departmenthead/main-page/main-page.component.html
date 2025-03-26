@@ -24,7 +24,7 @@
           <div *ngFor="let notification of notifications" 
         class="p-2 border-b last:border-none transition cursor-pointer rounded-md"
         [ngClass]="{'bg-gray-200': notification.is_read, 'bg-blue-100 hover:bg-blue-200': !notification.is_read}"
-        (click)="markNotificationAsRead(notification.id)">
+        (click)="markNotificationAsRead(notification)">
       <p class="text-sm text-black">  <!-- Adjust text color for contrast -->
         {{ notification.message }} 
         <br>
@@ -64,15 +64,15 @@
 
 
   <!-- Menu Items -->
-  <button mat-menu-item [routerLink]="['/user-page/account/']">
+  <button mat-menu-item [routerLink]="['/departmenthead-page/account/']">
     <mat-icon>settings</mat-icon>
     <span>Account Settings</span>
   </button>
-  <button mat-menu-item [routerLink]="['/user-page/rfile/list']">
+  <button mat-menu-item [routerLink]="['/departmenthead-page/rfile/list']">
     <mat-icon>dashboard</mat-icon>
     <span>Peronal Records</span>
   </button>
-  <button mat-menu-item [routerLink]="['/user-page/calendar']">
+  <button mat-menu-item [routerLink]="['/departmenthead-page/calendar']">
     <mat-icon>events</mat-icon>
     <span>My Calendar</span>
   </button>

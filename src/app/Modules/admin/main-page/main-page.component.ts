@@ -135,13 +135,30 @@ export class MainPageComponent implements OnInit {
     });
   }
   
-  markNotificationAsRead(id: number) {
-    this.conn.markAsRead(id).subscribe(
-      response => console.log(response),
+  markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
+    this.conn.markAsRead(notification.id).subscribe(
+      response => {
+        console.log(response);
+        this.routeToPage(notification); // Call routeToPage with the notification object
+        this.loadNotifications();
+        this.loadNotificationCount();
+      },
       error => console.error(error)
     );
-    this.loadNotifications();
-    this.loadNotificationCount();
+  }
+
+  routeToPage(notification: any) {
+    const routes: { [key: string]: string } = {
+      'User Request': '/admin-page/Employee/list',
+      'Announcements': '/admin-page/Announcement/list',
+      'Statement of Account': '/admin-page/rfile/list',
+      'Service Records': '/admin-page/rfile/list',
+      'Leave Request': '/admin-page/LeaveRequest/list',
+      'Leave Approval': '/admin-page/LeaveRequest/list'
+    };
+
+    const route = routes[notification.type] || '/notifications';
+    this.router.navigate([route]);
   }
 
   loadNotificationCount() {
@@ -167,9 +184,6 @@ export class MainPageComponent implements OnInit {
         console.warn('User ID not found in local storage.');
     }
 }
-
-
-
 
   onLogout() {
     this.conn.logout().subscribe(

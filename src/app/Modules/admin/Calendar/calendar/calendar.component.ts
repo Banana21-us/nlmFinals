@@ -13,6 +13,8 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 interface CalendarDay {
   date: Date;
   day: number;
@@ -40,7 +42,7 @@ interface CalendarDay {
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
-    ToastModule,ButtonModule,RippleModule
+    ToastModule,ButtonModule,RippleModule,DialogModule,InputTextModule
   ],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
@@ -53,6 +55,9 @@ export class CalendarComponent implements OnInit {
   isDialogOpenupdate = false;
   isDialogOpen = false;
   isDialogtoall= false;
+  visibles = false;
+  personal = false;
+  update = false;
   title = '';
   time = '';
   calendarDays: any[] = [];
@@ -64,6 +69,7 @@ export class CalendarComponent implements OnInit {
   events: any[] = []; // Make sure events is initialized as an array
   eventId = 0;
   position: string = '';
+
   loadEvents() {
     const userId = Number(localStorage.getItem('user'));
     this.loadEventsbyuser(userId);
@@ -85,11 +91,11 @@ export class CalendarComponent implements OnInit {
     this.loadEvents();
   }
   openDialog() {
-    this.isDialogOpen = true;
+    this.personal = true;
     this.title ="";
   }
   openDialogupdate(event: any) { 
-    this.isDialogOpenupdate = true;
+    this.update = true;
     this.title = event.title;
     this.eventId = event.id;
     console.log('Event:', this.eventId, this.title); 
@@ -100,43 +106,27 @@ export class CalendarComponent implements OnInit {
       this.time = localTime.toISOString().slice(0, 16); // Format for datetime-local input
   }
   }
-
   openDialogcreatetoall() {
-    this.isDialogtoall = true;
+    this.visibles = true;
     this.title ="";
-  }
-  closeDialogcreatetoall() {
-    this.isDialogtoall = false;
-    this.title ="";
-  }
-
-
-  closeDialog() {
-    this.isDialogOpen = false;
-  }
-  closeDialogupdate() {
-    this.isDialogOpenupdate = false;
   }
   updateEvents() {
     console.log('Updating event:', this.title, this.time,this.eventId);
-    // Ensure time is in the format 'YYYY-MM-DD HH:mm:ss'
     const event = {
       id: this.eventId,
       title: this.title,
       time: this.time,
-      // time:new Date(this.time).toISOString(), // Convert to ISO string
     };
 
     this.eventService.updateEvents(this.eventId, event).subscribe(response => {
       console.log("values",response);
-      // Handle response here
       this.messageService.add({ 
         severity: 'success', 
         summary: 'Success', 
         detail: 'Updated successfully',
         life: 3000
     });
-      this.closeDialogupdate();
+      
       this.loadEvents(); // Reload events after updating
       
     }, error => {
@@ -149,13 +139,17 @@ export class CalendarComponent implements OnInit {
     console.log('Deleting event:', this.eventId);
     this.eventService.deleteEvents(this.eventId).subscribe(response => {
       console.log("values",response);
-      // Handle response here
-      this.closeDialogupdate();
-      this.loadEvents();
+      this.messageService.add({ 
+        severity: 'success', 
+        summary: 'Success', 
+        detail: 'Deleted successfully',
+        life: 3000
+    });
+    this.loadEvents();
     }, error => {
       console.error(error);
-      // Handle error here
     });
+    this.loadEvents();
   }
   submitEvent() {
     const eventData = {
@@ -167,13 +161,14 @@ export class CalendarComponent implements OnInit {
     this.eventService.createEvent(eventData).subscribe(
       (response: any) => {
         console.log('Event created successfully:', response);
-        this.closeDialog();
+    
         this.loadEvents(); // Reload events after creating a new one
       },
       (error: any) => {
         console.error('Error creating event:', error);
       }
     );
+    this.loadEvents();
   }
 
   submitnlmEvent() {
@@ -185,7 +180,6 @@ export class CalendarComponent implements OnInit {
       (response) => {
         console.log('Event created successfully:', response);
         this.loadEvents();
-        this.closeDialogcreatetoall();
       },
       (error) => {
         console.error('Error creating event:', error);

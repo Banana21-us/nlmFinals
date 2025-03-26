@@ -116,13 +116,29 @@ export class MainPageComponent {
     }
 }
 
-  markNotificationAsRead(id: number) {
-    this.conn.markAsRead(id).subscribe(
-      response => console.log(response),
+  markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
+    this.conn.markAsRead(notification.id).subscribe(
+      response => {
+        console.log(response);
+        this.routeToPage(notification); // Call routeToPage with the notification object
+        this.loadNotifications();
+        this.loadNotificationCount();
+      },
       error => console.error(error)
     );
-    this.loadNotifications();
-    this.loadNotificationCount();
+  }
+
+  routeToPage(notification: any) {
+    const routes: { [key: string]: string } = {
+      'Announcements': '/departmenthead-page/Announcement/list',
+      'Statement of Account': '/departmenthead-page/rfile/list',
+      'Service Records': '/departmenthead-page/rfile/list',
+      'Leave Request': '/departmenthead-page/leave/list',
+      'Leave Approval': '/departmenthead-page/LeaveRequest'
+    };
+
+    const route = routes[notification.type] || '/departmenthead-page/dashboard';
+    this.router.navigate([route]);
   }
   getRelativeTime(dateString: string): string {
     const now = new Date();

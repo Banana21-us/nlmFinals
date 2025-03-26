@@ -12,61 +12,45 @@
   </div>
 
   <!-- Dashboard Cards Section -->
-<div class="row mt-4">
-  <div class="col-12 col-md-6">
-<div class="card mb-4 bg-c-green order-card">
-  <div class="card-body">
-    <i class="fa fa-calendar card-icon text-black"></i>
-    <h2 class="text-right"><span>{{ eventsToday }}</span></h2>
-    <P class="m-b-0 text-right ms-1">My Calendar</P>
-  </div>
-</div>
-</div>
-
-    <!-- view.component.html -->
-    <div class="col-12 col-md-6">
-      <!-- Senior High Card (My Leave Request) -->
-      <div class="card mb-4 bg-c-red order-card" >
-          <!-- (click)="Modal(seniorHighTotal)" -->
-        <div class="card-body">
-          <i class="fa fa-sign-out card-icon text-black"></i>
-          <h2 class="text-right"><span>{{ pending }}</span></h2>
-          <p class="m-b-0 text-right ms-1">My Leave Request</p>
+  <div class="row mt-4">
+    <div class="">
+      <div class="card mb-4 bg-c-green order-card">
+        <p class="m-b-0 text-right ms-1">Account Progress</p>
+        <div class="card">
+            <p-toast position="bottom-right" />
+            <p-progressbar [value]="value" />
         </div>
       </div>
     </div>
 
-<div class="col-12 col-md-6">
-  <!-- Senior High Card -->
-  <div class="card mb-4 bg-c-orange order-card">
-    <div class="card-body">
-      <i class="fa fa-check-circle-o card-icon text-black"></i>
-      <h2 class="text-right"><span>{{ approved }}</span></h2>
-      <p class="m-b-0 text-right ms-1">Approve Request</p>
+    <div class="col-12 col-md-4">
+      <div class="card mb-4 bg-c-red order-card">
+        <div class="card-body">
+          <i class="bi bi-megaphone card-icon text-black"></i>
+          <h2 class="text-right"><span>{{ ann }}</span></h2>
+          <p class="m-b-0 text-right ms-1">Announcements</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
+    <div class="col-12 col-md-4">
+      <div class="card mb-4 bg-c-orange order-card">
+        <div class="card-body">
+          <i class="bi bi-calendar4-event card-icon text-black"></i>
+          <h2 class="text-right"><span>{{todayEvents}}</span></h2>
+          <P class="m-b-0 text-right ms-1">Todays Events</P>
+        </div>
+      </div>
+    </div>
 
-  <div class="col-12 col-md-6 ">
-    <div class="card mb-4 bg-c-blue order-card">
-      <div class="card-body ">
-        <i class="fa fa-ban card-icon text-black"></i>
-        <h2 class="text-right "><span>{{ rejected }}</span></h2>
-        <p class="m-b-0 text-right ms-1 ">Reject Request</p>
+    <div class="col-12 col-md-4 ">
+      <div class="card mb-4 bg-c-blue order-card">
+        <div class="card-body ">
+          <i class="bi bi-bar-chart card-icon text-black"></i>
+          <h2 class="text-right"><span>{{totalLeaveDays}}</span></h2>
+          <p class="m-b-0 text-right ms-1">Total days of leave taken </p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-
-<!-- Sidebar Section (Logo) -->
-<!-- <aside class="l-wrap__sabbath l-sabbath js-sticky-parent js-toggle-menu">
-  <div class="l-sabbath__logo js-sticky">
-    <div class="l-sabbath__logo--inner">
-      <div class="l-sabbath__logo-light u-path-fill--white">
-        <img src="/logo1.png" alt="Your Logo" class="sidebar-logo">
-      </div>
-    </div>
-  </div>
-</aside> -->

@@ -99,13 +99,28 @@ export class MainPageComponent {
       this.notifications = data;
     });
   }
-  markNotificationAsRead(id: number) {
-    this.conn.markAsRead(id).subscribe(
-      response => console.log(response),
+  markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
+    this.conn.markAsRead(notification.id).subscribe(
+      response => {
+        console.log(response);
+        this.routeToPage(notification); // Call routeToPage with the notification object
+        this.loadNotifications();
+        this.loadNotificationCount();
+      },
       error => console.error(error)
     );
-    this.loadNotifications();
-    this.loadNotificationCount();
+  }
+
+  routeToPage(notification: any) {
+    const routes: { [key: string]: string } = {
+      'Announcements': '/archives-page/Announcement/list',
+      'Statement of Account': '/archives-page/rfile/list',
+      'Service Records': '/archives-page/rfile/list',
+      'Leave Request': '/archives-page/leave/list',
+    };
+
+    const route = routes[notification.type] || '/archives-page/dashboard';
+    this.router.navigate([route]);
   }
   loadNotificationCount() {
     const storedUser = localStorage.getItem('users'); // ✅ Get 'users' instead of 'user'

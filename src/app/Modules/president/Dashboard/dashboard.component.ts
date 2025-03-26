@@ -1,8 +1,5 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
-// import { Chart, registerables } from 'chart.js';
-// import { ConnectService } from '../../../connect.service';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { Router } from 'express';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -10,9 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ApiService } from '../../../api.service';
-// Register all necessary components of Chart.js
-// Chart.register(...registerables);
-
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -22,40 +19,106 @@ import { ApiService } from '../../../api.service';
     MatInputModule,
     FormsModule,
     CommonModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,ToastModule,ProgressBarModule
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
+  providers: [MessageService]
 })
 export class DashboardComponent implements OnInit {
-  
-
-  appl: number = 0;
-  appr: number = 0;
-  rej: number = 0;
-  tdl: number = 0;
-  emp: number = 0;
   ann: number = 0;
-
-  pending = 0;
-  approved = 0;
-  rejected = 0;
-  eventsToday = 0;  
-  
+  value: number = 0;
+  todayEvents: number = 0;
+  totalLeaveDays: number = 0;
+  appliedleavepres: number = 0;
+  userId: number = Number(localStorage.getItem('user')); 
   currentDate: Date = new Date();
-  activeSection: string = 'dashboard'; 
+  interval: any;
 
-  constructor(private dashboard: ApiService) {}
+  id: any;
+  accountData: any;
+
+  constructor(private dashboard: ApiService, private ngZone: NgZone,private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.fetchCounts();
-    this.countleavedash();
+    this.bar();
+    this.loadAccountDetails();
+    this.loadDashboardData();
+    this.loadDashboardpending();
+  }
+
+  bar() {
+      this.ngZone.runOutsideAngular(() => {
+          this.interval = setInterval(() => {
+              this.ngZone.run(() => {
+                  this.value = this.calculateProgress();
+                  });
+          }, 2000);
+      });
+  }
+
+  loadAccountDetails(): void {
+      const id = localStorage.getItem('user');
+      this.id = id;
+      this.dashboard.getAccountDetails(this.id).subscribe({
+          next: (response) => {
+              this.accountData = response.data; // Access the 'data' property
+              console.log('Account Details:', this.accountData);
+              this.value = this.calculateProgress();
+          },
+      });
+  }
+
+  calculateProgress(): number {
+      let totalFields = 0;
+      let filledFields = 0;
+
+      function countFields(obj: any, parentPath = '') {
+          for (const key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                  const value = obj[key];
+                  const fieldPath = parentPath ? `${parentPath}.${key}` : key;
+                  totalFields++;
+
+                  console.log(`Checking field: ${fieldPath}, Value: ${value}, Filled: ${checkValue(value)}`);
+                  if (!checkValue(value)) {
+                      console.warn(`⚠️ MISSING FIELD: ${fieldPath} is considered empty!`);
+                  }
+                  
+                  if (typeof value === 'object' && value !== null) {
+                      if (Array.isArray(value)) {
+                          if (value.length > 0) {
+                              filledFields++; // Count non-empty arrays
+                          }
+                      } else {
+                          countFields(value, fieldPath); // Recursively check nested objects
+                          filledFields++; // Count non-null objects (like spouse)
+                      }
+                  } else {
+                      if (checkValue(value)) {
+                          filledFields++;
+                      }
+                  }
+              }
+          }
+      }
+
+      function checkValue(value: any): boolean {
+          return value !== null && value !== undefined && value !== '';
+      }
+
+      if (this.accountData) {
+          countFields(this.accountData);
+      }
+
+      console.log(`Total Fields: ${totalFields}, Filled Fields: ${filledFields}, Progress: ${Math.round((filledFields / totalFields) * 100)}%`);
+      return Math.round((filledFields / totalFields) * 100);
   }
 
   fetchCounts() {
     this.dashboard.getCounts().subscribe({
       next: (response) => {
-        this.emp = response.total_users;
         this.ann = response.total_announcements;
       },
       error: (error) => {
@@ -63,25 +126,16 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  countleavedash(){
-    const userId = localStorage.getItem('user') ?? '';
-    
-    if (userId) {
-      this.dashboard.countleavedash(userId).subscribe(response => {
-        this.pending = response.pending;
-        this.approved = response.approved;
-        this.rejected = response.rejected;
-        this.eventsToday = response.events_today;
-      }, error => {
-        console.error('Error fetching dashboard data:', error);
-      });
-    } else {
-      console.error('User ID is null or undefined!');
-    }
+  loadDashboardData(): void {
+    this.dashboard.getDashboardData(this.userId).subscribe(response => {
+      this.todayEvents = response.today_events;
+      this.totalLeaveDays = response.total_leave_days;
+    });
   }
-
-
-
-
+  loadDashboardpending(): void {
+    this.dashboard.leavecountpresident().subscribe(response => {
+      this.appliedleavepres = response.pending_pres;
+    });
+  }
 
 }
