@@ -25,13 +25,14 @@
         class="p-2 border-b last:border-none transition cursor-pointer rounded-md"
         [ngClass]="{'bg-gray-200': notification.is_read, 'bg-blue-100 hover:bg-blue-200': !notification.is_read}"
         (click)="markNotificationAsRead(notification)">
-      <p class="text-sm text-black">  <!-- Adjust text color for contrast -->
-        {{ notification.message }} 
-        <br>
-        <span class="text-xs text-black">                
-          {{ getRelativeTime(notification.created_at) }}
-        </span>
-      </p>
+        
+        <p class="text-sm text-black">  <!-- Adjust text color for contrast -->
+          {{ notification.message }} 
+          <br>
+          <span class="text-xs text-black">                
+            {{ getRelativeTime(notification.created_at) }}
+          </span>
+        </p>
     </div>
 
     </div>

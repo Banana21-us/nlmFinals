@@ -39,7 +39,7 @@ export class MainPageComponent {
 
   onResize() {
     this.getWidth = window.innerWidth;
-    if (this.getWidth > 414) {
+    if (this.getWidth > 480) {
       this.navSize = '250px';
       this.collapsedState.set(false); 
     } else {
@@ -49,7 +49,7 @@ export class MainPageComponent {
     }
   }
   closeMenu() {
-    if (this.getWidth <= 414) {
+    if (this.getWidth <= 480) {
       this.collapsedState.set(true); // Close menu on small screens
     }
   }
@@ -130,7 +130,7 @@ export class MainPageComponent {
 
   routeToPage(notification: any) {
     const routes: { [key: string]: string } = {
-      'Announcements': '/archives-page/Announcement/list',
+      'Announcements': '/archives-page/Announcement/announcement',
       'Statement of Account': '/archives-page/rfile/list',
       'Service Records': '/archives-page/rfile/list',
       'Leave Request': '/archives-page/leave/list',
@@ -170,6 +170,7 @@ export class MainPageComponent {
             localStorage.removeItem('users');
             localStorage.removeItem('user');
             localStorage.removeItem('position');
+            localStorage.removeItem('admin_pic');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

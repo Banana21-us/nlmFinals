@@ -46,7 +46,7 @@ export class MainPageComponent {
   
     onResize() {
       this.getWidth = window.innerWidth;
-      if (this.getWidth > 414) {
+      if (this.getWidth > 480) {
         this.navSize = '250px';
         this.collapsedState.set(false); 
       } else {
@@ -56,7 +56,7 @@ export class MainPageComponent {
       }
     }
     closeMenu() {
-      if (this.getWidth <= 414) {
+      if (this.getWidth <= 480) {
         this.collapsedState.set(true); // Close menu on small screens
       }
     }
@@ -206,6 +206,7 @@ export class MainPageComponent {
             localStorage.removeItem('users');
             localStorage.removeItem('user');
             localStorage.removeItem('position');
+            localStorage.removeItem('admin_pic');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

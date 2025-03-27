@@ -46,7 +46,7 @@ export class MainPageComponent implements OnInit {
 
   onResize() {
     this.getWidth = window.innerWidth;
-    if (this.getWidth > 414) {
+    if (this.getWidth > 480) {
       this.navSize = '250px';
       this.collapsedState.set(false); 
     } else {
@@ -56,7 +56,7 @@ export class MainPageComponent implements OnInit {
     }
   }
   closeMenu() {
-    if (this.getWidth <= 414) {
+    if (this.getWidth <= 480) {
       this.collapsedState.set(true); // Close menu on small screens
     }
   }

@@ -7,7 +7,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const platformId = inject(PLATFORM_ID);
 
-  // Check if we are in the browser before using localStorage
   if (!isPlatformBrowser(platformId)) {
     console.warn('AuthGuard: Running on server, skipping localStorage access');
     return of(false);
@@ -18,32 +17,63 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (!position || position === 'null' || position === 'undefined') {
     console.log('No valid position found, redirecting to login');
-    router.navigate(['/login']);
+    setTimeout(() => router.navigate(['/login']), 0);
     return of(false);
   }
-  // Check if the user is trying to access the admin page
+
+  const positionsArray = position.split(',').map(p => p.trim());
+  console.log('Positions Array:', positionsArray);
+
+  // Check if the user has a defined position for specific pages
   if (route.routeConfig?.path?.startsWith('admin-page')) {
-    if (position === 'hr') {
-      return true;
-    } else {
-      console.log('Non-HR user trying to access admin page, redirecting to user page');
-      router.navigate(['/user-page/dashboard']);
-      return of(false);
+    if (positionsArray.includes('Human Resource') || positionsArray.includes('Executive Secretary')) {
+      return of(true);
     }
   }
 
-  // Check if the user is trying to access the user page
-  if (route.routeConfig?.path?.startsWith('user-page')) {
-    if (position !== 'hr') {
-      return true;
-    } else {
-      console.log('HR user trying to access user page, redirecting to admin page');
-      router.navigate(['/admin-page/dashboard']);
-      return of(false);
+  if (route.routeConfig?.path?.startsWith('accounting-page')) {
+    if (positionsArray.includes('Chief Accountant') || positionsArray.includes('Disbursing Accountant')) {
+      return of(true);
     }
   }
 
-  // Default fallback
-  router.navigate(['/login']);
+  if (route.routeConfig?.path?.startsWith('archives-page')) {
+    if (positionsArray.includes('Executive Secretary')) {
+      return of(true);
+    }
+  }
+
+  if (route.routeConfig?.path?.startsWith('president-page')) {
+    if (positionsArray.includes('President')) {
+      return of(true);
+    }
+  }
+
+  if (route.routeConfig?.path?.startsWith('departmenthead-page')) {
+    if (
+      positionsArray.includes('Treasurer') ||
+      ['Communication Ministry', 'Spirit of Prophecy', 'Education', 'Ministerial', 'Stewardship Ministry', 'Youth Ministries', 'Women Ministry', 'Sabbath School Personal Ministries'].some(pos => positionsArray.includes(pos))
+    ) {
+      return of(true);
+    }
+  }
+
+  // Allow direct access to user-page if it starts with "/user-page"
+  if (state.url.startsWith('/user-page')) {
+    console.log('Access granted to user-page/dashboard');
+    return of(true);
+  }
+
+  // If no matching position is found, redirect to user-page/dashboard **after returning false**
+  console.log('No matching position found, redirecting to /user-page/dashboard');
+  setTimeout(() => router.navigate(['/user-page/dashboard']), 0);
   return of(false);
 };
+
+
+  // if (route.routeConfig?.path?.startsWith('user-page')) {
+  //   if (positionsArray.includes('IT')) {
+  //     console.log('IT user allowed to access user-page/dashboard');
+  //     return of(true);
+  //   }
+  // }

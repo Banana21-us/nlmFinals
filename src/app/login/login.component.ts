@@ -137,34 +137,7 @@ export class LoginComponent {
               console.error('No position found in localStorage');
               this.router.navigate(['/user-page/dashboard']); // Default route
             }
-          }, 300);  // Slightly longer delay ensures updates before navigation
-          
-          // setTimeout(() => {
-          //   const position = localStorage.getItem('position');
-          
-          //   if (position) {
-          //     const positionsArray = position.split(',').map(p => p.trim()); // Split and trim spaces
-          //     console.log('Updated positions:', positionsArray);
-          
-          //     if (positionsArray.includes('Executive Secretary')) {
-          //       this.router.navigate(['/admin-page/dashboard']);
-          //     } 
-          //     else if (positionsArray.includes('Chief Accountant') || positionsArray.includes('Disbursing Accountant')) { 
-          //       this.router.navigate(['/accounting-page/dashboard']);
-          //     }
-            
-          //     else if (positionsArray.includes('archives')) { 
-          //       this.router.navigate(['/archives-page/dashboard']);
-          //     }
-          //     else {
-          //       this.router.navigate(['/user-page/dashboard']);
-          //     }
-          //   } else {
-          //     console.error('No position found in localStorage');
-          //     this.router.navigate(['/user-page/dashboard']); // Default route
-          //   }
-          // }, 300);  // Slightly longer delay ensures updates before navigation
-          
+          }, 300); 
         }
 
         
