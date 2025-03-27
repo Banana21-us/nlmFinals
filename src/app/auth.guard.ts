@@ -13,6 +13,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
 
   const position = localStorage.getItem('position');
+  const department = localStorage.getItem('department');
   console.log('AuthGuard Activated:', position, typeof position);
 
   if (!position || position === 'null' || position === 'undefined') {
@@ -26,7 +27,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   // Check if the user has a defined position for specific pages
   if (route.routeConfig?.path?.startsWith('admin-page')) {
-    if (positionsArray.includes('Human Resource') || positionsArray.includes('Executive Secretary')) {
+    if (positionsArray.includes('Human Resource') || positionsArray.includes('Executive Secretary')) {   
       return of(true);
     }
   }
@@ -38,7 +39,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
 
   if (route.routeConfig?.path?.startsWith('archives-page')) {
-    if (positionsArray.includes('Executive Secretary')) {
+    if (positionsArray.includes('Executive Secretary') || department === 'Secretariat') {
       return of(true);
     }
   }
@@ -70,10 +71,3 @@ export const authGuard: CanActivateFn = (route, state) => {
   return of(false);
 };
 
-
-  // if (route.routeConfig?.path?.startsWith('user-page')) {
-  //   if (positionsArray.includes('IT')) {
-  //     console.log('IT user allowed to access user-page/dashboard');
-  //     return of(true);
-  //   }
-  // }

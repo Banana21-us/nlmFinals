@@ -33,31 +33,10 @@ const routes: Routes = [
             { path: 'ann', 
               loadChildren: () => import('./announcement/announcement.route').then(r => annRoutes),
             },
-            // { path: 'Announcement', 
-            //   loadChildren: () => import('./Departments/dapartmets.routes').then(r => departmentsRoutes),
-            // },
-            // { path: 'LeaveManagement', 
-            //   loadChildren: () => import('./LeaveManagement/leavemanagement.routes').then(r => LeaveManagementRoutes),
-            // },
-            // { path: 'LeaveRequest', 
-            //   loadChildren: () => import('./LeaveRequest/leaverequest.routes').then(r => LeaveRequest),
-            // },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }
 ];
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     component: MainPageComponent,
-//     children: [
-//       { path: 'dashboard', component: DashboardComponent },
-//       { path: 'account', component: AccountComponent },
-//       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
-//     ]
-//   }
-// ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],

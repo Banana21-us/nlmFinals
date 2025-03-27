@@ -51,7 +51,11 @@ export class CustomSidenavComponent {
       label: 'Dashboard',
       route: 'dashboard'
     },
-    
+    {
+      icon: 'description',
+      label: 'Employee Files',
+      route: 'emplist'
+    },
     {
       icon: 'meeting_room',
       label: 'Request Leave',

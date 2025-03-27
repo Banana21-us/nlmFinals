@@ -61,6 +61,8 @@ export class LoginComponent {
           localStorage.setItem('user', result.id);
           localStorage.setItem('users', JSON.stringify(result.admin));
           localStorage.setItem('position', result.position);
+          localStorage.setItem('department', result.department);
+
           console.log('Token stored:', result.token);
 
           localStorage.setItem('admin_pic', result.admin.img);
