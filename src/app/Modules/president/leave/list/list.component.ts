@@ -36,7 +36,7 @@ export interface LeaveRequest {
 export class ListComponent implements OnInit{
   readonly dialog = inject(MatDialog)
   dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['type', 'from', 'to','submittedon','reason','actions'];
+  displayedColumns: string[] = ['submittedon','type', 'from', 'to','reason','actions'];
   element: any;
   leaveRequests:any;
   constructor(private messageService: MessageService,private api: ApiService,private confirmationService: ConfirmationService) {}

@@ -191,7 +191,7 @@
                             </select>
                         </div>
                     </div>
-                    
+                  
                       
                       <div class="col-lg-4">
                         <div class="form-group focused">
@@ -200,6 +200,54 @@
                             [readonly]="!isEditing" formControlName="birthplace">
                         </div>
                       </div>
+                      
+                      <div class="col-lg-4">
+                        <div class="form-group focused">
+                            <label for="old_password" class="form-control-label">Old Password:</label>
+                            <input [readonly]="!isEditing" 
+                                   class="form-control form-control-alternative" 
+                                   id="old_password" 
+                                   formControlName="old_password" 
+                                   type="password" 
+                                   required />
+                            <div *ngIf="accountForm.get('old_password')?.invalid && accountForm.get('old_password')?.touched">
+                                <small *ngIf="accountForm.get('old_password')?.hasError('required')">Old password is required.</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="form-group focused">
+                            <label for="new_password" class="form-control-label">New Password:</label>
+                            <input [readonly]="!isEditing" 
+                                   class="form-control form-control-alternative" 
+                                   id="new_password" 
+                                   formControlName="new_password" 
+                                   type="password" 
+                                   required />
+                            <div *ngIf="accountForm.get('new_password')?.invalid && accountForm.get('new_password')?.touched">
+                                <small *ngIf="accountForm.get('new_password')?.hasError('required')">New password is required.</small>
+                                <small *ngIf="accountForm.get('new_password')?.hasError('minlength')">New password must be at least 8 characters long.</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="form-group focused">
+                            <label for="confirm_password" class="form-control-label">Confirm Password:</label>
+                            <input [readonly]="!isEditing" 
+                                   class="form-control form-control-alternative" 
+                                   id="confirm_password" 
+                                   formControlName="confirm_password" 
+                                   type="password" 
+                                   required />
+                            <div *ngIf="accountForm.get('confirm_password')?.invalid && accountForm.get('confirm_password')?.touched">
+                                <small *ngIf="accountForm.get('confirm_password')?.hasError('required')">Confirm password is required.</small>
+                                <small *ngIf="accountForm.get('confirm_password')?.hasError('mismatch')">Passwords do not match.</small>
+                            </div>
+                        </div>
+                    </div>
+                    
                     </div>
                   </div>
                   <!-- education -->

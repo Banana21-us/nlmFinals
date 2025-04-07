@@ -52,7 +52,11 @@ export class RegisterComponent {
     email : new FormControl('', [Validators.required, Validators.email]),
     password : new FormControl('', [Validators.required, Validators.minLength(8)])
   });
-
+  
+  close() {
+    console.log('Close button clicked');
+    this.dialogRef.close(false);
+  }
   registers() {
     console.log('Registering user with data:', this.userform.value); // Log request payload
     this.isLoading = true;

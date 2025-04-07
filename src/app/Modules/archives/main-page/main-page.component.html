@@ -19,7 +19,7 @@
 </button>
 
     <mat-menu #notificationsMenu="matMenu" xPosition="before" class="w-72 mt-2">
-      <div class="p-3 bg-white rounded-md shadow-md">
+      <div class="p-3 bg-white rounded-md shadow-md max-h-80 overflow-auto">
         <div *ngIf="notifications && notifications.length > 0; else noNotifications">
           <div *ngFor="let notification of notifications" 
         class="p-2 border-b last:border-none transition cursor-pointer rounded-md"
@@ -44,12 +44,10 @@
   
   
 
-  <button mat-icon-button
+<button mat-icon-button
   class="example-icon circle-btn ms-2 me-2 flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
   [matMenuTriggerFor]="profileMenu">
   <img [src]="adminPic ? adminPic : 'default-profile.png'" class="w-8 h-8 me-2 rounded-full prof-image">
-
-
 </button>
 
 <!-- Angular Material Menu -->

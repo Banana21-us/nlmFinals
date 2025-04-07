@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../api.service';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 export interface LeaveRequest {
   id: number;
@@ -22,14 +24,16 @@ export interface LeaveRequest {
 
 @Component({
   selector: 'app-list',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, CommonModule, ButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, CommonModule, ButtonModule,ConfirmDialog],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.css'
+  styleUrl: './list.component.css',
+    providers: [MessageService,ConfirmationService]
 })
 export class ListComponent implements OnInit {
-  readonly leavemanagementService = inject(ApiService);
+
+  constructor(private messageService: MessageService,private leavemanagementService: ApiService, private confirmationService: ConfirmationService) {}
   dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['name', 'leave_type', 'from', 'to', 'submittedon', 'reason','dept_head', 'exec_sec','president', 'actions'];
+  displayedColumns: string[] = ['submittedon','name', 'leave_type', 'from', 'to',  'reason','dept_head', 'exec_sec','president', 'actions'];
 
   ngOnInit(): void {
     this.getdata();
@@ -76,17 +80,71 @@ export class ListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  acceptRequest(element: LeaveRequest) {
-    this.leavemanagementService.accept(element.id).subscribe(() => {
-      console.log('Request accepted');
-      this.getdata();
-    });
-  }
+  // acceptRequest(element: LeaveRequest) {
+  //   this.leavemanagementService.accept(element.id).subscribe(() => {
+  //     console.log('Request accepted');
+  //     this.getdata();
+  //   });
+  // }
 
+  // rejectRequest(element: LeaveRequest) {
+  //   this.leavemanagementService.reject(element.id).subscribe(() => {
+  //     console.log('Request rejected');
+  //     this.getdata();
+  //   });
+  // }
+
+    acceptRequest(element: LeaveRequest) {
+      this.confirmationService.confirm({ 
+          key: 'acceptDialog',
+          header: 'Are you sure?',
+          message: 'Please confirm to proceed.',
+          accept: () => {
+              this.leavemanagementService.accept(element.id).subscribe(response => {
+                  console.log('Request accepted', response);
+                  this.messageService.add({ 
+                      severity: 'success', 
+                      summary: 'Success', 
+                      detail: 'Request accepted successfully',
+                      life: 3000
+                  });
+                  this.getdata(); // Refresh the data after accepting the request
+              });
+          },
+          reject: () => {
+              this.messageService.add({ 
+                  severity: 'info', 
+                  summary: 'Cancel', 
+                  detail: 'Action has been canceled' 
+              });
+          },
+      });
+  }
+  
   rejectRequest(element: LeaveRequest) {
-    this.leavemanagementService.reject(element.id).subscribe(() => {
-      console.log('Request rejected');
-      this.getdata();
+    this.confirmationService.confirm({ 
+        key: 'declineDialog',
+        header: 'Are you sure?',
+        message: 'Please confirm to proceed.',
+        accept: () => {
+            this.leavemanagementService.reject(element.id).subscribe(response => {
+              console.log('Request rejected', response);
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Success', 
+                    detail: 'Request declined successfully',
+                    life: 3000
+                });
+                this.getdata(); // Refresh the data after accepting the request
+            });
+        },
+        reject: () => {
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Cancel', 
+                detail: 'Action has been canceled' 
+            });
+        },
     });
   }
 }

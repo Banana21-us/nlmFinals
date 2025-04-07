@@ -74,5 +74,8 @@ export class CreateComponent implements OnInit{
       }
     );
   }
-  
+  close() {
+    console.log('Close button clicked');
+    this.dialogRef.close(false);
+  }
 }

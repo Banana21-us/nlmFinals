@@ -19,16 +19,7 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent implements OnInit {
  
-  notifications: any = {
-    user_requests: [],
-    announcements: [],
-    statementofaccount: [],
-    servicerecords:[],
-    leavereq: [],
-    leaveapproval: [],
-    events: [],
-  };
-
+  notifications: any[] = [];
   notificationCount: number = 0;
   
   sidenavWidth:any;
@@ -141,6 +132,7 @@ export class MainPageComponent implements OnInit {
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
       this.notifications = [...data.user_requests, ...data.leavereq, ...data.leaveapproval, ...data.statementofaccount, ...data.announcements, ...data.servicerecords,...data.events ];
+      this.notifications.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
@@ -207,6 +199,7 @@ export class MainPageComponent implements OnInit {
             localStorage.removeItem('user');
             localStorage.removeItem('position');
             localStorage.removeItem('admin_pic');
+            localStorage.removeItem('department');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

@@ -19,15 +19,7 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
-  notifications: any = {
-      user_requests: [],
-      announcements: [],
-      statementofaccouunt: [],
-      servicerecords:[],
-      leaveapproval: [],
-      leavereq: [],
-      events: [],
-    };
+  notifications: any[] = [];  
   
     notificationCount: number = 0;
     // getWidth: any;
@@ -144,6 +136,8 @@ export class MainPageComponent {
         ...data.leavereq,
         ...data.servicerecords,
         ...data.events ]; // Merge both arrays
+        this.notifications.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
@@ -191,7 +185,7 @@ export class MainPageComponent {
       'Statement of Account': '/president-page/rfile/list',
       'Service Records': '/president-page/rfile/list',
       'Leave Approval': '/president-page/LeaveRequest',
-      'Leave Request': '/president-page/leave/list',
+      'Leave Request': '/president-page/LeaveRequest',
       'Event': '/president-page/calendar'
     };
 
@@ -207,6 +201,7 @@ export class MainPageComponent {
             localStorage.removeItem('user');
             localStorage.removeItem('position');
             localStorage.removeItem('admin_pic');
+            localStorage.removeItem('department');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

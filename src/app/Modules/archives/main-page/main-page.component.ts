@@ -18,13 +18,7 @@ import { ApiService } from '../../../api.service';
   styleUrl: './main-page.component.css'
 })
 export class MainPageComponent {
-  notifications: any = {
-    announcements: [],
-    statementofaccount: [],
-    servicerecords:[],
-    leaveapproval: [],
-    events: [],
-  };
+  notifications: any[] = [];
   notificationCount: number = 0;
   sidenavWidth:any;
   menunavWidth:any;
@@ -63,20 +57,42 @@ export class MainPageComponent {
     console.log('Collapsed State:', this.collapsedState());
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     window.addEventListener('resize', () => this.onResize());
     this.onResize();
+
+    console.log('notifcon',this.notifications)
     const storedUser = localStorage.getItem('users');
     if (storedUser) {
       console.log('Stored user:', storedUser);
       this.user = JSON.parse(storedUser);
     }
-    // Get the current window width
+    // Subscribe to the adminPic$ observable to get the image URL
+    this.conn.adminPic$.subscribe((newImageUrl) => {
+      if (newImageUrl) {
+        this.adminPic = newImageUrl; // Update the component's admin picture
+        localStorage.setItem('admin_pic', JSON.stringify({ img: newImageUrl })); // Store the latest image
+      }
+    });
+  
+    const storedAdminPic = localStorage.getItem('admin_pic');
+    if (storedAdminPic) {
+      try {
+        const user = JSON.parse(storedAdminPic);
+        if (user && user.img) {
+          this.adminPic = user.img;
+        }
+      } catch (error) {
+        console.error('Error parsing admin_pic:', error);
+      }
+    }
     this.sidenavWidth = computed(() => this.collapsedState() ? '65px' : this.navSize);
     this.menunavWidth = computed(() => this.collapsedState() ? '65px' : '450px');
     console.log(this.getWidth)
+
     this.loadNotifications();
     this.loadNotificationCount();
+    
   }
   getRelativeTime(dateString: string): string {
     const now = new Date();
@@ -105,13 +121,23 @@ export class MainPageComponent {
   
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
+  
+      // Combine all notifications into one array
       this.notifications = [
-        ...data.leaveapproval, 
+        ...data.user_requests,
+        ...data.announcements,
         ...data.statementofaccount,
-        ...data.announcements, 
         ...data.servicerecords,
-        ...data.events ]; // Merge both arrays
-      console.log('Merged notifications:', this.notifications);
+        ...data.leavereq,
+        ...data.leaveapproval,
+        ...data.events,
+        ...data.leaverejected,
+      ];
+  
+      // Sort notifications by created_at (latest first)
+      this.notifications.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  
+      console.log('Sorted notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
     });
@@ -134,6 +160,8 @@ export class MainPageComponent {
       'Statement of Account': '/archives-page/rfile/list',
       'Service Records': '/archives-page/rfile/list',
       'Leave Request': '/archives-page/leave/list',
+      'Leave Approval': 'archives-page/leave/list',
+      'Leave Rejected': 'archives-page/leave/list',
     };
 
     const route = routes[notification.type] || '/archives-page/dashboard';
@@ -171,6 +199,8 @@ export class MainPageComponent {
             localStorage.removeItem('user');
             localStorage.removeItem('position');
             localStorage.removeItem('admin_pic');
+            localStorage.removeItem('department');
+
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

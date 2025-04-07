@@ -51,13 +51,28 @@ export class AccountComponent implements OnInit{
             education: this.fb.array([]),
             spouse: [''],
             dateofmarriage: [''],
-            employments: this.fb.array([])
+            employments: this.fb.array([]),
+            old_password: [''],  // Old password field
+            new_password: ['', [Validators.minLength(8)]],  // New password field
+            confirm_password: ['']  // Confirm password field
+        }, {
+            validators: this.passwordMatchValidator
         });
 
         this.childrenForm = this.fb.group({
             children: this.fb.array([])
         });
     }
+    passwordMatchValidator(form: FormGroup) {
+        const newPassword = form.get('new_password')?.value;
+        const confirmPassword = form.get('confirm_password')?.value;
+        if (newPassword !== confirmPassword) {
+            form.get('confirm_password')?.setErrors({ mismatch: true });
+            return { mismatch: true };
+        }
+        return null;
+    }
+    
 
     loadUserData(): void {
       try {
@@ -259,6 +274,15 @@ export class AccountComponent implements OnInit{
   
   
   onSubmit(): void {
+    // Clear password validators if not needed
+    this.accountForm.get('old_password')?.clearValidators();
+    this.accountForm.get('old_password')?.updateValueAndValidity();
+    this.accountForm.get('new_password')?.clearValidators();
+    this.accountForm.get('new_password')?.updateValueAndValidity();
+    this.accountForm.get('confirm_password')?.clearValidators();
+    this.accountForm.get('confirm_password')?.updateValueAndValidity();
+    
+
     if (this.accountForm.valid && this.childrenForm.valid) {
         const accountData = this.accountForm.value;
         const childrenData = this.childrenForm.value;
@@ -270,7 +294,7 @@ export class AccountComponent implements OnInit{
         }
 
         const allData = {
-            userid: userId, // Ensure user ID is included
+            userid: userId,
             ...accountData,
             children: childrenData.children
         };
@@ -290,13 +314,13 @@ export class AccountComponent implements OnInit{
             }
         );
         this.toggleEditMode(false);
-        
     } else {
         this.accountForm.markAllAsTouched();
         this.childrenForm.markAllAsTouched();
         console.log('Form is invalid. Check the errors.');
     }
 }
+
 
     showBottomRight() {
         this.messageService.add({ severity: 'success', summary: 'Updated', detail: 'Account updated successfully', key: 'br', life: 3000 });

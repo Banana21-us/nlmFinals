@@ -18,13 +18,7 @@ import { ApiService } from '../../../api.service';
   styleUrl: './main-page.component.css'
 })
 export class MainPageComponent {
-  notifications: any = {
-    announcements: [],
-    statementofaccount: [],
-    servicerecords:[],
-    leaveapproval: [],
-    events: [],
-  };
+  notifications: any[] = [];
   notificationCount: number = 0;
   sidenavWidth:any;
   menunavWidth:any;
@@ -147,14 +141,33 @@ export class MainPageComponent {
     }
 }
 
-  markNotificationAsRead(id: number) {
-    this.conn.markAsRead(id).subscribe(
-      response => console.log(response),
+  markNotificationAsRead(notification: any) { // Change parameter to accept the notification object
+    this.conn.markAsRead(notification.id).subscribe(
+      response => {
+        console.log(response);
+        // this.routeToPage(notification); 
+        this.loadNotifications();
+        this.loadNotificationCount();
+      },
       error => console.error(error)
     );
-    this.loadNotifications();
-    this.loadNotificationCount();
   }
+
+  routeToPage(notification: any) {
+    const routes: { [key: string]: string } = {
+      'Announcements': '/accounting-page/Announcement/announcement',
+      'Events': '/accounting-page/calendar',
+      'Statement of Account': '/accounting-page/pfile',
+      'Service Records': '/accounting-page/pfile',
+      'Leave Request': '/accounting-page/leave/list',
+      'Leave Rejected': '/accounting-page/leave/list',
+      'Leave Approval': '/accounting-page/leave/list',
+    };
+
+    const route = routes[notification.type] || '/accounting-page/dashboard';
+    this.router.navigate([route]);
+  }
+
   loadNotifications(): void {
     const userId = Number(localStorage.getItem('user'));
   
@@ -170,7 +183,9 @@ export class MainPageComponent {
         ...data.statementofaccount,
         ...data.announcements, 
         ...data.servicerecords,
+        ...data.leaverejected,
         ...data.events ]; 
+        this.notifications.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
@@ -185,6 +200,7 @@ export class MainPageComponent {
             localStorage.removeItem('user');
             localStorage.removeItem('position');
             localStorage.removeItem('admin_pic');
+            localStorage.removeItem('department');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

@@ -27,10 +27,14 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   // Check if the user has a defined position for specific pages
   if (route.routeConfig?.path?.startsWith('admin-page')) {
-    if (positionsArray.includes('Human Resource') || positionsArray.includes('Executive Secretary')) {   
-      return of(true);
-    }
+  if (
+    positionsArray.includes('Human Resource') || 
+    positionsArray.includes('Executive Secretary') || 
+    department === 'Administrators'
+  ) {   
+    return of(true);
   }
+}
 
   if (route.routeConfig?.path?.startsWith('accounting-page')) {
     if (positionsArray.includes('Chief Accountant') || positionsArray.includes('Disbursing Accountant')) {

@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../api.service';
 import { ButtonModule } from 'primeng/button';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 export interface LeaveRequest {
   id: number;
@@ -24,19 +26,22 @@ export interface LeaveRequest {
 
 @Component({
   selector: 'app-list',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule,ConfirmDialog],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.css'
+  styleUrl: './list.component.css',
+  providers: [MessageService,ConfirmationService]
+  
 })
 
 export class ListComponent implements OnInit {
-  readonly leavemanagementService = inject(ApiService);
+
+  constructor(private messageService: MessageService,private leavemanagementService: ApiService, private confirmationService: ConfirmationService) {}
   ngOnInit(): void {
    this.getdata();
   }
 
 dataSource = new MatTableDataSource<LeaveRequest>([]);
-displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason','dept_head','exec_sec','president','actions'];
+displayedColumns: string[] = ['submittedon','name', 'type', 'from', 'to','reason','dept_head','exec_sec','president','actions'];
 
   
   getdata(){
@@ -52,16 +57,56 @@ displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason
   }
 
   acceptRequest(element: LeaveRequest) {
-    this.leavemanagementService.acceptpres(element.id).subscribe(response => {
-      console.log('Request accepted', response);
-      this.getdata(); // Refresh the data after accepting the request
-    });
+      this.confirmationService.confirm({ 
+          key: 'acceptDialog',
+          header: 'Are you sure?',
+          message: 'Please confirm to proceed.',
+          accept: () => {
+              this.leavemanagementService.acceptpres(element.id).subscribe(response => {
+                  console.log('Request accepted', response);
+                  this.messageService.add({ 
+                      severity: 'success', 
+                      summary: 'Success', 
+                      detail: 'Request accepted successfully',
+                      life: 3000
+                  });
+                  this.getdata(); // Refresh the data after accepting the request
+              });
+          },
+          reject: () => {
+              this.messageService.add({ 
+                  severity: 'info', 
+                  summary: 'Cancel', 
+                  detail: 'Action has been canceled' 
+              });
+          },
+      });
   }
-
+  
   rejectRequest(element: LeaveRequest) {
-    this.leavemanagementService.rejectpres(element.id).subscribe(response => {
-      console.log('Request rejected', response);
-      this.getdata(); // Refresh the data after accepting the request
+    this.confirmationService.confirm({ 
+        key: 'declineDialog',
+        header: 'Are you sure?',
+        message: 'Please confirm to proceed.',
+        accept: () => {
+            this.leavemanagementService.rejectpres(element.id).subscribe(response => {
+              console.log('Request rejected', response);
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Success', 
+                    detail: 'Request declined successfully',
+                    life: 3000
+                });
+                this.getdata(); // Refresh the data after accepting the request
+            });
+        },
+        reject: () => {
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Cancel', 
+                detail: 'Action has been canceled' 
+            });
+        },
     });
   }
 }

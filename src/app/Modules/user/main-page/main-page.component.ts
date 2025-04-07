@@ -19,16 +19,8 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
-  notifications: any = {
-      announcements: [],
-      statementofaccount: [],
-      servicerecords:[],
-      leaveapproval: [],
-      events: [],
-    };
-  
+  notifications: any[] = [];  
   notificationCount: number = 0;
-  // getWidth: any;
   sidenavWidth:any;
   menunavWidth:any;
   adminPic: string | null = null;
@@ -179,10 +171,12 @@ export class MainPageComponent {
         ...data.statementofaccount,
         ...data.servicerecords,
         ...data.leaveapproval,
+        ...data.leaverejected,
         ...data.events,
         
       ] as Notification[]; // Cast to Notification[]
-  
+      this.notifications.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
       // Sort notifications by created_at (descending order)
       this.notifications.sort((a: Notification, b: Notification) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
@@ -211,7 +205,8 @@ export class MainPageComponent {
       'Announcements': '/user-page/ann/announcement',
       'Statement of Account': '/user-page/rfile/list',
       'Service Records': '/user-page/rfile/list',
-      'has Approved': '/user-page/leave/list',
+      'Leave Approval': '/user-page/leave/list',
+      'Leave Rejected': '/user-page/leave/list',
       'Event': '/president-page/calendar'
     };
 
@@ -227,6 +222,7 @@ export class MainPageComponent {
             localStorage.removeItem('user');
             localStorage.removeItem('position');
             localStorage.removeItem('admin_pic');
+            localStorage.removeItem('department');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

@@ -99,7 +99,7 @@
               printWindow.document.write(`
                   <html>
                   <head>
-                    <title>Workers Profile 2025</title>
+                    <title>Workers Profile ${new Date().getFullYear()}</title>
                     <style>
                       body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
                       .container { width: 100%; max-width: 800px; margin: 0 auto; }

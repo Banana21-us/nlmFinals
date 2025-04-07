@@ -19,16 +19,7 @@ import { ApiService } from '../../../api.service';
 })
 export class MainPageComponent {
 
-  notifications: any = {
-      user_requests: [],
-      announcements: [],
-      statementofaccouunt: [],
-      servicerecords:[],
-      leavereq:[],
-      leaveapproval: [],
-      events: [],
-    };
-  
+  notifications: any[] = [];  
   notificationCount: number = 0;
   sidenavWidth:any;
   menunavWidth:any;
@@ -142,11 +133,13 @@ export class MainPageComponent {
 
   routeToPage(notification: any) {
     const routes: { [key: string]: string } = {
-      'Announcements': '/departmenthead-page/Announcement/list',
+      'Announcements': '/departmenthead-page/ann/announcement',
+      'Events': '/departmenthead-page/calendar',
       'Statement of Account': '/departmenthead-page/rfile/list',
       'Service Records': '/departmenthead-page/rfile/list',
-      'Leave Request': '/departmenthead-page/leave/list',
-      'Leave Approval': '/departmenthead-page/LeaveRequest'
+      'Leave Request': 'departmenthead-page/LeaveRequest',
+      'Leave Approval': '/departmenthead-page/LeaveRequest',
+      'Leave Rejected': '/departmenthead-page/LeaveRequest',
     };
 
     const route = routes[notification.type] || '/departmenthead-page/dashboard';
@@ -181,11 +174,15 @@ export class MainPageComponent {
     this.conn.getNotifications(userId).subscribe((data: any) => {
       console.log('Raw response:', data);
       this.notifications = [
-        ...data.leaveapproval, 
-        ...data.statementofaccount,
         ...data.announcements, 
+        ...data.statementofaccount,
         ...data.servicerecords,
+        ...data.leavereq,
+        ...data.leaveapproval,
+        ...data.leaverejected,
         ...data.events ]; // Merge both arrays
+        this.notifications.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
       console.log('Merged notifications:', this.notifications);
     }, (error) => {
       console.error('Error fetching notifications:', error);
@@ -202,6 +199,7 @@ export class MainPageComponent {
             localStorage.removeItem('user');
             localStorage.removeItem('position');
             localStorage.removeItem('admin_pic');
+            localStorage.removeItem('department');
             this.router.navigate(['/login']); // Navigate to the login page
         },
         (error) => {

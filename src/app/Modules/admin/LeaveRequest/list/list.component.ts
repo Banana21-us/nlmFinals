@@ -43,7 +43,7 @@ export class ListComponent implements OnInit {
   }
 
 dataSource = new MatTableDataSource<LeaveRequest>([]);
-  displayedColumns: string[] = ['name', 'type', 'from', 'to','submittedon','reason','dept_head','exec_sec','president','actions'];
+  displayedColumns: string[] = ['submittedon','name', 'type', 'from', 'to','reason','dept_head','exec_sec','president','actions'];
 
   
   getdata(){
@@ -58,26 +58,6 @@ dataSource = new MatTableDataSource<LeaveRequest>([]);
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  
-
-  // rejectRequest(element: LeaveRequest) {
-  //   this.leavemanagementService.rejectexecsec(element.id).subscribe(response => {
-  //     console.log('Request rejected', response);
-  //     this.getdata(); // Refresh the data after accepting the request
-  //   });
-  // }
-  // acceptRequest(element: LeaveRequest) {
-  //   this.leavemanagementService.acceptexecsec(element.id).subscribe(response => {
-  //     console.log('Request accepted', response);
-  //     this.messageService.add({ 
-  //       severity: 'success', 
-  //       summary: 'Success', 
-  //       detail: 'Deleted successfully',
-  //       life: 3000
-  //   });
-  //     this.getdata(); // Refresh the data after accepting the request
-  //   });
-  // }
   acceptRequest(element: LeaveRequest) {
     this.confirmationService.confirm({ 
         key: 'acceptDialog',

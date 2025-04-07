@@ -36,8 +36,9 @@
   </p-dialog>
 <!-- primeng update  -->
   <p-dialog class=" justify-center items-center min-h-screen p-4" 
-      header="Update Event" [modal]="true" [(visible)]="update"
+      header="View Event" [modal]="true" [(visible)]="update"
       [style]="{ width: '25rem', 'max-width': '100vw','padding-left':'4rem','left':'8rem'}">
+  
       <div class="flex items-center gap-1 mb-8">
         <label for="title" class="font-semibold w-24">Title</label>
         <input pInputText id="title" class="flex-auto w-10" autocomplete="off" [(ngModel)]="title" />
