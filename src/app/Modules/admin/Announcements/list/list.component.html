@@ -23,7 +23,7 @@
                             {{ ann.created_at | date: 'medium' }}
                         </span>
                         <div class="announcement-actions ms-3">
-                            <p-toast  position="bottom-right" />
+                           
                             <p-button icon="bi bi-pencil" class="me-2 mb-2" (click)="onUpdate(ann)"></p-button>
                             <p-button icon="bi bi-trash3" class="me-2 mb-2" (click)="confirm(ann.id)"
                             styleClass="p-button-danger"></p-button>
@@ -35,6 +35,7 @@
             </div>
         </section>
     </div>
+    <p-toast  position="bottom-right" />
 </div>
 <p-confirmdialog #cd>
     <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">

@@ -9,6 +9,7 @@ import { ApiService } from '../../../../api.service';
 import { ButtonModule } from 'primeng/button';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 export interface LeaveRequest {
   id: number;
@@ -26,10 +27,27 @@ export interface LeaveRequest {
 
 @Component({
   selector: 'app-list',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule,ConfirmDialog],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule,ConfirmDialog,ToastModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
-  providers: [MessageService,ConfirmationService]
+  providers: [MessageService,ConfirmationService],
+  styles: [`
+    :host ::ng-deep .p-toast {
+      width: 335px; /* Adjust width as needed */
+      font-size: 0.8rem; /* Adjust font size as needed */
+      left: 50%;
+      margin-left: 30px; /* Adjust top position as needed */
+      transform: translateX(-50%);
+    }
+
+    :host ::ng-deep .p-toast-message-content {
+      padding: 0.75rem; /* Adjust padding as needed */
+    }
+
+    :host ::ng-deep .p-toast-summary {
+      font-weight: bold;
+    }
+  `],
   
 })
 

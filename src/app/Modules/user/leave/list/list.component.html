@@ -82,7 +82,6 @@
        <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element" >
-            <p-toast  position="bottom-right" />
             <ng-container *ngIf="element.dept_head !== 'Rejected' && element.dept_head !== 'Approved'">
               <p-button icon="bi bi-pencil-square" (click)="edits(element)" styleClass="p-button-success me-1"></p-button>
               <p-button icon="bi bi-trash3" (click)="confirm(element.id)" styleClass="p-button-danger"></p-button>
@@ -100,10 +99,11 @@
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
+      <p-toast position="bottom-right"></p-toast>
     </div>
-    <div class="card flex justify-center" >
+    <!-- <div class="card flex justify-center" >
       <p-toast position="bottom-right" key="br"/>
-    </div>
+    </div> -->
   </div>
   <p-confirmdialog #cd>
     <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">

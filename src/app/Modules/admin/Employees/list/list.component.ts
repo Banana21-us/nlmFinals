@@ -37,7 +37,24 @@ export interface Employee {
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [MessageService,ConfirmationService]
+  providers: [MessageService,ConfirmationService],
+  styles: [`
+    :host ::ng-deep .p-toast {
+      width: 335px; /* Adjust width as needed */
+      font-size: 0.8rem; /* Adjust font size as needed */
+      left: 50%;
+      margin-left: 30px; /* Adjust top position as needed */
+      transform: translateX(-50%);
+    }
+
+    :host ::ng-deep .p-toast-message-content {
+      padding: 0.75rem; /* Adjust padding as needed */
+    }
+
+    :host ::ng-deep .p-toast-summary {
+      font-weight: bold;
+    }
+  `],
 })
 
 

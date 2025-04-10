@@ -18,7 +18,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-          <p-toast  position="bottom-right" />
+          
           <p-button icon="bi bi-pencil" class="me-2 mb-2" (click)="editposition(element)"></p-button>
           <p-button icon="bi bi-trash3" class="me-2 mb-2" (click)="confirm(element.id)"
           styleClass="p-button-danger"></p-button>
@@ -33,6 +33,7 @@
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
+      <p-toast  position="bottom-right" />
     </div>
     <p-confirmdialog #cd>
       <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">

@@ -4,12 +4,13 @@ mat-toolbar {
   position: relative;
   z-index: 5;
   background-color: #364b44;
-  
+  height: fit-content;
 }
 .img-small {
   width: 150px; /* Adjust width as needed */
   height: auto; /* Maintain aspect ratio */
 }
+
 mat-icon{
   color: white;
 }
@@ -17,8 +18,17 @@ mat-icon{
 .content {
   padding: 24px;
   background-color: #F1F0E8;
+
+  /* Hide scrollbar but keep scrolling */
+  overflow-y: auto;
+  scrollbar-width: none;            /* Firefox */
+  -ms-overflow-style: none;         /* IE 10+ */
 }
 
+.content::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
 mat-sidenav-container{
   height: calc(100vh - 64px);
   background-color: #F1F0E8;

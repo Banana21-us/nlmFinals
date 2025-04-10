@@ -19,7 +19,6 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 export interface departments {
   id:number;
   name: string;
-  
 }
 
 @Component({
@@ -29,11 +28,28 @@ export interface departments {
    ],
   templateUrl: './dept.component.html',
   styleUrl: './dept.component.css',
-  providers: [MessageService,ConfirmationService]
+  providers: [MessageService,ConfirmationService],
+  styles: [`
+    :host ::ng-deep .p-toast {
+      width: 335px; /* Adjust width as needed */
+      font-size: 0.8rem; /* Adjust font size as needed */
+      left: 50%;
+      margin-left: 30px; /* Adjust top position as needed */
+      transform: translateX(-50%);
+    }
+
+    :host ::ng-deep .p-toast-message-content {
+      padding: 0.75rem; /* Adjust padding as needed */
+    }
+
+    :host ::ng-deep .p-toast-summary {
+      font-weight: bold;
+    }
+  `],
 })
 export class DeptComponent implements OnInit{
   readonly dialog = inject(MatDialog);
-    constructor(private messageService: MessageService,private DeptmanagementService: ApiService, private confirmationService: ConfirmationService) {}
+  constructor(private messageService: MessageService,private DeptmanagementService: ApiService, private confirmationService: ConfirmationService) {}
   
   dataSource = new MatTableDataSource<departments>([]);
   displayedColumns: string[] = ['name', 'actions'];
@@ -48,19 +64,23 @@ export class DeptComponent implements OnInit{
     });
   }
   
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(CreatedeptComponent, {
       width: '90%',  // 90% of viewport width
       height: 'auto', // 90% of viewport height
-      
     });
-  
     dialogRef.afterClosed().subscribe(result => {
       if (result) { // Only call getdata() if the dialog closed after successful submission
         this.getdata();
       }
     });
   }
+
   editdept(element: any) {
       const dialogRef = this.dialog.open(UpdatedeptComponent, {
         width: 'auto',
@@ -73,11 +93,6 @@ export class DeptComponent implements OnInit{
           this.getdata(); // Refresh data if update was successful
         }
       });
-  }
-  
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   confirm(id: number) {
@@ -105,7 +120,7 @@ export class DeptComponent implements OnInit{
         },
     });
     this.getdata(); 
-}
+  }
 }
 
 

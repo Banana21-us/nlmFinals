@@ -145,7 +145,7 @@ export class MainPageComponent {
     this.conn.markAsRead(notification.id).subscribe(
       response => {
         console.log(response);
-        // this.routeToPage(notification); 
+        this.routeToPage(notification); 
         this.loadNotifications();
         this.loadNotificationCount();
       },
