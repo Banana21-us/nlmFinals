@@ -35,7 +35,8 @@ export class CustomSidenavComponent {
   uid: any;
   private intervalId: any;
   unreadMessagesCount: any = 0;
-  
+  userPosition: string | null = null;
+
   constructor() {}
 
   onMenuItemClick() {
@@ -43,7 +44,8 @@ export class CustomSidenavComponent {
     this.menuItemClicked.emit(); // Emit event when an item is clicked
   }
   ngOnInit(): void {
-  
+    this.userPosition = localStorage.getItem('position');
+
   }
   menuItems = signal<MenuItem[]>([
     {

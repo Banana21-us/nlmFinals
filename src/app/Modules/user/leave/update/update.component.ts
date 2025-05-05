@@ -59,6 +59,10 @@ export class UpdateComponent implements OnInit {
     }
     
   }
+  close() {
+    console.log('Close button clicked');
+    this.dialogRef.close(false);
+  }
       
   }
 

@@ -42,9 +42,11 @@
       <ng-container matColumnDef="dept_head">
         <th mat-header-cell *matHeaderCellDef> Department <br> Head </th>
         <td mat-cell *matCellDef="let element"> <span [ngClass]="{
+          
           'text-warning': element.dept_head === 'Pending',
           'text-success': element.dept_head === 'Approved',
-          'text-danger': element.dept_head === 'Rejected'
+          'text-danger': element.dept_head === 'Rejected',
+          'text-secondary': element.dept_head === 'None'
         }">
           {{element.dept_head}}
         </span> </td>

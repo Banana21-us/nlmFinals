@@ -6,11 +6,12 @@ import { DashboardComponent } from './Dashboard/dashboard.component';
 import { AccountComponent } from '../admin/Account/account.component'; // Reusing Account component from Admin module
 import { CalendarComponent } from '../admin/Calendar/calendar/calendar.component';
 import { annRoutes } from '../user/announcement/announcement.route';
-import { userLeaveRequest } from '../user/leave/leave.route';
+// import { userLeaveRequest } from '../user/leave/leave.route';
 import { requestfile } from './requestfile/requestfile.routes';
 
 import { EmployeeRoutes } from './Employees/employee.routes';
 import { ListComponent } from '../user/requestfile/list/list.component';
+import { userLeaveRequest } from '../departmenthead/leave/leave.route';
 
 // 👤 archives Module Routes
 
@@ -35,7 +36,8 @@ const routes: Routes = [
               loadChildren: () => import('../user/announcement/announcement.route').then(r => annRoutes),
             },
             { path: 'leave', 
-              loadChildren: () => import('../user/leave/leave.route').then(r => userLeaveRequest),
+              // loadChildren: () => import('../user/leave/leave.route').then(r => userLeaveRequest),
+              loadChildren: () => import('../departmenthead/leave/leave.route').then(r => userLeaveRequest),
             },
             { path: 'rfile', 
                 loadChildren: () => import('./requestfile/requestfile.routes').then(r => requestfile),
