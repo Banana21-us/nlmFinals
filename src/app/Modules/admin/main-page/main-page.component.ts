@@ -97,10 +97,10 @@ export class MainPageComponent implements OnInit {
     this.loadNotifications();
     this.loadNotificationCount();
 
-    // this.intervalId = setInterval(() => {
-    //   this.loadNotifications();
-    //   this.loadNotificationCount()
-    // }, 10000)
+    this.intervalId = setInterval(() => {
+      this.loadNotifications();
+      this.loadNotificationCount()
+    }, 10000)
     
   }
   

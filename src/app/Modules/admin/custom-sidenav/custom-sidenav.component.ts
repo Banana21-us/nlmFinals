@@ -72,11 +72,11 @@ export class CustomSidenavComponent {
         route: 'Departments'
       },
       
-      {
-        icon: 'meeting_room',
-        label: 'Leave Management',
-        route: 'LeaveManagement'
-      },
+      // {
+      //   icon: 'meeting_room',
+      //   label: 'Leave Management',
+      //   route: 'LeaveManagement'
+      // },
       
       {
         icon: 'announcement',

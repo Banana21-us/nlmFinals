@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from '../../../api.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-announcement',
   imports: [MatExpansionModule,CommonModule,
@@ -26,12 +28,14 @@ export class AnnouncementComponent {
   announcements: any[] = [];
   filteredAnnouncements: any[] = []; // New filtered array
 
-  constructor(private router: Router, private ser: ApiService) {}
+  constructor(private router: Router, private ser: ApiService,private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.getdata();
   }
-
+   getSanitizedHtml(content: string): SafeHtml {
+      return this.sanitizer.bypassSecurityTrustHtml(content);
+    }
   getdata() {
     this.ser.getAnnouncements().subscribe(data => {
       this.announcements = data;

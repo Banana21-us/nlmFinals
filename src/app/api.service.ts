@@ -2,9 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+
+export interface LeaveBalance {
+  type: string;
+  type_id: number;
+  allowed: number;
+  used: number;
+  remaining: number;
+}
+export interface LeaveBalanceResponse {
+  years_of_service: number;
+  balances: LeaveBalance[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
   private apiUrl = 'http://localhost:8000/api/'; // Laravel API URL
   token: string | null = null;
@@ -22,6 +36,11 @@ export class ApiService {
 
   // private userPicSubject = new BehaviorSubject<string | null>(null); // Store user image URL
   // userPic$ = this.userPicSubject.asObservable();
+  
+  getLeaveBalances(userId: number): Observable<LeaveBalanceResponse> {
+    return this.http.get<LeaveBalanceResponse>(`${this.apiUrl}leave-getLeaveBalances/${userId}`);
+  }
+
   uploadFiles(files: File[]): Observable<any> {
     const formData = new FormData();
     for (let file of files) {

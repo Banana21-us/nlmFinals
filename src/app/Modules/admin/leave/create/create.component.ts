@@ -8,6 +8,8 @@ import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CalendarModule } from 'primeng/calendar';
+import { LeaveBalance,LeaveBalanceResponse } from '../../../../api.service';
+
 interface LeaveType {
   id: number;
   type: string;
@@ -34,12 +36,21 @@ export class CreateComponent implements OnInit {
     reason: new FormControl('')
   });
 
+  calculatedDays: number = 0;
+  selectedLeaveTypeId: number | null = null;
+  remainingDaysError: boolean = false;
+  remainingDays: number = 0;
+  leaveBalances: LeaveBalance[] = [];
+  yearsOfService = 0;
+  hide: boolean = true;
   constructor(private api: ApiService, private messageService: MessageService, private dialogRef: MatDialogRef<CreateComponent>) {}
 
   ngOnInit(): void {
     this.getLeaveTypes();
   }
-
+  toggleHide(): void {
+    this.hide = !this.hide;
+  }
   getLeaveTypes() {
     this.api.getleave().subscribe(data => {
       this.leaveTypes = data;

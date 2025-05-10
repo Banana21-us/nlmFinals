@@ -32,7 +32,7 @@ export class UpdateComponent implements OnInit{
     work_status: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     email : new FormControl('', [Validators.required, Validators.email]),
-    password : new FormControl('', [Validators.required, Validators.minLength(8)])
+    password: new FormControl('', Validators.minLength(8))
   });
 
   constructor(
@@ -80,36 +80,24 @@ export class UpdateComponent implements OnInit{
   update() {
     if (this.empformupdate.valid) {
       const formData = this.empformupdate.value;
-  
-      // Ensure 'position' is treated as a comma-separated string
+    
       const positionValue = Array.isArray(formData.position)
         ? formData.position.join(', ')
         : formData.position;
-  
+    
       const filteredData = Object.fromEntries(
-        Object.entries({ ...formData, position: positionValue }) // Include modified position
+        Object.entries({ ...formData, position: positionValue })
           .filter(([key, value]) => value !== '' && value !== null)
       );
-  
-      console.log('Updating emp with ID:', this.data.emp.id);
+    
       this.empService.updateemp(this.data.emp.id, filteredData).subscribe({
-        next: (response) => {
-          this.dialogRef.close(true);
-        },
+        next: () => this.dialogRef.close(true),
         error: (error) => {
           console.error('Error updating employee:', error);
         }
       });
-    } else {
-      console.error('Form is invalid:', this.empformupdate);
-      this.messageService.add({ 
-        severity: 'warn', 
-        summary: 'Invalid', 
-        detail: 'Provide password to save changes \n New Password must be at least 8 characters long',
-        life: 5000
-      });
+    
     }
   }
-  
-  
+
 }

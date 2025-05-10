@@ -96,7 +96,8 @@ export class ListComponent implements OnInit {
 
   editemployee(element: any) {
         const dialogRef = this.dialog.open(UpdateComponent, {
-          width: 'auto',
+          width: '60vw',
+          maxWidth: '60vw',
           height: 'auto',
           data: { emp: element } 
         });

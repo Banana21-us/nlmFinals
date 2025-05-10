@@ -14,17 +14,6 @@
                         </select>
                     </div>
 
-                    <!-- <div class="input-field">
-                        <label>Position</label>
-                      
-                        <select formControlName="position" class="form-control" required>
-                            @for (position of positions; track $index) {
-                            <option [value]="position.name">{{ position.name }}</option>
-                            }
-                        </select>
-                        
-                    </div> -->
-
                     <div class="input-field">
                         <label>Designation</label>
                         <select formControlName="designation" class="form-control" required>
@@ -71,7 +60,7 @@
                     <p-toast  position="bottom-right" />
                     <div class="input-field4">
                         <label>New Password</label>
-                        <input required type="password" formControlName="password" class="form-control">
+                        <input type="password" formControlName="password" class="form-control">
                     </div>
 
                 </div>

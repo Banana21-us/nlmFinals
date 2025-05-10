@@ -16,9 +16,9 @@
                         </h3>
                         <span class="date">
                             {{ ann.created_at | date: 'medium' }}
-                        </span>
+                        </span> 
                     </div>
-                     <p class="announcement-p" [innerHTML]="ann.announcement"></p> 
+                    <p class="announcement-p" [innerHTML]="getSanitizedHtml(ann.announcement)"></p>
                 </div>
                 }
             </div>

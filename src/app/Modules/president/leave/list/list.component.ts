@@ -114,16 +114,16 @@ export class ListComponent implements OnInit{
       });
     
       dialogRef.afterClosed().subscribe(result => {
-        if (result) {
+        // if (result) {
           
-          this.messageService.add({ 
-            severity: 'success', 
-            summary: 'Success', 
-            detail: 'Updated successfully',
-            life: 3000
-        });
+        //   this.messageService.add({ 
+        //     severity: 'success', 
+        //     summary: 'Success', 
+        //     detail: 'Updated successfully',
+        //     life: 3000
+        // });
       
-        }
+        // }
         this.getdata();
       }
       

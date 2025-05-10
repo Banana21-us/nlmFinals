@@ -53,7 +53,7 @@ export class CustomSidenavComponent {
     
     {
       icon: 'meeting_room',
-      label: 'Request Leave',
+      label: 'File a Leave',
       route: 'leave'
     },
     {

@@ -93,6 +93,7 @@ export class ListComponent {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update account code' });
       }
     );
+    this.getFile();
   }
 
   onFileChange(event: any) {
