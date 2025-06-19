@@ -60,11 +60,7 @@ export class CreateComponent {
   filePickerCallback(callback: any, value: any, meta: any) {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
-    if (meta.filetype === 'image') {
-      input.setAttribute('accept', 'image/*');
-    } else {
-      input.setAttribute('accept', '.pdf,.doc,.docx');
-    }
+    input.setAttribute('accept', '.pdf,.doc,.docx');
 
     input.onchange = async (e: any) => {
       const file = e.target.files[0];

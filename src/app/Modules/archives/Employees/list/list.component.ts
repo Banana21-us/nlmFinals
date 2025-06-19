@@ -99,6 +99,7 @@ export class ListComponent implements OnInit {
           width: '60vw',
           maxWidth: '60vw',
           height: 'auto',
+          maxHeight: '85vh',
           data: { emp: element } 
         });
       

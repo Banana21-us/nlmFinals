@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { RippleModule } from 'primeng/ripple';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export interface LeaveRequest {
   id: number;
@@ -28,7 +29,7 @@ export interface LeaveRequest {
 
 @Component({
   selector: 'app-list',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule,
+  imports: [ReactiveFormsModule,FormsModule,MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule,CommonModule, ButtonModule,
     ToastModule,RippleModule,ConfirmDialog
   ],
   templateUrl: './list.component.html',
@@ -68,6 +69,15 @@ dataSource = new MatTableDataSource<LeaveRequest>([]);
     this.leavemanagementService.getLeaveRequestsByexecsec().subscribe(data => {
       this.dataSource.data = data;
       console.log("hell",this.dataSource.data);
+    });
+  }
+   onToDateChange(element: any) {
+    this.leavemanagementService.updateDates(element.id, {
+      from: element.from,
+      to: element.to
+    }).subscribe({
+      next: () => console.log('Date updated successfully'),
+      error: (err) => console.error('Error updating date', err)
     });
   }
 

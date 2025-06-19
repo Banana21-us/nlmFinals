@@ -244,6 +244,9 @@ export class ApiService {
   updatedetails(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}leave-requests/userupdate/${id}`, data);
   }
+  updateDates(id: number, dates: { from: string, to: string }): Observable<any> {
+    return this.http.put(`${this.apiUrl}leave-requests/${id}`, dates);
+  }
   // getLeaveRequests(): Observable<any[]> {
   //   return this.http.get<any[]>(this.apiUrl + 'leaverequests');
   // }

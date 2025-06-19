@@ -19,13 +19,21 @@
       </ng-container>
       <!-- from Column -->
       <ng-container matColumnDef="from">
-        <th mat-header-cell *matHeaderCellDef> From </th>
-        <td mat-cell *matCellDef="let element"> {{element.from | date:'MMM dd, yyyy'}} </td>
+        <th mat-header-cell *matHeaderCellDef>From</th>
+        <td mat-cell *matCellDef="let element">
+          <input matInput type="date" 
+                [(ngModel)]="element.from" 
+                (change)="onToDateChange(element)">
+        </td>
       </ng-container>
-      <!-- to Column -->
+
       <ng-container matColumnDef="to">
-        <th mat-header-cell *matHeaderCellDef> To </th>
-        <td mat-cell *matCellDef="let element"> {{element.to | date:'MMM dd, yyyy'}} </td>
+        <th mat-header-cell *matHeaderCellDef>To</th>
+        <td mat-cell *matCellDef="let element">
+          <input matInput type="date" 
+                [(ngModel)]="element.to" 
+                (change)="onToDateChange(element)">
+        </td>
       </ng-container>
       <!-- submittedon Column -->
       <ng-container matColumnDef="submittedon">

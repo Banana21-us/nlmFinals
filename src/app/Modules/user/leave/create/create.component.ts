@@ -118,14 +118,20 @@ export class CreateComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
-  formatDate(date: string | null | undefined): string {
-    if (!date) {
-      return '';
-    }
-    const parsedDate = new Date(date);
-    return parsedDate.toISOString().slice(0, 19).replace('T', ' ');
+  // formatDate(date: string | null | undefined): string {
+  //   if (!date) {
+  //     return '';
+  //   }
+  //   const parsedDate = new Date(date);
+  //   return parsedDate.toISOString().slice(0, 19).replace('T', ' ');
+  // }
+  formatDate(date: Date | string | null | undefined): string {
+    if (!date) return '';
+    const d = date instanceof Date ? date : new Date(date);
+    // Format as YYYY-MM-DD HH:MM:SS without timezone conversion
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} 12:00:00`;
   }
-
   calculateDays() {
     const fromDate = this.leavereqform.value.from;
     const toDate = this.leavereqform.value.to;
