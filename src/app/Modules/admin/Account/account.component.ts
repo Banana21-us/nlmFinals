@@ -1,30 +1,73 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../api.service';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { FileUpload,FileUploadEvent } from 'primeng/fileupload';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { start } from 'repl';
+interface UploadEvent {
+    originalEvent: Event;
+    files: File[];
+}
+
+export interface Certificate {
+  id: number;
+  name: string;
+  file: string;
+  file_url: string;
+  created_at: string;
+}
+
 @Component({
   selector: 'app-account',
-  imports: [CommonModule,ReactiveFormsModule,ToastModule,ButtonModule,RippleModule],
+  standalone: true,
+  imports: [CommonModule,ReactiveFormsModule,FormsModule,ToastModule,ButtonModule,RippleModule,DialogModule,InputTextModule,FileUpload,ConfirmDialog],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
-  providers: [MessageService]
+  providers: [MessageService,ConfirmationService],
+  styles: [`
+    :host ::ng-deep .p-toast {
+      width: 335px; /* Adjust width as needed */
+      font-size: 0.8rem; /* Adjust font size as needed */
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    :host ::ng-deep .p-toast-message-content {
+      padding: 0.75rem; /* Adjust padding as needed */
+    }
+
+    :host ::ng-deep .p-toast-summary {
+      font-weight: bold;
+    }
+  `],
 })
 export class AccountComponent implements OnInit{
-
-  constructor(private acc: ApiService,private fb: FormBuilder,private messageService: MessageService) {}
+ @ViewChild('fileUploadRef') fileUploadRef!: FileUpload;
+  constructor(private acc: ApiService,private fb: FormBuilder,private messageService: MessageService
+  ,private confirmationService: ConfirmationService
+  ) {}
     accountForm!: FormGroup;
     childrenForm!: FormGroup;
     userPic: any;
     user: any;
     id: any;
+    userId: any;
     accountData: any;
     accountDetails: any;
     isEditing = false;
     Editing = true;
+    personal = false;
+    name = '';
+    total_years_of_service:any;
+    selectedFile: File | null = null; // To hold the selected file for upload
+    certificates: Certificate[] = [];
     toggleEditMode(editMode: boolean) {
       this.isEditing = editMode;
       this.Editing = !editMode;
@@ -38,8 +81,62 @@ export class AccountComponent implements OnInit{
         this.initializeForms();
         this.loadUserData();
         this.loadAccountDetails();
+        this.getUserFromLocalStorage();
+        this.loadCertificates();
     }
-
+    loadCertificates(): void {
+    // Get user ID from localStorage
+    const userData = localStorage.getItem('users');
+    if (!userData) {
+      return;
+    }
+    const userId = JSON.parse(userData).id;
+    
+    this.acc.getCertificatesByUserId(userId).subscribe({
+      next: (data:any) => {
+        this.certificates = data.data;
+        
+        console.log('Certificates loaded:', this.certificates);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+    }
+    
+    deleteCertificate(id: number): void {
+      this.confirmationService.confirm({
+        header: 'Are you sure?',
+        message: 'Do you really want to delete this certificate?',
+        accept: () => {
+          this.acc.deleteCertificate(id).subscribe({
+            next: (response: any) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Certificate deleted successfully',
+                life: 3000
+              });
+              this.loadCertificates(); // Refresh the list after deletion
+            },
+            error: (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to delete certificate'
+              });
+            }
+          });
+        },
+        reject: () => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Cancelled',
+            detail: 'Certificate deletion cancelled'
+          });
+        }
+      });
+    }
     initializeForms(): void {
         this.accountForm = this.fb.group({
             name: ['', Validators.required],
@@ -52,6 +149,7 @@ export class AccountComponent implements OnInit{
             spouse: [''],
             dateofmarriage: [''],
             employments: this.fb.array([]),
+            yearsofservice: this.fb.array([]),
             old_password: [''],  // Old password field
             new_password: ['', [Validators.minLength(8)]],  // New password field
             confirm_password: ['']  // Confirm password field
@@ -151,6 +249,14 @@ export class AccountComponent implements OnInit{
                 this.addEmployment(employment);
             });
         }
+
+        // Patch yearsofservice
+        this.clearFormArray(this.yearsofservice);
+        if (this.accountData?.yearsofservice?.length) {
+            this.accountData.yearsofservice.forEach((service: any) => {
+                this.addYearsOfService(service);
+            });
+        }
     }
 
     // Helper function to clear a FormArray
@@ -223,6 +329,28 @@ export class AccountComponent implements OnInit{
     removeEmployment(index: number): void {
         this.employments.removeAt(index);
     }
+
+    // yearsofservice
+   get yearsofservice(): FormArray {
+      return this.accountForm.get('yearsofservice') as FormArray;
+    }
+
+    createYearsOfServiceFormGroup(service?: any): FormGroup {
+      return this.fb.group({
+        organization: [service?.organization || '', Validators.required],
+        start_date: [service?.start_date || '', Validators.required],
+        end_date: [service?.end_date ?? null]
+      });
+    }
+
+    addYearsOfService(service?: any): void {
+      this.yearsofservice.push(this.createYearsOfServiceFormGroup(service));
+    }
+
+    removeYearsOfService(index: number): void {
+      this.yearsofservice.removeAt(index);
+    }
+
 
   
     onFileChange(event: any): void {
@@ -324,5 +452,107 @@ export class AccountComponent implements OnInit{
 
     showBottomRight() {
         this.messageService.add({ severity: 'success', summary: 'Updated', detail: 'Account updated successfully', key: 'br', life: 3000 });
+    }   
+    getUserFromLocalStorage() {
+        const userData = localStorage.getItem('users');
+        if (userData) {
+            const user = JSON.parse(userData);
+            this.userId = user.id; // Assuming your user object has an 'id' field
+        }
     }
+
+    openCertificate() {
+    this.name = '';
+    this.selectedFile = null;
+    this.personal = true;
+    }
+    onFileSelect(event: any) {
+    if (event.files && event.files.length > 0) {
+      this.selectedFile = event.files[0];
+      
+      // Validate file type
+      const validTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+      if (this.selectedFile && !validTypes.includes(this.selectedFile.type)) {
+        this.selectedFile = null;
+        return;
+      }
+      
+      // Validate file size (5MB max)
+      if (this.selectedFile && this.selectedFile.size > 5 * 1024 * 1024) {
+        this.selectedFile = null;
+        return;
+      }
+    }
+  }
+     submitCertificate() {
+    // Validate all fields
+    if (!this.userId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'User not identified'
+      });
+      return;
+    }
+
+    if (!this.name) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please enter a certificate name'
+      });
+      return;
+    }
+    if (!this.selectedFile) {
+      console.log('Please select a valid file');
+      return;
+    }
+    if (!this.selectedFile) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please select a file'
+      });
+      return;
+    }
+
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('name', this.name);
+    formData.append('userid', this.userId);
+
+    // Submit
+    this.acc.postcertificate(formData).subscribe({
+      next: (response) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Certificate uploaded successfully'
+        });
+        this.resetForm();
+        
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.error?.message || 'Upload failed'
+        });
+      }
+    });
+     this.loadCertificates();
+  }
+
+  resetForm() {
+    this.name = '';
+    this.selectedFile = null;
+    this.personal = false;
+
+    if (this.fileUploadRef) {
+      this.fileUploadRef.clear(); // This is PrimeNG's method to clear files
+      this.fileUploadRef.files = []; // Force clear the files array
+    }
+  }
 }
+

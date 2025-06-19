@@ -209,6 +209,32 @@
                 }
                 </div>
 
+                <h6 class="heading-small text-muted mb-4">Years Of Service</h6>
+                <div class="pl-lg-4">
+                  @for (emp of employee.yearsofservice; track $index) {
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Organition</label>
+                        <h3>{{ emp.organization }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Start Date</label>
+                        <h3>{{ emp.start_date }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">End Date</label>
+                        <h3>{{ emp.end_date }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                }
+                </div>
+
               </form>
             </div>
           </div>

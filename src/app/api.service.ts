@@ -14,6 +14,13 @@ export interface LeaveBalanceResponse {
   years_of_service: number;
   balances: LeaveBalance[];
 }
+export interface Certificate {
+  id: number;
+  name: string;
+  file: string;
+  file_url: string;
+  created_at: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -345,5 +352,15 @@ export class ApiService {
   }
   getNotificationCount(userId: number): Observable<{ count: number }> {
     return this.http.get<{ count: number }>(`${this.apiUrl}notifications/unread-count/${userId}`);
+  }
+  postcertificate(data: any): Observable<any> {
+    return this.http.post(this.apiUrl + 'post-cert', data);
+  }
+
+  getCertificatesByUserId(userId: number): Observable<any> {
+      return this.http.get(`${this.apiUrl}certbyid/${userId}`);
+  }
+  deleteCertificate(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}delcertificates/${id}`);
   }
 }

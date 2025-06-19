@@ -48,20 +48,20 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCounts();
-    this.bar();
+    // this.bar();
     this.loadAccountDetails();
     this.loadDashboardData();
   }
 
-  bar() {
-      this.ngZone.runOutsideAngular(() => {
-          this.interval = setInterval(() => {
-              this.ngZone.run(() => {
-                  this.value = this.calculateProgress();
-                  });
-          }, 2000);
-      });
-  }
+  // bar() {
+  //     this.ngZone.runOutsideAngular(() => {
+  //         this.interval = setInterval(() => {
+  //             this.ngZone.run(() => {
+  //                 this.value = this.calculateProgress();
+  //                 });
+  //         }, 2000);
+  //     });
+  // }
 
   loadAccountDetails(): void {
       const id = localStorage.getItem('user');

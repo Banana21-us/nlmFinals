@@ -11,8 +11,8 @@
     }">
 
 
-      <span class="mask bg-gradient-default opacity-4" style="border-top-left-radius: 15px;
-      border-top-right-radius: 15px;"></span>
+      <span class="mask bg-gradient-default opacity-8"
+      style="border-top-left-radius: 15px; border-top-right-radius: 15px;"></span>
       <div class="container-fluid d-flex align-items-center ">
         <div class="row">
           <div class="col-lg-7 col-md-10">
@@ -210,6 +210,32 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">Organization</label>
                         <h3>{{ emp.dateofemp }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                }
+                </div>
+
+                <h6 class="heading-small text-muted mb-4">Years Of Service</h6>
+                <div class="pl-lg-4">
+                  @for (emp of employee.yearsofservice; track $index) {
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Organition</label>
+                        <h3>{{ emp.organization }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">Start Date</label>
+                        <h3>{{ emp.start_date }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">End Date</label>
+                        <h3>{{ emp.end_date }}</h3>
                       </div>
                     </div>
                   </div>

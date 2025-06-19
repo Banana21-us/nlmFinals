@@ -25,7 +25,7 @@ export class ViewComponent implements OnInit{
     employees: any[] = [];
     spouse: any[] = [];
     employfamily: any[] = [];
-
+    yearsofservice: any[] = [];
 
 
   ngOnInit(): void {
@@ -40,6 +40,8 @@ export class ViewComponent implements OnInit{
             this.employment = data.employment ?? [];
             this.spouse = data.spouse ?? [];
             this.employfamily = data.employfamily ?? [];
+            this.yearsofservice = data.yearsofservice ?? [];
+
             console.log('Employee data:', this.employee);
           },
           (error) => {
@@ -162,6 +164,22 @@ export class ViewComponent implements OnInit{
                         `).join('') : `<tr><td colspan="3">No children records found.</td></tr>`}
                       </table>
                     </div>
+
+                    <div class="section">
+                        <h3>Years Of Service</h3>
+                        <table class="employment">
+                          <tr><th>Name</th><th>Date</th></tr>
+                          ${this.yearsofservice?.length > 0 ? this.yearsofservice.map((ys: any) => `
+                            <tr>
+                              <td>${ys.organization ?? "N/A"}</td>
+                              <td>${ys.start_date ?? "N/A"}</td>
+                              <td>${ys.end_date ?? "Present"}</td>
+                            </tr>
+                          `).join('') : `<tr><td colspan="3">No Years of Service records found.</td></tr>`}
+                        </table>
+                      </div>
+
+                      
                   </div>
                 </body>
                 </html>

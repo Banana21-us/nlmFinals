@@ -4,31 +4,31 @@
         <div class="border-b border-gray-900/10 pb-12">
             <h2 class="text-base font-semibold text-gray-900">Personal Details</h2>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Full Name</label>
                     <div class="mt-2">
                         <input type="text" formControlName="name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your name" oninput="this.value = this.value.replace(/[^a-zA-ZñÑ\s\'.]/g, '');">
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Date of Birth</label>
                     <div class="mt-2">
                         <input type="date" formControlName="birthdate" class=" border border-black-900 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm" required placeholder="Enter your birthdate">
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Place of Birth</label>
                     <div class="mt-2">
                         <input type="text" formControlName="birthplace" class="border border-black-900 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm " required placeholder="Enter your birthplace">
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Address</label>
                     <div class="mt-2">
                         <input type="text" formControlName="address" class="border border-black-900 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your address">
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Status</label>
                     <div class="mt-2">
                         <select formControlName="status" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
@@ -38,7 +38,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Gender</label>
                     <div class="mt-2">
                         <select formControlName="gender" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
@@ -48,40 +48,50 @@
                         </select>
                     </div>
                 </div>
-                <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium text-gray-900">Department</label>
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-900">Role</label>
                     <div class="mt-2">
                         <select formControlName="department" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
-                            <option disabled selected>Select Department</option>
+                            <option disabled selected>Select Role</option>
                             @for (department of departments; track $index) {
                                 <option [value]="department.name">{{ department.name }}</option>
                                 }    
                         </select>
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <!-- <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Position</label>
                     <div class="mt-2">
                         <select formControlName="position" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
                             <option disabled selected>Select Position</option>
-                            @for (position of positions; track $index) {
-                                <option [value]="position.name">{{ position.name }}</option>
-                                }                        
+                             @for (designation of designations; track $index) {
+                                <option [value]="designation.name">{{ designation.name }}</option>
+                                }             
                         </select>
                     </div>
-                </div>
-                <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium text-gray-900">Work Status</label>
+                </div> -->
+                <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium text-gray-900">Position</label>
+                        <div class="mt-2">
+                          <mat-select formControlName="position" multiple class="form-control" style="height: 43px; border-color: #9ca3af; font-size: 14px; color:#6b7280" >
+                            @for (designation of designations; track $index) {
+                              <mat-option [value]="designation.name" style="font-size: 14px; color:#6b7280">{{ designation.name }}</mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-900">Designation</label>
                     <div class="mt-2">
                         <select formControlName="designation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
-                            <option disabled selected>Work Status</option>
-                            @for (designation of designations; track $index) {
-                                <option [value]="designation.name">{{ designation.name }}</option>
-                                }                        
+                            <option disabled selected>Select Designation</option>
+                            @for (position of positions; track $index) {
+                                <option [value]="position.name">{{ position.name }}</option>
+                                }                         
                         </select>
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Category</label>
                     <div class="mt-2">
                         <select formControlName="category" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
@@ -92,8 +102,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium text-gray-900">Designation</label>
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-900">Work Status</label>
                     <div class="mt-2">
                         <select formControlName="work_status" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required>
                             <option disabled selected>Select Work Status</option>
@@ -104,19 +114,26 @@
                     </div>
                 </div>
 
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Mobile Number</label>
                     <div class="mt-2">
                         <input type="text" formControlName="phone_number" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your phone number">
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-900">Registration Date</label>
+                    <div class="mt-2">
+                        <input type="date" formControlName="reg_approval" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your email">
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Email</label>
                     <div class="mt-2">
                         <input type="email" formControlName="email" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your email">
                     </div>
                 </div>
-                <div class="sm:col-span-3">
+                
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-900">Password</label>
                     <div class="mt-2">
                         <input type="password" formControlName="password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 focus:outline-indigo-600 sm:text-sm border border-black-900" required placeholder="Enter your password">

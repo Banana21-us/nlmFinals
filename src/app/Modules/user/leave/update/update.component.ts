@@ -129,11 +129,18 @@ export class UpdateComponent implements OnInit {
     return d.toISOString().split('T')[0];
   }
 
-  formatDateForApi(date: string | null | undefined): string {
+  // formatDateForApi(date: string | null | undefined): string {
+  //   if (!date) return '';
+  //   const d = new Date(date);
+  //   return d.toISOString().slice(0, 19).replace('T', ' ');
+  // }
+  formatDateForApi(date: Date | string | null | undefined): string {
     if (!date) return '';
-    const d = new Date(date);
-    return d.toISOString().slice(0, 19).replace('T', ' ');
-  }
+    const d = date instanceof Date ? date : new Date(date);
+    // Format as YYYY-MM-DD HH:MM:SS without timezone conversion
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} 12:00:00`;
+}
 
   onSubmit(): void {
     if (this.updateleavereqform.invalid) {
@@ -149,6 +156,8 @@ export class UpdateComponent implements OnInit {
     const fromDate = this.updateleavereqform.value.from;
     const toDate = this.updateleavereqform.value.to;
 
+    console.log('Original form dates - from:', fromDate, 'to:', toDate); // Debug log
+
     if (!fromDate || !toDate) {
       this.messageService.add({
         severity: 'error',
@@ -162,6 +171,8 @@ export class UpdateComponent implements OnInit {
     const from = new Date(fromDate);
     const to = new Date(toDate);
     
+    console.log('Parsed dates - from:', from, 'to:', to); // Debug log
+
     if (from > to) {
       this.dateError = true;
       this.messageService.add({
@@ -198,12 +209,20 @@ export class UpdateComponent implements OnInit {
       return;
     }
 
+    // Format dates for API
+    const formattedFrom = this.formatDateForApi(fromDate);
+    const formattedTo = this.formatDateForApi(toDate);
+    
+    console.log('Formatted dates for API - from:', formattedFrom, 'to:', formattedTo); // Debug log
+
     // Proceed with update if all validations pass
     const formValue = { 
       ...this.updateleavereqform.value,
-      from: this.formatDateForApi(fromDate),
-      to: this.formatDateForApi(toDate)
+      from: formattedFrom,
+      to: formattedTo
     };
+
+    console.log('Final payload being sent to API:', formValue); // Debug log
 
     this.ser.updatedetails(this.data.emp.id, formValue).subscribe({
       next: () => {
@@ -215,6 +234,7 @@ export class UpdateComponent implements OnInit {
         this.dialogRef.close(true);
       },
       error: (error) => {
+        console.error('API Error:', error); // Debug log
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

@@ -31,6 +31,7 @@ export class UpdateComponent implements OnInit{
     designation: new FormControl('', Validators.required),
     work_status: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
+    reg_approval: new FormControl('', Validators.required),
     email : new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.minLength(8))
   });
@@ -53,6 +54,7 @@ export class UpdateComponent implements OnInit{
         email: this.data.emp.email,
         category: this.data.emp.category,
         work_status: this.data.emp.work_status,
+        reg_approval: this.data.emp.reg_approval,
       });
     }
   }

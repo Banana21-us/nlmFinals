@@ -31,7 +31,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
   {
     path: 'admin-page',
-    canActivate: [authGuard], // Protect admin routes
+    // canActivate: [authGuard], // Protect admin routes
     loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule),
   },
   {

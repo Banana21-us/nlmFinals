@@ -3,6 +3,17 @@
   overflow-x: hidden;
   overflow-y: hidden;
 }
+app-menu-item  {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+app-menu-item .collapsed {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
 
 .sidenav-header {
   padding-top: 24px;
