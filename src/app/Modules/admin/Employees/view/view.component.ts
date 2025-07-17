@@ -23,7 +23,9 @@
     employfamily: any[] = [];
     yearsofservice: any[] = [];
     currentDate: Date = new Date();
-
+    total_years_of_service:any;
+    accountData: any;
+    id: any;
     constructor(private users: ApiService,
       private dialogRef: MatDialogRef<ViewComponent>,
       private route: ActivatedRoute,
@@ -65,7 +67,7 @@
     }
 
     ngOnInit(): void {
-      
+      this.loadAccountDetails();
       const employeeId = this.data.empId;
       if (employeeId) {
         this.users.getEmployee(employeeId).subscribe(
@@ -83,6 +85,21 @@
           }
         );
       }
+    }
+    
+    loadAccountDetails(): void {
+        const id = localStorage.getItem('user');
+        this.id = id;
+        this.users.getAccountDetails(this.id).subscribe({
+            next: (response) => {
+                this.accountData = response.data; // Access the 'data' property
+                console.log('Account Details:', this.accountData);
+                this.total_years_of_service = response.data.total_years_of_service;
+            },
+            error: (error) => {
+                console.error('Error fetching account details:', error);
+            }
+        });
     }
 
     printemployee() {
